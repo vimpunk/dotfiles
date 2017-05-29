@@ -1,0 +1,5 @@
+rofi.color-enabled: true
+rofi.color-window: argb:dd31b49, #7c98b3, #7c98b3
+rofi.color-normal: argb:dd31b49, #f3f4f5, argb:dd31b49, #7c98b3, #fafafa
+rofi.color-active: argb:dd31b49
+rofi.color-urgent: argb:dd31b49
