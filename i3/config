@@ -79,9 +79,9 @@ bindsym $mod+shift+x exec ~/.config/i3/lock
 
 ### Launch stuff ###
 exec_always feh --bg-scale ~/.config/i3/wallpaper
-exec_always xrandr --output DP2 --auto --left-of HDMI2
+exec_always xrandr --output DP1 --auto --left-of HDMI2
 exec firefox
-exec --no-startup-id i3-msg 'workspace $workspace1; exec $terminal -d ~/bt/src'
+exec --no-startup-id i3-msg 'workspace $workspace1; exec $terminal -d ~/projects'
 exec --no-startup-id i3-msg 'workspace $workspace3; exec $terminal'
 exec compton
 exec xflux -l 47 -g 19
@@ -222,6 +222,10 @@ assign [class="Firefox"] $workspace2
 assign [class="Audacious"] $workspace9
 assign [class="Nautilus"] $workspace8
 assign [class="Deluge"] $workspace8
+
+workspace $workspace1 output HDMI2
+workspace $workspace2 output DP2
+workspace $workspace3 output DP2
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
