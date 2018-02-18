@@ -46,7 +46,7 @@ monitor =
 
 modules-left   = config i3 menu
 modules-center = clock
-modules-right  = redshift pkg filesystem memory temperature coreuse network volume
+modules-right  = redshift pkg filesystem memory temperature coreuse network backlight volume
 
 ; All available modules (some require configuration in modules.conf)
 ; redshift github filesystem jgmenu mpd wired-network wireless-network battery menu volume-bar bspwm
