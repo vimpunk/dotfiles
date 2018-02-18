@@ -19,15 +19,17 @@ set $terminal termite
 font pango:Inconsolata Regular 12
 
 # colors
-set $blue #3685e2
-set $pastel_blue #5294e2
 set $pastel_pink #ad7fa8
+set $turqoise #7bcdb4
+set $turq_compl_pink #cc7a93
 #set $pastel_beige #bfbbbf
 set $pastel_beige #afaaaf
 set $weldon_blue #7c98b3
-set $terminal_bg_gray #313b49
+set $term_bg_gray #313b49
+set $lighter_term_bg_gray #4F5A6B
 set $urgent_red #a34935
 set $urgent_red2 #ff5757
+set $grey_white #aab1be
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -37,13 +39,14 @@ bar {
         font xft:Droid Sans Mono, FontAwesome 11
 
         colors {
-            background $terminal_bg_gray
+            background $term_bg_gray
             #background #2F343F
             #background #002B36
 
-            focused_workspace $pastel_beige $pastel_beige $terminal_bg_gray
-            active_workspace $weldon_blue $weldon_blue #fafafa
-            inactive_workspace $terminal_bg_gray $terminal_bg_gray #fafafa
+            focused_workspace $pastel_beige $pastel_beige $term_bg_gray
+            #active_workspace $weldon_blue $weldon_blue #fafafa
+            active_workspace $term_bg_gray $term_bg_gray #fafafa
+            inactive_workspace $term_bg_gray $term_bg_gray #fafafa
             urgent_workspace $urgent_red $urgent_red #fafafa
         }
 }
@@ -51,15 +54,16 @@ bar {
 ########## Styling ##########
 
 # class                 border       bg.          text    indicator    child-border
-client.focused          $pastel_beige $pastel_beige #fafafa $pastel_beige $pastel_beige
-client.focused_inactive $weldon_blue $weldon_blue #eeeeee $weldon_blue $weldon_blue
-client.unfocused        $weldon_blue $weldon_blue #eeeeee $weldon_blue $weldon_blue
+client.focused          $pastel_beige $pastel_beige $term_bg_gray $pastel_beige $pastel_beige
+#client.focused_inactive $term_bg_gray $term_bg_gray #eeeeee $term_bg_gray $term_bg_gray
+client.focused_inactive $pastel_beige $term_bg_gray $grey_white $weldon_blue $weldon_blue
+client.unfocused        $pastel_beige $term_bg_gray $grey_white $weldon_blue $weldon_blue
 client.urgent           $urgent_red $urgent_red #ffffff $urgent_red $urgent_red
 client.background #404552
 
 ########## i3-gaps integration ##########
 
-for_window [class="^.*"] border pixel 3
+for_window [class="^.*"] border pixel 1
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [title="Preferences$"] floating enable
@@ -81,8 +85,8 @@ bindsym $mod+shift+x exec ~/.config/i3/lock
 exec_always feh --bg-scale ~/.config/i3/wallpaper
 exec_always xrandr --output DP1 --auto --left-of HDMI2
 exec firefox
-exec --no-startup-id i3-msg 'workspace $workspace1; exec $terminal -d ~/projects'
-exec --no-startup-id i3-msg 'workspace $workspace3; exec $terminal'
+exec --no-startup-id i3-msg 'workspace $workspace2; exec $terminal'
+exec --no-startup-id i3-msg 'workspace $workspace3; exec $terminal -d ~/projects'
 exec compton
 exec xflux -l 47 -g 19
 
@@ -90,6 +94,8 @@ exec xflux -l 47 -g 19
 bindsym $mod+Shift+bracketleft move workspace to output left
 bindsym $mod+Shift+bracketright move workspace to output right
 
+# doesn't work TODO
+bindsym $mod+Shift+f exec ~/.config/i3/focus.py
 
 ######################
 # Core functionality #
@@ -188,9 +194,9 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 "1 "
-set $workspace2 "2 "
-set $workspace3 "3 "
+set $workspace1 "1 "
+set $workspace2 "2 "
+set $workspace3 "3 "
 set $workspace8 "8 "
 set $workspace9 "9 "
 
@@ -218,7 +224,7 @@ bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace 10
 
-assign [class="Firefox"] $workspace2
+assign [class="Firefox"] $workspace1
 assign [class="Audacious"] $workspace9
 assign [class="Nautilus"] $workspace8
 assign [class="Deluge"] $workspace8

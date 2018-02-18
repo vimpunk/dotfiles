@@ -11,7 +11,10 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
+" installed plugins
 Plugin 'vim-syntastic/syntastic'
+Plugin 'rust-lang/rust.vim'
+Plugin 'scrooloose/nerdtree'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -56,6 +59,3 @@ map <F7> :tabp <CR>
 map <F8> :tabn <CR>
 set nolist wrap linebreak breakat&vim
 set hlsearch
-
-"nmap <C-j> 5j5<C-e>
-"nmap <C-k> 5k5<C-y> 
