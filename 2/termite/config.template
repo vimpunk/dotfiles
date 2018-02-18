@@ -1,0 +1,55 @@
+[options]
+scroll_on_output    = false
+scroll_on_keystroke = true
+audible_bell        = false
+mouse_autohide      = false
+allow_bold          = true
+dynamic_title       = true
+urgent_on_bell      = true
+clickable_url       = true
+font                = {{.Data.terminal_font}}
+scrollback_lines    = 10000
+search_wrap         = true
+icon_name           = utilities-terminal
+geometry            = 750x500
+clickable_url       = true
+cursor_blink        = system
+cursor_shape        = block
+browser             = exo-open
+filter_unmatched_urls = true
+
+[colors]
+background      = {{.Data.terminal_termbackground}}
+foreground      = {{.Data.terminal_foreground}}
+foreground_bold = {{.Data.terminal_bold}}
+cursor          = {{.Data.terminal_foreground}}
+
+# Black, Gray, Silver, White
+color0  = {{index .Data.terminal_colors 0}}
+color8  = {{index .Data.terminal_colors 7}}
+color7  = {{index .Data.terminal_colors 8}}
+color15 = {{.Data.terminal_foreground}}
+
+# Red
+color1  = {{index .Data.terminal_colors 1}}
+color9  = {{index .Data.terminal_colors 1}}
+
+# Green
+color2  = {{index .Data.terminal_colors 2}}
+color10 = {{index .Data.terminal_colors 2}}
+
+# Yellow
+color3  = {{index .Data.terminal_colors 3}}
+color11 = {{index .Data.terminal_colors 3}}
+
+# Blue
+color4  = {{index .Data.terminal_colors 4}}
+color12 = {{index .Data.terminal_colors 4}}
+
+# Purple
+color5  = {{index .Data.terminal_colors 5}}
+color13 = {{index .Data.terminal_colors 5}}
+
+# Teal
+color6  = {{index .Data.terminal_colors 6}}
+color14 = {{index .Data.terminal_colors 6}}

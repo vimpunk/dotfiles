@@ -1,0 +1,44 @@
+<?xml encoding="UTF-8" version="1.0"?>
+<actions>
+  <action>
+    <icon>utilities-terminal</icon>
+    <name>Open in Terminal</name>
+    <unique-id>1499240572835265-1</unique-id>
+    <command>exo-open --launch TerminalEmulator %f</command>
+    <description></description>
+    <patterns>*</patterns>
+    <startup-notify/>
+    <directories/>
+  </action>
+  <action>
+    <icon>document-open</icon>
+    <name>Open as Root</name>
+    <unique-id>1498523394840843-5</unique-id>
+    <command>gksu thunar %f</command>
+    <description></description>
+    <patterns>*</patterns>
+    <directories/>
+  </action>
+  <action>
+    <icon>archive-extract</icon>
+    <name>Extract Here</name>
+    <unique-id>1500573442438340-2</unique-id>
+    <command>file-roller -h %N</command>
+    <description></description>
+    <patterns>*</patterns>
+    <startup-notify/>
+    <other-files/>
+  </action>
+  <action>
+    <icon>archive-insert</icon>
+    <name>Archive</name>
+    <unique-id>1500573639456321-3</unique-id>
+    <command>file-roller -d %F</command>
+    <description>Archive selected items</description>
+    <patterns>*</patterns>
+    <directories/>
+    <image-files/>
+    <other-files/>
+    <text-files/>
+  </action>
+</actions>
