@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+question=$(echo " lock| logout| reboot| shutdown" | rofi -sep "|" \
+    -dmenu -i -p 'System: ' "" -width 20 -hide-scrollbar -font "Ubuntu 11" \
+    -eh 1 -line-padding 4 -padding 20 -no-config -lines 4 -color-enabled \
+    -color-window "{{.Data.terminal_background}}, {{.Data.terminal_foreground}}, {{.Data.terminal_background}}" \
+    -color-normal "{{.Data.terminal_background}}, {{.Data.terminal_foreground}}, {{.Data.terminal_background}}, {{index .Data.terminal_colors 4}}, {{.Data.terminal_background}}")
+
+case $question in
+    *lock)
+        i3lock-fancy
+        ;;
+    *logout)
+        session-logout
+        ;;
+    *reboot)
+        systemctl reboot
+        ;;
+    *shutdown)
+        systemctl poweroff
+        ;;
+    *)
+        exit 0  # do nothing on wrong response
+        ;;
+esac

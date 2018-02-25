@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+if [ "$(pidof compton)" ]; then
+    al-compositor --restart
+else
+    al-compositor --start
+fi

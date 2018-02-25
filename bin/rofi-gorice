@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+rofi -no-config -modi run,drun,window -show drun \
+    -eh 1 -line-padding 4 -padding 50 -sidebar-mode \
+    -show-icons -drun-icon-theme "ArchLabs-Light" \
+    -font "Ubuntu 11" -color-enabled \
+    -color-window "#2b303b, #8fa1b3, #2b303b" \
+    -color-normal "#2b303b, #8fa1b3, #2b303b, #8fa1b3, #2b303b"

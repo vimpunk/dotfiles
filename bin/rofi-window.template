@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rofi -no-config -modi window -show window -hide-scrollbar -eh 1 \
+     -padding 50 -line-padding 4 -font "Fantasque Sans Mono 12" -color-enabled \
+     -color-window "{{.Data.terminal_background}}, {{.Data.terminal_background}}, {{.Data.terminal_background}}" \
+     -color-normal "{{.Data.terminal_background}}, {{.Data.terminal_foreground}}, {{.Data.terminal_background}}, {{index .Data.terminal_colors 4}}, {{.Data.terminal_background}}"

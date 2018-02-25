@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+on=""
+off=""
+
+# if the script is passed --toggle
+if [[ $1 == *toggle* ]] && pgrep caffeine &>/dev/null; then
+    killall caffeine && exit 0
+elif [[ $1 == *toggle* ]]; then
+    caffeine && exit 0
+fi
+
+while true; do
+    # caffeine is running
+    if pgrep caffeine &>/dev/null; then
+        echo "%{F#0000FF}$on"
+    else
+        echo "%{F#FF0000}$off"
+    fi
+    sleep 2
+done

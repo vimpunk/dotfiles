@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# will check if precisely this termite instance is running
+# if it is, then kill it, otherwise launch a new termite with these settings
+# This allows a "Toggle-able" terminal, by simply binding a key to
+#                    "toggle-termite"
+
+if pgrep --full 'termite --title=work-term' &>/dev/null; then
+    pkill --full 'termite --title=work-term'
+else
+    termite --title=work-term --class=work-term &
+fi

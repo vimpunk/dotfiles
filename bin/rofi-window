@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rofi -no-config -modi window -show window -hide-scrollbar -eh 1 \
+     -padding 50 -line-padding 4 -font "Fantasque Sans Mono 12" -color-enabled \
+     -color-window "#1F2326, #1F2326, #1F2326" \
+     -color-normal "#1F2326, #F1F1F1, #1F2326, #4E88CF, #1F2326"

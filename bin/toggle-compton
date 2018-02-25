@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+on=""
+off=""
+
+if [[ $1 == *toggle* ]] && [[ $(pidof compton) ]]; then
+    al-compositor --stop && exit 0
+elif [[ $1 == *toggle* ]]; then
+    al-compositor --start && exit 0
+fi
+
+while true; do
+    if [[ $(pidof compton) ]]; then
+        echo "$on"
+    else
+        echo "%{F#888888}$off"
+    fi
+    sleep 2
+done

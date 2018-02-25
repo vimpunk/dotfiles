@@ -1,0 +1,147 @@
+#!/usr/bin/env python
+
+
+import os
+import struct
+import subprocess
+import yaml
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk, Gdk, Pango
+
+
+# This is the name of the group where your configs are stored.
+GROUP = 'i3'
+PATH = '{}/bin/gorice'.format(os.environ['HOME'])
+
+
+class Selection(Gtk.EventBox):
+    def __init__(self, name, colours, foreground, background, selected,
+                 working=True):
+        super().__init__()
+        self.name = name
+        self.background = background
+        self.selected_colour = selected
+
+        if not working:
+            name = 'x  ' + name
+        text = Gtk.Label(name)
+        hbox = Gtk.HBox()
+        hbox.set_size_request(0, 30)
+        hbox.pack_start(text, False, True, 20)
+        hbox.override_color(Gtk.StateType.NORMAL, Gdk.RGBA(*foreground))
+        hbox.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(*background))
+
+        colour_widgets = Gtk.HBox()
+
+        for colour in colours:
+            box = Gtk.Box()
+            box.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(*colour))
+            box.set_size_request(15, 15)
+            padding = Gtk.Alignment()
+            padding.set_padding(10, 10, 0, 0)
+            padding.add(box)
+            colour_widgets.pack_start(padding, False, True, 2)
+
+        hbox.pack_end(colour_widgets, False, True, 20)
+        self.hbox = hbox
+        self.connect('enter-notify-event', self.selected)
+        self.connect('leave-notify-event', self.unselected)
+        self.connect('button-press-event', self.clicked)
+        self.add(self.hbox)
+
+    def clicked(self, widget, button):
+        _, index = button.get_button()
+        if index == 1:
+            proc = subprocess.run([PATH, 'load', self.name])
+            Gtk.main_quit()
+        return None
+
+    def selected(self, *args):
+        # self.hbox.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(*self.selected))
+        return None
+
+    def unselected(self, *args):
+        # self.hbox.override_background_color(Gtk.StateType.NORMAL, Gdk.RGBA(*self.selected))
+        return None
+
+
+def load_configs():
+    broken = subprocess.check_output([PATH, 'check', GROUP])
+    broken = broken.decode('utf-8').split('\n')
+
+    output = []
+    path = '{}/.gorice/output.yaml'.format(os.environ['HOME'])
+
+    with open(path, 'r') as f:
+        data = yaml.load(f.read())
+
+    names = sorted(data['configs'])
+    for config in names:
+        info = data['configs'][config]
+        config, ext = os.path.splitext(config)
+        if config == 'i3/default':
+            continue
+
+        _, name = config.split('/', 1)
+
+        foreground = rgb(info['foreground'])
+        background = rgb(info['background'])
+        selection = [x+0.02 for x in background]
+        colours = [rgb(x) for x in info['colors']]
+
+        item = Selection(config, colours, foreground, background, selection,
+                         working=name not in broken)
+        output.append(item)
+    return output
+
+
+def rgb(colour):
+    colour = colour[1:]
+    return [x/255 for x in struct.unpack('BBB', bytes.fromhex(colour))]
+
+
+def keypress(window, key):
+    if key.keyval == 65307:
+        Gtk.main_quit()
+    return None
+
+
+def main():
+    configs = load_configs()
+    window = Gtk.Window()
+
+    window.modify_font(Pango.FontDescription('xos4 Terminus 9'))
+    window.set_property('type-hint', Gdk.WindowTypeHint.SPLASHSCREEN)
+    window.set_decorated(False)
+    window.set_resizable(False)
+
+    window.connect('leave-notify-event', Gtk.main_quit)
+    window.set_property('skip-taskbar-hint', False)
+    # window.set_title('bar-dropdown')
+    # window.set_border_width(0)
+    # window.stick()
+
+    window.connect('delete-event', Gtk.main_quit)
+
+    scrolled = Gtk.ScrolledWindow()
+    scrolled.set_policy(Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC)
+    box = Gtk.VBox()
+
+    for config in configs:
+        box.pack_start(config, False, False, 0)
+
+    scrolled.add(box)
+    window.add(scrolled)
+    window.set_size_request(200, 420)
+    window.show_all()
+    window.move(10, 35)
+    window.connect('key-press-event', keypress)
+    window.set_events(Gdk.EventMask.BUTTON_PRESS_MASK)
+
+    Gtk.main()
+    return None
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# do the launcher
+rofi -modi run,drun,window -show drun \
+     -show-icons -me-select-entry '' \
+     -me-accept-entry 'Mouse1' -sidebar-mode

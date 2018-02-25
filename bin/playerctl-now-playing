@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+is_online() {
+    ! [[ "$(playerctl -l 2>&1 > /dev/null)" = "No players were found" ]]
+}
+
+is_playing() {
+    [[ "$(playerctl status)" = "Playing" ]]
+}
+
+is_paused() {
+    [[ "$(playerctl status)" = "Paused" ]]
+}
+
+if [[ $1 = "--toggle" ]] || [[ $1 = "-t" ]]; then
+    if is_online; then
+        playerctl play-pause
+    fi
+    exit 0
+elif [[ $1 = "--next" ]] || [[ $1 = "-n" ]]; then
+    if is_playing; then
+        playerctl next
+    fi
+    exit 0
+elif [[ $1 = "--prev" ]] || [[ $1 = "-p" ]]; then
+    if is_playing; then
+        playerctl previous
+    fi
+    exit 0
+fi
+
+while true; do
+    if is_online; then
+        metadata=$(playerctl metadata)
+        if [[ $metadata != "" ]]; then
+            artist="$(grep -Po "'xesam:artist': <\[.*?\]>" <<< $metadata \
+                | grep -o '<\[.*\]>')"
+            title="$(grep -Po "'xesam:title': <.*?>" <<< $metadata | grep -o '<.*>')"
+            if [[ $title != "" && $artist != 0 ]]; then
+                artist="${artist:3:${#artist}-6}"
+                title="${title:2:${#title}-4}"
+                output="$title - $artist"
+                if is_playing; then
+                    echo " $output"
+                else
+                    echo " $output"
+                fi
+            fi
+        fi
+    fi
+    sleep 1
+done
