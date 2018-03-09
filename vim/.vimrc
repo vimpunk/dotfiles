@@ -3,8 +3,10 @@
 " ==============================================================================
 
 " Download vim-plug if it's not installed on this machine.
-if empty(glob("~/.vim/autoload/plug.vim"))
-    execute '!curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.github.com/junegunn/vim-plug/master/plug.vim'
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/bundle')
@@ -12,6 +14,12 @@ call plug#begin('~/.vim/bundle')
 Plug 'rust-lang/rust.vim'
 "Plug 'Valloric/YouCompleteMe'
 "Plug 'w0rp/ale'
+
+" Language Server Protocol
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " Fuzzy search utility.
 Plug '/usr/local/opt/fzf'
@@ -24,12 +32,11 @@ Plug 'junegunn/limelight.vim'
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
 
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 
 " TODO test
-Plug 'majutsushi/tagbar' 
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'majutsushi/tagbar' Plug 'ludovicchabant/vim-gutentags'
 
 call plug#end()
 
@@ -42,30 +49,34 @@ let g:indentLine_color_term = 239
 let g:goyo_width = 90
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-" NERD Tree
-nnoremap <F10> :NERDTreeToggle<cr>
+nnoremap <F10> :NERDTreeToggle<CR>
 
-" ------------------------------------------------------------------------------
-" ALE
-" ------------------------------------------------------------------------------
-let g:ale_linters = {'rust': ['rls']}
-let g:ale_rust_rls_toolchain = 'stable'
-" Don't lint immediately.
-let g:ale_lint_delay = 1000
-" Don't lint when file is opened.
-let g:ale_lint_on_enter = 0
-" Navigate errors using ALE's builtins.
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap) 
+set hidden " (Required for operations modifying multiple buffers like rename.)
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ }
 
-" ------------------------------------------------------------------------------
-" YouCompleteMe
-" ------------------------------------------------------------------------------
-" Generate .c and .cpp compile_commands.json files.
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-nnoremap <leader>g :YcmCompleter GoTo<CR>
-" TODO <leader>d doesn't work.
-nnoremap <C-d> :YcmCompleter GetDoc<CR>
+"" ------------------------------------------------------------------------------
+"" ALE
+"" ------------------------------------------------------------------------------
+"let g:ale_linters = {'rust': ['rls']}
+"let g:ale_rust_rls_toolchain = 'stable'
+"" Don't lint immediately.
+"let g:ale_lint_delay = 1000
+"" Don't lint when file is opened.
+"let g:ale_lint_on_enter = 0
+"" Navigate errors using ALE's builtins.
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap) 
+
+"" ------------------------------------------------------------------------------
+"" YouCompleteMe
+"" ------------------------------------------------------------------------------
+"" Generate .c and .cpp compile_commands.json files.
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"nnoremap <leader>g :YcmCompleter GoTo<CR>
+"" TODO <leader>d doesn't work.
+"nnoremap <C-d> :YcmCompleter GetDoc<CR>
 
 
 " ==============================================================================
@@ -85,29 +96,39 @@ syntax on
 set smartindent
 set number
 set relativenumber
-set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
-set nolist wrap linebreak breakat&vim
-
-" This changed my life.
-set wildmenu
+set tabstop=4
+set softtabstop=0
+set expandtab
+set shiftwidth=4
+set smarttab
+set nolist " Don't visualize tabs and line breaks.
+set wrap
+set linebreak " Don't break lines mid-word.
+set breakat&vim " Reset chars at which line is broken to vim defaults.
+set showcmd
+set lazyredraw
+set encoding=utf-8
+set nocursorline
+set diffopt=filler,vertical
+set autoread " Reload file if it has been changed outside of vim but not inside.
+set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
+set breakindent " Preserve indentation when wrapping lines.
+set wildmenu " This changed my life.
 set wildmode=full
 
 " Hack to be able save read-only files.
 cmap w!! w !sudo tee % >/dev/null
 
 set scrolloff=5
-" Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the file, so we
-" need to skip the rest of the way there with the movement commands.
+" Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the visible
+" window, so we need to skip the rest of the way there with the movement
+" commands.
 nnoremap <S-H> <S-H>5k
 nnoremap <S-L> <S-L>5j
 
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
 inoremap jk <Esc> 
-xnoremap jj <Esc>
-xnoremap jk <Esc>
-cnoremap jj <C-c>
-cnoremap jk <C-c>
 
 " ------------------------------------------------------------------------------
 " Buffers
@@ -142,7 +163,7 @@ set hlsearch
 set incsearch
 set ignorecase smartcase
 " Clear search highlight.
-nnoremap <C-l> :nohlsearch<CR>
+nnoremap <leader><space> :nohlsearch<CR>
 
 " Make n and N always go in the same direction, no matter what search
 " direction you started off with, and always center the current match on the
@@ -156,7 +177,7 @@ nnoremap <expr> N 'nN'[v:searchforward] . 'zz'
 " Properly join two lines of comments by deleting the joined line's comment symbol(s).
 set formatoptions+=j
 " Auto format text.
-set formatoptions+=c
+set formatoptions+=c,a
 
 " ------------------------------------------------------------------------------ 
 " Movement
@@ -172,7 +193,6 @@ inoremap <C-h> <C-o>h
 inoremap <C-l> <C-o>a
 inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
-inoremap <C-^> <C-o><C-^> 
 
 " Make Y behave like other capitalized movement commands.
 nnoremap Y y$
@@ -181,8 +201,8 @@ nnoremap Y y$
 " Moving lines up and down
 " ----------------------------------------------------------------------------
 nnoremap <silent> <C-k> :move-2<cr>
-nnoremap <silent> <C-j> :move+<cr>
 xnoremap <silent> <C-k> :move-2<cr>gv
+nnoremap <silent> <C-j> :move+<cr>
 xnoremap <silent> <C-j> :move'>+<cr>gv
 
 
@@ -200,14 +220,10 @@ augroup ErrorHighlights
     autocmd!
     autocmd Colorscheme * call s:color()
     autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%91v')
-
-    " Highlight trailing spaces.
-    "autocmd InsertLeave * silent! execute 'call matchdelete(w:trailid)' \ |
-    "let w:trailid = matchadd('ErrorMsg', '\s\+\%#\@!$', -1)
 augroup end
 
-" Show relative line numbers when in command mode or switching to another buffer and show
-" absolute line numbers when in insert mode.
+" Show relative line numbers when in command mode or switching to another
+" buffer, and show absolute line numbers when in insert mode.
 :augroup NumberToggle
 :  autocmd!
 :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
@@ -224,29 +240,7 @@ augroup end
 "syntax match DoubleSpace /\S\zs {2,}/
 "highlight link DoubleSpace Error
 
-" syntastic begin
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 0
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_cpp_check_header = 1
-"let g:syntactic_cpp_compiler = 'g++'
-"let g:syntactic_cpp_compiler_optinos = ' -std=c++14'
-" syntastic end
-
-" Space doesn't show up in the command corner, so map space to the default
-" Leader key so that pressing it does show up.
-"map <space> <leader>
-
-"map <Esc> :noh<CR>
-
-"set cc=90
-
-" These only work when vim is compiled with +clipboard flag set.
+" These only work when vim is compiled with +clipboard flag set:
 " Copy to system clipboard.
 "vnoremap <Leader>y "+y
 "nnoremap <Leader>Y "+yg_
@@ -264,16 +258,6 @@ augroup end
 "let g:ale_lint_on_insert_leave = 1
 
 
-" Language Server Protocol
-"Plug 'autozimu/LanguageClient-neovim', {
-    "\ 'branch': 'next',
-    "\ 'do': 'bash install.sh',
-    "\ }
-
-"set hidden " (Required for operations modifying multiple buffers like rename.)
-"let g:LanguageClient_serverCommands = {
-    "\ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    "\ }
 
 "nnoremap <silent> <leader>lk :call LanguageClient_textDocument_hover()<CR>
 "nnoremap <silent> <leader>ld :call LanguageClient_textDocument_definition()<CR>
@@ -297,3 +281,9 @@ augroup end
     "let col = col('.') - 1
     "return !col || getline('.')[col - 1]  =~ '\s'
 "endfunction"}}}
+
+" Split navigations. currently conflicts with line movements
+"nnoremap <C-J> <C-W><C-J>
+"nnoremap <C-K> <C-W><C-K>
+"nnoremap <C-L> <C-W><C-L>
+"nnoremap <C-H> <C-W><C-H>
