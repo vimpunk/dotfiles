@@ -1,0 +1,76 @@
+[options]
+scroll_on_output    = false
+scroll_on_keystroke = true
+audible_bell        = false
+mouse_autohide      = false
+allow_bold          = true
+dynamic_title       = true
+urgent_on_bell      = true
+clickable_url       = true
+scrollback_lines    = 10000
+search_wrap         = true
+icon_name           = utilities-terminal
+geometry            = 750x500
+clickable_url       = true
+cursor_blink        = off
+cursor_shape        = block
+browser             = exo-open
+filter_unmatched_urls = true
+
+# bottommost font will be picked
+font                = Fantasque Sans Mono 13
+font                = Hack Regular 12
+font                = mononoki Bold 12
+
+font                = Fira Mono 12
+font                = Source Code Pro 12
+font                = Inconsolata Regular 13
+
+[colors]
+background      = rgba(37,41,51,0.90)
+background      = #252933
+background      = #2b303b
+background      = rgba(43,48,59,0.9)
+
+foreground      = #c0c5ce
+foreground_bold = #c0c5ce
+
+# Black
+color0  = #2b303b
+# Gray
+color8  = #65737e
+# White
+color7  = #F6F6F6
+# Silver
+color15 = #c0c5ce
+
+# Red
+# "Pattern not found" msg hl in vim
+color1  = #bf616a
+color9  = #bf616a
+
+# Green
+# c++: builtin types, template, namespace, class
+color2  = #a3be8c
+color10 = #a3be8c
+
+# Yellow
+color3  = #ebcb8b
+# c++: if, for, public, return, this, TODO highlight
+color11 = #edb876
+
+# Blue
+color4  = #8fa1b3
+color12 = #8fa1b3
+
+# Purple
+# macros
+color5  = #b48ead
+color13 = #b48ead
+
+# c++: matching parentheses highlight
+# python: function name
+color6  = #88406e
+# c++: comments
+# symlinks
+color14 = #667c8c

@@ -1,0 +1,88 @@
+;=====================================================
+;     File Includes
+;=====================================================
+
+[section/base]
+include-file = /home/mandreyel/.config/polybar/master.conf
+include-file = /home/mandreyel/.config/polybar/modules.conf
+
+
+
+;=====================================================
+;     i3 Bars
+;=====================================================
+
+[bar/i3-bar]
+inherit = bar/master
+
+; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
+monitor =
+
+modules-left   = i3 pkg
+modules-center = playerctl-now-playing
+modules-right  = volume filesystem memory temperature coreuse backlight battery clock
+module-margin  = 1
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem jgmenu mpd wired-network wireless-network battery menu volume-bar bspwm
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+; title backlight
+
+tray-position = modules-left
+;tray-padding = 10
+tray-background = ${colors.background}
+tray-offset-x = 0%
+tray-detached = false
+
+
+
+;=====================================================
+;     Bspwm Bars
+;=====================================================
+
+[bar/bspwm-bar]
+inherit = bar/master
+
+; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
+monitor =
+
+modules-left   = bspwm menu
+modules-center = clock
+modules-right  = pkg memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github filesystem mpd jgmenu wired-network wireless-network battery menu volume-bar bspwm
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
+
+;;;;;; Tray is commented out ;;;;;;;;
+;tray-position = center
+;tray-padding = 10
+;tray-background = ${colors.background}
+;tray-offset-x = 20%
+
+
+;=====================================================
+;     Openbox Bars
+;=====================================================
+
+[bar/openbox-bar]
+inherit = bar/master
+
+; Use $ xrandr -q | grep " connected" | cut -d ' ' -f1
+monitor =
+
+modules-left   = jgmenu config workspaces
+modules-center = window_switch clock
+modules-right  = pkg memory temperature coreuse network volume
+
+; All available modules (some require configuration in modules.conf)
+; redshift github jgmenu filesystem mpd wired-network wireless-network battery menu volume-bar bspwm
+; pkg keyboard memory temperature coreuse network clock volume i3-workspaces workspaces window_switch
+
+
+;;;;;; Tray is commented out ;;;;;;;;
+;tray-position = center
+;tray-padding = 10
+;tray-background = ${colors.background}
+;tray-offset-x = 20%

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+updates="$(checkupdates)"
+if [[ ! $updates ]]; then
+    echo "Nothing to update."
+    exit
+else
+    echo "Available updates:"
+    echo "$updates" | sed 's/^/>> /'
+fi
+echo
+while : ; do
+    answer=""
+    read -p "Do you wish to upgrade? [Y/n] " answer
+    if [[ $answer =~ [nN]+ ]]; then
+        exit
+    elif [[ $answer == "" || $answer =~ [yY\ ]+ ]]; then
+        echo "Upgrading..."
+        sudo pacman -Syu
+        exit
+    fi
+done
