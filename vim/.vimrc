@@ -1,6 +1,6 @@
-"========
+" ==============================================================================
 " Plugins
-"========
+" ==============================================================================
 
 " Download vim-plug if it's not installed on this machine.
 if empty(glob("~/.vim/autoload/plug.vim"))
@@ -11,7 +11,7 @@ call plug#begin('~/.vim/bundle')
 
 Plug 'rust-lang/rust.vim'
 "Plug 'Valloric/YouCompleteMe'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 
 " Fuzzy search utility.
 Plug '/usr/local/opt/fzf'
@@ -34,15 +34,20 @@ Plug 'ludovicchabant/vim-gutentags'
 call plug#end()
 
 
-"==========================
+" ==============================================================================
 " Plugin specific settings
-"==========================
+" ==============================================================================
 
 let g:indentLine_color_term = 239
 let g:goyo_width = 90
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
+" NERD Tree
+nnoremap <F10> :NERDTreeToggle<cr>
+
+" ------------------------------------------------------------------------------
 " ALE
+" ------------------------------------------------------------------------------
 let g:ale_linters = {'rust': ['rls']}
 let g:ale_rust_rls_toolchain = 'stable'
 " Don't lint immediately.
@@ -53,19 +58,27 @@ let g:ale_lint_on_enter = 0
 nmap <silent> <C-k> <Plug>(ale_previous_wrap)
 nmap <silent> <C-j> <Plug>(ale_next_wrap) 
 
-" YCM
+" ------------------------------------------------------------------------------
+" YouCompleteMe
+" ------------------------------------------------------------------------------
 " Generate .c and .cpp compile_commands.json files.
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-nnoremap <Leader>g :YcmCompleter GoTo<CR>
-" TODO <Leader>d doesn't work.
+nnoremap <leader>g :YcmCompleter GoTo<CR>
+" TODO <leader>d doesn't work.
 nnoremap <C-d> :YcmCompleter GetDoc<CR>
 
 
-"==================
+" ==============================================================================
 " Builtin settings
-"==================
+" ==============================================================================
 
 set textwidth=80
+
+" Don't pollute working directories (these need to exist, otherwise vim will
+" bother you every time you want to save a file).
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set undodir=~/.vim/undo//
 
 syntax on
 set smartindent
@@ -74,18 +87,61 @@ set relativenumber
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set nolist wrap linebreak breakat&vim
 
+" This changed my life.
 set wildmenu
 set wildmode=full
-set scrolloff=5
 
+" Hack to be able save read-only files.
+cmap w!! w !sudo tee % >/dev/null
+
+set scrolloff=5
+" Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the file, so we
+" need to skip the rest of the way there with the movement commands.
+nnoremap <S-H> <S-H>5k
+nnoremap <S-L> <S-L>5j
+
+" Quicker way to escape insert mode.
+inoremap jj <Esc> 
+inoremap jk <Esc> 
+xnoremap jj <Esc>
+xnoremap jk <Esc>
+cnoremap jj <C-c>
+cnoremap jk <C-c>
+
+" ------------------------------------------------------------------------------
+" Buffers
+" ------------------------------------------------------------------------------
+nnoremap ]b :bnext<cr>
+nnoremap [b :bprev<cr>
+
+" ------------------------------------------------------------------------------
+" Tabs
+" ------------------------------------------------------------------------------
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
+" ------------------------------------------------------------------------------
+" Mapleader mappings
+" ------------------------------------------------------------------------------
 let mapleader = " "
 nnoremap <space> <nop>
 
+" Open new line below and above current line.
+nnoremap <leader>o o<esc>
+nnoremap <leader>O O<esc>
+
+" Shortcuts to quickly edit and source .vimrc.
+nnoremap <leader>ev :tabe $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" ------------------------------------------------------------------------------
+" Search
+" ------------------------------------------------------------------------------
 set hlsearch
 set incsearch
 set ignorecase smartcase
 " Clear search highlight.
-nnoremap <C-L> :nohlsearch<CR>
+nnoremap <C-l> :nohlsearch<CR>
 
 " Make n and N always go in the same direction, no matter what search
 " direction you started off with, and always center the current match on the
@@ -93,45 +149,45 @@ nnoremap <C-L> :nohlsearch<CR>
 nnoremap <expr> n 'Nn'[v:searchforward] . 'zz'
 nnoremap <expr> N 'nN'[v:searchforward] . 'zz'
 
+" ------------------------------------------------------------------------------ 
+" Formatting
+" ------------------------------------------------------------------------------ 
 " Properly join two lines of comments by deleting the joined line's comment symbol(s).
 set formatoptions+=j
 " Auto format text.
 set formatoptions+=c
-" experimental:
+
+" ------------------------------------------------------------------------------ 
+" Movement
+" ------------------------------------------------------------------------------ 
 " Navigate wrapped lines as though they were normal lines with line breaks.
 nnoremap j gj
 nnoremap k gk
 nnoremap $ g$
 nnoremap 0 g0
 
-" Quicker way to escape insert mode.
-inoremap jj <Esc> 
-inoremap jk <Esc> 
+" Movement in insert mode
+inoremap <C-h> <C-o>h
+inoremap <C-l> <C-o>a
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-^> <C-o><C-^> 
 
-" Navigate buffers.
-map <F2> :bp <CR> 
-map <F3> :bn <CR>
+" Make Y behave like other capitalized movement commands.
+nnoremap Y y$
 
-" Navigate buffers.
-map <F9> :tabp <CR> 
-map <F10> :tabn <CR>
-
-" Hack to be able save read-only files.
-cmap w!! w !sudo tee % >/dev/null
-
-" Don't pollute working directories.
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set undodir=~/.vim/undo//
-
-" Shortcuts to quickly edit and source .vimrc.
-nnoremap <Leader>ev :tabe $MYVIMRC<CR>
-nnoremap <Leader>sv :source $MYVIMRC<CR>
+" ----------------------------------------------------------------------------
+" Moving lines up and down
+" ----------------------------------------------------------------------------
+nnoremap <silent> <C-k> :move-2<cr>
+nnoremap <silent> <C-j> :move+<cr>
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
 
 
-"=========
+" ==============================================================================
 " Scripts
-"=========
+" ==============================================================================
 
 " Unobtrusively highlight column 91 to indicate that the line is too long
 " (this is a less obtrusive way of doing "set colorcolumn").
@@ -183,7 +239,7 @@ augroup end
 
 " Space doesn't show up in the command corner, so map space to the default
 " Leader key so that pressing it does show up.
-"map <space> <Leader>
+"map <space> <leader>
 
 "map <Esc> :noh<CR>
 
@@ -191,20 +247,21 @@ augroup end
 
 " These only work when vim is compiled with +clipboard flag set.
 " Copy to system clipboard.
-"vnoremap <leader>y "+y
-"nnoremap <leader>Y "+yg_
-"nnoremap <leader>y "+y
+"vnoremap <Leader>y "+y
+"nnoremap <Leader>Y "+yg_
+"nnoremap <Leader>y "+y
 
 " Paste from system clipboard.
-"nnoremap <leader>p "+p
-"nnoremap <leader>P "+P
-"vnoremap <leader>p "+p
+"nnoremap <Leader>p "+p
+"nnoremap <Leader>P "+P
+"vnoremap <Leader>p "+p
 "vnoremap <leader>P "+P
 
 " Instead of always linting, which is highly distracting, only lint when
 " insert mode is left.
 "let g:ale_lint_on_text_changed = 'never'
 "let g:ale_lint_on_insert_leave = 1
+
 
 " Language Server Protocol
 "Plug 'autozimu/LanguageClient-neovim', {
@@ -217,11 +274,12 @@ augroup end
     "\ 'rust': ['rustup', 'run', 'stable', 'rls'],
     "\ }
 
-"nnoremap <silent> <Leader>lk :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> <Leader>ld :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <Leader>lr :call LanguageClient_textDocument_rename()<CR>
-"nnoremap <silent> <Leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+"nnoremap <silent> <leader>lk :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> <leader>ld :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <leader>lr :call LanguageClient_textDocument_rename()<CR>
+"nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
 "let g:LanguageClient_loggingLevel = 'DEBUG'
+
 
 " Auto-completion.
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -238,18 +296,3 @@ augroup end
     "let col = col('.') - 1
     "return !col || getline('.')[col - 1]  =~ '\s'
 "endfunction"}}}
-
-
-" ----------------------------------------------------------------------------
-" Moving lines
-" ----------------------------------------------------------------------------
-"nnoremap <silent> <C-k> :move-2<cr>
-"nnoremap <silent> <C-j> :move+<cr>
-"nnoremap <silent> <C-h> <<
-"nnoremap <silent> <C-l> >>
-"xnoremap <silent> <C-k> :move-2<cr>gv
-"xnoremap <silent> <C-j> :move'>+<cr>gv
-"xnoremap <silent> <C-h> <gv
-"xnoremap <silent> <C-l> >gv
-"xnoremap < <gv
-"xnoremap > >gv
