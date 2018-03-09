@@ -72,6 +72,7 @@ nnoremap <C-d> :YcmCompleter GetDoc<CR>
 " Builtin settings
 " ==============================================================================
 
+filetype indent plugin on
 set textwidth=80
 
 " Don't pollute working directories (these need to exist, otherwise vim will
