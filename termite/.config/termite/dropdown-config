@@ -24,7 +24,7 @@ font                = mononoki Bold 12
 
 font                = Fira Mono 12
 font                = Source Code Pro 12
-font                = Inconsolata Regular 13
+font                = Inconsolata Regular 12
 
 [colors]
 background      = rgba(37,41,51,0.90)

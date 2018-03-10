@@ -37,6 +37,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " TODO test
 "Plug 'majutsushi/tagbar' Plug 'ludovicchabant/vim-gutentags'
+Plug 'mhartington/oceanic-next'
 
 call plug#end()
 
@@ -44,6 +45,13 @@ call plug#end()
 " ==============================================================================
 " Plugin specific settings
 " ==============================================================================
+
+" for vim 8
+if (has("termguicolors"))
+    set termguicolors
+endif
+
+colorscheme OceanicNext
 
 let g:indentLine_color_term = 239
 let g:goyo_width = 90
@@ -154,6 +162,10 @@ set formatoptions+=n " Recognize numbered lists.
 " ------------------------------------------------------------------------------
 nnoremap ]b :bnext<cr>
 nnoremap [b :bprev<cr>
+
+" Circular split window navigation.
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
 
 " ------------------------------------------------------------------------------
 " Tabs
