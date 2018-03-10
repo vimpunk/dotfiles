@@ -84,7 +84,6 @@ let g:LanguageClient_serverCommands = {
 " ==============================================================================
 
 filetype indent plugin on
-set textwidth=80
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
@@ -93,18 +92,10 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
 syntax on
-set smartindent
 set number
 set relativenumber
-set tabstop=4
-set softtabstop=0
-set expandtab
-set shiftwidth=4
-set smarttab
 set nolist " Don't visualize tabs and line breaks.
-set wrap
 set linebreak " Don't break lines mid-word.
-set breakat&vim " Reset chars at which line is broken to vim defaults.
 set showcmd
 set lazyredraw
 set encoding=utf-8
@@ -112,7 +103,6 @@ set nocursorline
 set diffopt=filler,vertical
 set autoread " Reload file if it has been changed outside of vim but not inside.
 set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
-set breakindent " Preserve indentation when wrapping lines.
 set wildmenu " This changed my life.
 set wildmode=full
 
@@ -129,6 +119,35 @@ nnoremap <S-L> <S-L>5j
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
 inoremap jk <Esc> 
+
+" ------------------------------------------------------------------------------ 
+" Formatting
+" ------------------------------------------------------------------------------ 
+set wrap
+set breakindent " Preserve indentation when wrapping lines.
+set breakat&vim " Reset chars at which line is broken to vim defaults.
+set textwidth=80
+
+set softtabstop=0 " Turn off.
+set expandtab " Use spaces for tabs.
+set tabstop=4 " Length of <Tab> in spaces.
+set shiftwidth=4 " Number of spaces to use for auto indent.
+set smarttab
+set cindent " Stricter rules for C/C++ programs.
+set autoindent
+
+set formatoptions="" " Reset fo.
+set formatoptions+=j " Remove comment leader when joining comment lines.
+set formatoptions+=c " Auto format text in plaintext files, or comments in source files.
+set formatoptions+=a " Auto format text every time text is changed.
+set formatoptions+=r " Auto insert comment leader after hitting <Enter>.
+set formatoptions+=o " Auto insert comment leader when hitting 'o' or 'O' in normal mode.
+set formatoptions+=q " Allow formatting of comments with 'gq'.
+set formatoptions+=l " Don't break long lines in insert mode.
+" experimental:
+set formatoptions+=1 " Break line before a single-letter word.
+set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
+set formatoptions+=n " Recognize numbered lists.
 
 " ------------------------------------------------------------------------------
 " Buffers
@@ -170,14 +189,6 @@ nnoremap <leader><space> :nohlsearch<CR>
 " screen.
 nnoremap <expr> n 'Nn'[v:searchforward] . 'zz'
 nnoremap <expr> N 'nN'[v:searchforward] . 'zz'
-
-" ------------------------------------------------------------------------------ 
-" Formatting
-" ------------------------------------------------------------------------------ 
-" Properly join two lines of comments by deleting the joined line's comment symbol(s).
-set formatoptions+=j
-" Auto format text.
-set formatoptions+=c,a
 
 " ------------------------------------------------------------------------------ 
 " Movement
