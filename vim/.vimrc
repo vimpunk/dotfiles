@@ -37,7 +37,10 @@ Plug 'scrooloose/nerdcommenter'
 
 " TODO test
 "Plug 'majutsushi/tagbar' Plug 'ludovicchabant/vim-gutentags'
-Plug 'mhartington/oceanic-next'
+
+" Colorschemes
+"Plug 'mhartington/oceanic-next' Plug 'arcticicestudio/nord-vim'
+Plug '~/code/seasmoke'
 
 call plug#end()
 
@@ -46,12 +49,7 @@ call plug#end()
 " Plugin specific settings
 " ==============================================================================
 
-" for vim 8
-if (has("termguicolors"))
-    set termguicolors
-endif
-
-colorscheme OceanicNext
+colorscheme Seasmoke
 
 let g:indentLine_color_term = 239
 let g:goyo_width = 90
@@ -113,6 +111,7 @@ set autoread " Reload file if it has been changed outside of vim but not inside.
 set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
 set wildmenu " This changed my life.
 set wildmode=full
+set laststatus=2 " Always display the statusline.
 
 " Hack to be able save read-only files.
 cmap w!! w !sudo tee % >/dev/null
@@ -192,7 +191,8 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 " ------------------------------------------------------------------------------
 set hlsearch
 set incsearch
-set ignorecase smartcase
+set ignorecase
+set smartcase
 " Clear search highlight.
 nnoremap <leader><space> :nohlsearch<CR>
 

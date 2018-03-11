@@ -25,12 +25,12 @@ set_from_resource $grey    color7      #969CD3
 set_from_resource $white   color15     #F1F1F1
 set_from_resource $black   color0      #19043C
 
-# class                 bd    bg  txt    ind   child_bordr
-client.focused          $grey $bg $fg    $blue $grey
-client.unfocused        $grey $bg $black $bg   $bg
-client.focused_inactive $grey $bg $black $bg   $bg
-client.urgent           $red  $bg $red   $red  $red
-client.placeholder      $grey $bg $bg    $bg   $bg
+# class                 border  bg      text    indictr child_border
+client.focused          $grey   $bg     $fg     $blue   $grey
+client.unfocused        $grey   $bg     $black  $bg     $bg
+client.focused_inactive $grey   $bg     $black  $bg     $bg
+client.urgent           $red    $bg     $red    $red    $red
+client.placeholder      $grey   $bg     $bg     $bg     $bg
 client.background       $bg
 
 # border & title (must be set to border pixel for gaps to work)
@@ -54,15 +54,18 @@ set $down j
 set $up k
 set $right l
 
-set $WS1 "1: "
-set $WS2 "2: "
-set $WS3 "3: "
-set $WS4 "4: "
-set $WS5 "5: "
-set $WS6 "6: "
-set $WS7 "7: "
-set $WS8 "8: "
-set $WS9 "9: ♫"
+set $WS1 "1"
+set $WS2 "2"
+set $WS3 "3"
+set $WS4 "4"
+set $WS5 "5"
+set $WS6 "6"
+set $WS7 "7"
+set $WS8 "8"
+set $WS9 "9"
+
+#        ♫
+
 
 #set $WS1 "1: 一"
 #set $WS2 "2: 二"

@@ -1,7 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
-let g:netrw_dirhist_1='/home/mandreyel/dotfiles/termite/.config'
-let g:netrw_dirhist_2='/home/mandreyel/dotfiles/termite'
-let g:netrw_dirhist_3='/home/mandreyel/dotfiles/termite/.config'
-let g:netrw_dirhist_4='/home/mandreyel/dotfiles/termite/.config/termite'
-let g:netrw_dirhist_5='/home/mandreyel/dotfiles/termite'
