@@ -35,9 +35,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 
-" TODO test
-"Plug 'majutsushi/tagbar' Plug 'ludovicchabant/vim-gutentags'
-
 " Colorschemes
 "Plug 'mhartington/oceanic-next' Plug 'arcticicestudio/nord-vim'
 Plug '~/code/seasmoke'
@@ -183,7 +180,7 @@ nnoremap <leader>o o<esc>
 nnoremap <leader>O O<esc>
 
 " Shortcuts to quickly edit and source .vimrc.
-nnoremap <leader>ev :tabe $MYVIMRC<CR>
+nnoremap <leader>ev :e $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " ------------------------------------------------------------------------------
@@ -236,7 +233,7 @@ xnoremap <silent> <C-j> :move'>+<cr>gv
 " Unobtrusively highlight column 91 to indicate that the line is too long
 " (this is a less obtrusive way of doing "set colorcolumn").
 fun! s:color()
-    highlight LineWidthLimit ctermfg=black ctermbg=white guibg=white
+    highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
 call s:color()
 augroup ErrorHighlights
