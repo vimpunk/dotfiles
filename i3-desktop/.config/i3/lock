@@ -1,0 +1,5 @@
+#!/bin/bash
+screen=/tmp/screenshot.png
+scrot $screen
+convert $screen -scale 10% -scale 1000% -fill black -colorize 25% $screen
+i3lock -neu -i $screen

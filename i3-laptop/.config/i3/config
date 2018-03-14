@@ -1,4 +1,10 @@
 #########################################
+#########################################
+# Laptop config
+#########################################
+#########################################
+
+#########################################
 ###         KEY DEFINITIONS          ####
 #########################################
 ##     $Mod = Super key or Mod4        ##
@@ -40,9 +46,9 @@ for_window [class="^.*"] border pixel 2, title_format "<b> %class >> %title </b>
 font pango:Roboto 11
 
 
-####################################################################################################
-#################                            Set vars                             ##################
-####################################################################################################
+################################################################################
+# Variables
+################################################################################
 
 # $Mod = Super (Mod4) or Alt (Mod1)
 #set $Mod Mod4
@@ -85,9 +91,10 @@ set $Mon2 HDMI2
 # the terminal emulator
 set $terminal termite
 
-####################################################################################################
-#################                            Autostart                            ##################
-####################################################################################################
+
+################################################################################
+# Autostart
+################################################################################
 
 # run with reload
 exec_always --no-startup-id start-compton
@@ -118,9 +125,10 @@ bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
 # to restart it (sometimes we kill the poor sod)
 bindsym $Mod+Shift+t exec --no-startup-id dropdown-terminal.sh
 
-####################################################################################################
-#################                          Bindings                               ##################
-####################################################################################################
+
+################################################################################
+# Bindings
+################################################################################
 
 # kill focused window
 bindsym $Mod+Shift+q kill
@@ -154,9 +162,10 @@ bindsym XF86AudioMute         exec --no-startup-id pamixer -t
 bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 5
 
-####################################################################################################
-#################                        Workspace Bindings                        #################
-####################################################################################################
+
+################################################################################
+# Workspace bindings
+################################################################################
 
 # workspace assignment
 workspace $WS1 output $Mon1
@@ -191,9 +200,10 @@ bindsym $Mod+Shift+7 move container to workspace $WS7; workspace $WS7
 bindsym $Mod+Shift+8 move container to workspace $WS8; workspace $WS8
 bindsym $Mod+Shift+9 move container to workspace $WS9; workspace $WS9
 
-####################################################################################################
-#################                          Reload configs                          #################
-####################################################################################################
+
+################################################################################
+# Reload configs
+################################################################################
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $Mod+Shift+r restart
@@ -201,9 +211,10 @@ bindsym $Mod+Shift+r restart
 # reload the configuration file
 bindsym $Mod+Shift+c reload
 
-####################################################################################################
-################                       Container/Window control                   ##################
-####################################################################################################
+
+################################################################################
+# Container/window control
+################################################################################
 
 # Scratchpad, Floating
 #bindsym Mod1+minus  move scratchpad
@@ -283,15 +294,10 @@ mode "resize" {
 
 bindsym $Mod+r mode "resize"
 
-# Size
-#bindsym Control+Mod1+Up     resize shrink height 10 px or 1 ppt
-#bindsym Control+Mod1+Down   resize grow   height 10 px or 1 ppt
-#bindsym Control+Mod1+Left   resize shrink width  10 px or 1 ppt
-#bindsym Control+Mod1+Right  resize grow   width  10 px or 1 ppt
 
-####################################################################################################
-#################                            Border & Gaps                         #################
-####################################################################################################
+################################################################################
+# Border & gaps
+################################################################################
 
 # gaps
 gaps inner 5
@@ -308,21 +314,10 @@ bindsym $Mod+n border normal
 bindsym $Mod+y border 1pixel
 bindsym $Mod+u border none
 
-# change gaps
-#bindsym $Mod+plus                gaps inner current plus  5
-#bindsym $Mod+minus               gaps inner current minus 5
-#bindsym $Mod+Shift+plus          gaps outer current plus  5
-#bindsym $Mod+Shift+minus         gaps outer current minus 5
 
-#bindsym $Mod+Control+plus        gaps inner all plus  5
-#bindsym $Mod+Control+minus       gaps inner all minus 5
-#bindsym $Mod+Control+Shift+plus  gaps outer all plus  5
-#bindsym $Mod+Control+Shift+minus gaps outer all minus 5
-
-
-####################################################################################################
-#################                        application settings                      #################
-####################################################################################################
+################################################################################
+# Application settings
+################################################################################
 
 # focus & floating
 for_window [class="(?i)(?:lxapp\w+|peek)"]   floating enable, focus
@@ -332,13 +327,11 @@ for_window [class="(?i)(?:qt5ct|pinentry)"]  floating enable, focus
 for_window [class="(?i)(?:$terminal|thunar)"]  focus
 for_window [class="(?i)(?:firefox)"]   focus
 
-# Assign Applications to specific workspace
-# get class with xprop
+# Assign Applications to specific workspaces (get class with xprop)
 assign [class="(?i)(?:firefox)"]              → $WS1
 assign [class="(?i)(?:geany)"]                → $WS6
 assign [class="(?i)(?:deluge|thunar)"]        → $WS8
 assign [class="(?i)(?:audacious|spotify)"]    → $WS9
-#assign [class="(?i)(?:gimp|nitrogen)"]        → $WS4
 
 # focus, floating, & sticky
 for_window [title="(?i)(?:copying|deleting|moving|auth\w+)"] floating enable, sticky enable

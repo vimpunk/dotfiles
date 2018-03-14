@@ -133,15 +133,15 @@ set autoindent
 set formatoptions="" " Reset fo.
 set formatoptions+=j " Remove comment leader when joining comment lines.
 set formatoptions+=c " Auto format text in plaintext files, or comments in source files.
-set formatoptions+=a " Auto format text every time text is changed.
 set formatoptions+=r " Auto insert comment leader after hitting <Enter>.
 set formatoptions+=o " Auto insert comment leader when hitting 'o' or 'O' in normal mode.
 set formatoptions+=q " Allow formatting of comments with 'gq'.
 set formatoptions+=l " Don't break long lines in insert mode.
 " experimental:
 set formatoptions+=1 " Break line before a single-letter word.
-set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
 set formatoptions+=n " Recognize numbered lists.
+"set formatoptions+=a " Auto format text every time text is changed.
+"set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
 
 " ------------------------------------------------------------------------------
 " Buffers
@@ -288,9 +288,6 @@ augroup end
 " insert mode is left.
 "let g:ale_lint_on_text_changed = 'never'
 "let g:ale_lint_on_insert_leave = 1
-
-
-
 
 
 " Auto-completion.
