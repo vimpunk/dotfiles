@@ -36,11 +36,10 @@ Plug 'scrooloose/nerdcommenter'
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-"Plug 'mandreyel/vim-japanese-indigo'
+Plug 'mandreyel/vim-japanese-indigo'
 
 " Work in progress
 Plug '~/code/seasmoke'
-Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -49,7 +48,7 @@ call plug#end()
 " Plugin specific settings
 " ==============================================================================
 
-colorscheme JapaneseIndigo
+colorscheme Seasmoke
 
 let g:indentLine_color_term = 239
 let g:goyo_width = 90
