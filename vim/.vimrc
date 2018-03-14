@@ -12,8 +12,6 @@ endif
 call plug#begin('~/.vim/bundle')
 
 Plug 'rust-lang/rust.vim'
-"Plug 'Valloric/YouCompleteMe'
-"Plug 'w0rp/ale'
 
 " Language Server Protocol
 Plug 'autozimu/LanguageClient-neovim', {
@@ -21,7 +19,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
-" Fuzzy search utility.
+" Fuzzy searching.
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 

@@ -30,5 +30,3 @@ alias pacman='sudo pacman --color auto'
 alias update='sudo pacman -Syu'
 alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 
-neofetch
-

@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=ArchLabs-Light-Modified
+Comment=Ocea Alex
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=ArchLabs-Light-Modified
+GtkTheme=ArchLabs-Light-Modified
+IconTheme=ArchLabs-Light-Modified
+MetacityTheme=ArchLabs-Light-Modified
