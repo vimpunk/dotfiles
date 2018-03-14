@@ -34,8 +34,13 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 
 " Colorschemes
-"Plug 'mhartington/oceanic-next' Plug 'arcticicestudio/nord-vim'
+"Plug 'mhartington/oceanic-next'
+Plug 'arcticicestudio/nord-vim'
+"Plug 'mandreyel/vim-japanese-indigo'
+
+" Work in progress
 Plug '~/code/seasmoke'
+Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -44,7 +49,7 @@ call plug#end()
 " Plugin specific settings
 " ==============================================================================
 
-colorscheme Seasmoke
+colorscheme JapaneseIndigo
 
 let g:indentLine_color_term = 239
 let g:goyo_width = 90
@@ -52,32 +57,19 @@ let g:limelight_conceal_ctermfg = 'DarkGray'
 
 nnoremap <F10> :NERDTreeToggle<CR>
 
+" ------------------------------------------------------------------------------
+" LanguageClient
+" ------------------------------------------------------------------------------
 set hidden " (Required for operations modifying multiple buffers like rename.)
+nnoremap <silent> <leader>lk :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> <leader>ld :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <leader>lr :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+
+" Language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ }
-
-"" ------------------------------------------------------------------------------
-"" ALE
-"" ------------------------------------------------------------------------------
-"let g:ale_linters = {'rust': ['rls']}
-"let g:ale_rust_rls_toolchain = 'stable'
-"" Don't lint immediately.
-"let g:ale_lint_delay = 1000
-"" Don't lint when file is opened.
-"let g:ale_lint_on_enter = 0
-"" Navigate errors using ALE's builtins.
-"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-j> <Plug>(ale_next_wrap) 
-
-"" ------------------------------------------------------------------------------
-"" YouCompleteMe
-"" ------------------------------------------------------------------------------
-"" Generate .c and .cpp compile_commands.json files.
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-"nnoremap <leader>g :YcmCompleter GoTo<CR>
-"" TODO <leader>d doesn't work.
-"nnoremap <C-d> :YcmCompleter GetDoc<CR>
 
 
 " ==============================================================================
@@ -270,6 +262,28 @@ augroup end
 "vnoremap <Leader>p "+p
 "vnoremap <leader>P "+P
 
+"" ------------------------------------------------------------------------------
+"" ALE
+"" ------------------------------------------------------------------------------
+"let g:ale_linters = {'rust': ['rls']}
+"let g:ale_rust_rls_toolchain = 'stable'
+"" Don't lint immediately.
+"let g:ale_lint_delay = 1000
+"" Don't lint when file is opened.
+"let g:ale_lint_on_enter = 0
+"" Navigate errors using ALE's builtins.
+"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+"nmap <silent> <C-j> <Plug>(ale_next_wrap) 
+
+"" ------------------------------------------------------------------------------
+"" YouCompleteMe
+"" ------------------------------------------------------------------------------
+"" Generate .c and .cpp compile_commands.json files.
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"nnoremap <leader>g :YcmCompleter GoTo<CR>
+"" TODO <leader>d doesn't work.
+"nnoremap <C-d> :YcmCompleter GetDoc<CR>
+
 " Instead of always linting, which is highly distracting, only lint when
 " insert mode is left.
 "let g:ale_lint_on_text_changed = 'never'
@@ -277,11 +291,6 @@ augroup end
 
 
 
-"nnoremap <silent> <leader>lk :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> <leader>ld :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <leader>lr :call LanguageClient_textDocument_rename()<CR>
-"nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-"let g:LanguageClient_loggingLevel = 'DEBUG'
 
 
 " Auto-completion.
@@ -305,3 +314,12 @@ augroup end
 "nnoremap <C-K> <C-W><C-K>
 "nnoremap <C-L> <C-W><C-L>
 "nnoremap <C-H> <C-W><C-H>
+
+"" Always show line numbers, but only in current window.
+"set number
+":au WinEnter * :setlocal number
+":au WinLeave * :setlocal nonumber
+
+"" Automatically resize vertical splits.
+":au WinEnter * :set winfixheight
+":au WinEnter * :wincmd =
