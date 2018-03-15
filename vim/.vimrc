@@ -55,7 +55,7 @@ nnoremap <space> <nop>
 
 filetype indent plugin on
 
-colorscheme Seasmoke
+colorscheme JapaneseIndigo
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
