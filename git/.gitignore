@@ -10,6 +10,11 @@ Session.vim
 # Temporary
 .netrwhist
 *~
+# Annoying artifacts
+\'
+'
+"
+"'"
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS
