@@ -40,7 +40,7 @@ client.placeholder      $grey   $bg     $bg     $bg     $bg
 client.background       $bg
 
 # border & title (must be set to border pixel for gaps to work)
-for_window [class="^.*"] border pixel 2, title_format "<b> %class >> %title </b>"
+for_window [class="^.*"] border pixel 2, title_format "<b> %title </b>"
 
 # font
 font pango:Roboto 11
