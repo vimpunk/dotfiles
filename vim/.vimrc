@@ -35,47 +35,27 @@ Plug 'scrooloose/nerdcommenter'
 
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
-Plug 'arcticicestudio/nord-vim'
-Plug 'mandreyel/vim-japanese-indigo'
+"Plug 'arcticicestudio/nord-vim'
+"Plug 'mandreyel/vim-japanese-indigo'
 
 " Work in progress
 Plug '~/code/seasmoke'
+Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
-
-
-" ==============================================================================
-" Plugin specific settings
-" ==============================================================================
-
-colorscheme Seasmoke
-
-let g:indentLine_color_term = 239
-let g:goyo_width = 90
-let g:limelight_conceal_ctermfg = 'DarkGray'
-
-nnoremap <F10> :NERDTreeToggle<CR>
-
-" ------------------------------------------------------------------------------
-" LanguageClient
-" ------------------------------------------------------------------------------
-set hidden " (Required for operations modifying multiple buffers like rename.)
-nnoremap <silent> <leader>lk :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> <leader>ld :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <leader>lr :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-
-" Language servers
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ }
 
 
 " ==============================================================================
 " Builtin settings
 " ==============================================================================
 
+" NOTE: this must go before all other mappings.
+let mapleader = ' '
+nnoremap <space> <nop>
+
 filetype indent plugin on
+
+colorscheme Seasmoke
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
@@ -112,6 +92,10 @@ nnoremap <S-L> <S-L>5j
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
 inoremap jk <Esc> 
+
+" Shortcuts to quickly edit and source .vimrc.
+nnoremap <leader>ev :e $MYVIMRC<CR>
+nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " ------------------------------------------------------------------------------ 
 " Formatting
@@ -159,20 +143,6 @@ nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
 
 " ------------------------------------------------------------------------------
-" Mapleader mappings
-" ------------------------------------------------------------------------------
-let mapleader = " "
-nnoremap <space> <nop>
-
-" Open new line below and above current line.
-nnoremap <leader>o o<esc>
-nnoremap <leader>O O<esc>
-
-" Shortcuts to quickly edit and source .vimrc.
-nnoremap <leader>ev :e $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
-
-" ------------------------------------------------------------------------------
 " Search
 " ------------------------------------------------------------------------------
 set hlsearch
@@ -205,6 +175,10 @@ inoremap <C-k> <C-o>k
 
 " Make Y behave like other capitalized movement commands.
 nnoremap Y y$
+
+" Open new line below and above current line.
+nnoremap <leader>o o<esc>
+nnoremap <leader>O O<esc>
 
 " ----------------------------------------------------------------------------
 " Moving lines up and down
@@ -240,6 +214,36 @@ augroup end
 :augroup END
 
 
+" ==============================================================================
+" Plugin specific settings
+" ==============================================================================
+
+let g:indentLine_color_term = 239
+let g:goyo_width = 90
+let g:limelight_conceal_ctermfg = 'DarkGray'
+
+nnoremap <F10> :NERDTreeToggle<CR>
+
+" ------------------------------------------------------------------------------
+" LanguageClient
+" ------------------------------------------------------------------------------
+set hidden " (Required for operations modifying multiple buffers like rename.)
+
+" Language servers
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'python': ['pyls'],
+    \ }
+
+nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
+nnoremap <leader>lg :call LanguageClient_textDocument_definition()<CR>
+nnoremap <leader>lr :call LanguageClient_textDocument_rename()<CR>
+nnoremap <leader>lo :call LanguageClient_textDocument_references()<CR>
+nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
+nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
+
+
 "==========
 " Dumpster
 "==========
@@ -260,34 +264,6 @@ augroup end
 "nnoremap <Leader>P "+P
 "vnoremap <Leader>p "+p
 "vnoremap <leader>P "+P
-
-"" ------------------------------------------------------------------------------
-"" ALE
-"" ------------------------------------------------------------------------------
-"let g:ale_linters = {'rust': ['rls']}
-"let g:ale_rust_rls_toolchain = 'stable'
-"" Don't lint immediately.
-"let g:ale_lint_delay = 1000
-"" Don't lint when file is opened.
-"let g:ale_lint_on_enter = 0
-"" Navigate errors using ALE's builtins.
-"nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-"nmap <silent> <C-j> <Plug>(ale_next_wrap) 
-
-"" ------------------------------------------------------------------------------
-"" YouCompleteMe
-"" ------------------------------------------------------------------------------
-"" Generate .c and .cpp compile_commands.json files.
-"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-"nnoremap <leader>g :YcmCompleter GoTo<CR>
-"" TODO <leader>d doesn't work.
-"nnoremap <C-d> :YcmCompleter GetDoc<CR>
-
-" Instead of always linting, which is highly distracting, only lint when
-" insert mode is left.
-"let g:ale_lint_on_text_changed = 'never'
-"let g:ale_lint_on_insert_leave = 1
-
 
 " Auto-completion.
 "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
