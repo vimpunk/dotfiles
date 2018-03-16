@@ -19,6 +19,12 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
+" Async completion
+"Plug 'roxma/nvim-completion-manager'
+"if !has('nvim')
+    "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+
 " Fuzzy searching.
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
@@ -55,7 +61,7 @@ nnoremap <space> <nop>
 
 filetype indent plugin on
 
-colorscheme JapaneseIndigo
+colorscheme Seasmoke
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).

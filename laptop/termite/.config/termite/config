@@ -51,19 +51,15 @@ color7  = #F6F6F6
 color15 = #c0c5ce
 
 # Red
-# "Pattern not found" msg hl in vim
 color1  = #a32a36
-# ALE error highlight
 color9  = #a32a36
 
 # Green
-# c++: builtin types, template, namespace, class
 color2  = #a3be8c
 color10 = #a3be8c
 
 # Yellow
 color3  = #ebcb8b
-# c++: if, for, public, return, this, TODO highlight
 color11 = #edb876
 
 # Blue
@@ -71,13 +67,9 @@ color4  = #8fa1b3
 color12 = #8fa1b3
 
 # Purple
-# macros
 color5  = #b48ead
 color13 = #b48ead
 
-# c++: matching parentheses highlight
-# python: function name
 color6  = #88406e
-# c++: comments
 # symlinks
 color14 = #667c8c

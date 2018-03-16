@@ -325,7 +325,6 @@ for_window [class="(?i)(?:gpic\w+|gvim)"]    floating enable, focus
 #for_window [class="(?i)(?:deluge|nitrogen)"] floating enable, focus
 for_window [class="(?i)(?:qt5ct|pinentry)"]  floating enable, focus
 for_window [class="(?i)(?:$terminal|thunar)"]  focus
-for_window [class="(?i)(?:firefox)"]   focus
 
 # Assign Applications to specific workspaces (get class with xprop)
 assign [class="(?i)(?:firefox)"]              → $WS1
