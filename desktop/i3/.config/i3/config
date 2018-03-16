@@ -29,7 +29,7 @@ set_from_resource $purple  color5      #85678F
 set_from_resource $cyan    color6      #5E8D87
 set_from_resource $grey    color7      #969CD3
 set_from_resource $white   color15     #F1F1F1
-set_from_resource $black   color0      #19043C
+set_from_resource $black   color8      #19043C
 
 # class                 border  bg      text    indictr child_border
 client.focused          $grey   $bg     $fg     $blue   $grey
@@ -43,7 +43,7 @@ client.background       $bg
 for_window [class="^.*"] border pixel 2, title_format "<b> %title </b>"
 
 # font
-font pango:Roboto 11
+font pango:Inconsolata Regular 12
 
 # TODO switch to polybar
 bar {
@@ -55,7 +55,7 @@ bar {
             background $bg
 
             focused_workspace $blue $blue $bg
-            active_workspace $weldon_blue $weldon_blue #fafafa
+            active_workspace $blue $blue #fafafa
             inactive_workspace $bg $bg #fafafa
             urgent_workspace $red $red #fafafa
         }
@@ -139,10 +139,7 @@ bindsym $Mod+Shift+q kill
 bindsym Mod1+q kill
 
 # launchers
-#bindsym $Mod+d exec --no-startup-id rofi-gorice
-#bindsym Mod1+F1 exec --no-startup-id rofi-gorice
-bindsym $mod+d exec rofi -show drun -padding 20 -opacity 75
-
+bindsym $mod+d exec --no-startup-id ~/bin/rofi-gorice
 
 bindsym $Mod+Return exec --no-startup-id $terminal
 
@@ -152,7 +149,7 @@ bindsym Print exec --no-startup-id "scrot '%S.png' \
 #; gpicview $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
 
 # logout
-bindsym $Mod+x exec --no-startup-id rofi-logout
+bindsym $Mod+x exec --no-startup-id ~/bin/rofi-logout
 
 # audio
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -339,7 +336,7 @@ for_window [class="(?i)(?:lxapp\w+|peek)"] floating enable, focus
 for_window [class="(?i)(?:gpic\w+|gvim)"] floating enable, focus
 for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable, focus
 for_window [class="(?i)(?:$terminal|thunar)"] focus
-for_window [class="(?i)(?:firefox)"] focus
+#for_window [class="(?i)(?:firefox)"] focus
 
 # Assign Applications to specific workspaces (get class with xprop)
 assign [class="(?i)(?:firefox)"]              → $WS1

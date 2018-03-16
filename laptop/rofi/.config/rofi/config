@@ -1,0 +1,5 @@
+rofi.color-window: #2b303b, #8fa1b3, #2b303b
+rofi.color-normal: #2b303b, #8fa1b3, #2b303b, #8fa1b3, #2b303b
+rofi.color-active: #2b303b
+rofi.color-urgent: #2b303b
+rofi.font: Inconsolata Regular 12
