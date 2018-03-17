@@ -30,13 +30,16 @@ set_from_resource $cyan    color6      #5E8D87
 set_from_resource $grey    color7      #969CD3
 set_from_resource $white   color15     #F1F1F1
 set_from_resource $black   color8      #19043C
+set $orange #d08770
+set $turq #88c0d0
+set $li #65737e
 
 # class                 border  bg      text    indictr child_border
-client.focused          $grey   $bg     $fg     $blue   $grey
-client.unfocused        $grey   $bg     $black  $bg     $bg
-client.focused_inactive $grey   $bg     $black  $bg     $bg
-client.urgent           $red    $bg     $red    $red    $red
-client.placeholder      $grey   $bg     $bg     $bg     $bg
+client.focused          $li   $bg     $fg     $li   $li
+client.unfocused        $li   $bg     $black  $bg     $bg
+client.focused_inactive $li   $bg     $black  $bg     $bg
+client.urgent           $purple    $bg     $purple    $purple    $purple
+client.placeholder      $li   $bg     $bg     $bg     $bg
 client.background       $bg
 
 # border & title (must be set to border pixel for gaps to work)
@@ -54,10 +57,10 @@ bar {
         colors {
             background $bg
 
-            focused_workspace $blue $blue $bg
-            active_workspace $blue $blue #fafafa
-            inactive_workspace $bg $bg #fafafa
-            urgent_workspace $red $red #fafafa
+            focused_workspace $cyan $cyan $bg
+            active_workspace $cyan $cyan $white
+            inactive_workspace $bg $bg $white
+            urgent_workspace $purple $purple $white
         }
 }
 
@@ -122,12 +125,12 @@ exec --no-startup-id i3-msg 'workspace $WS2; exec $terminal'
 exec --no-startup-id i3-msg 'workspace $WS3; exec $terminal -d ~/projects'
 
 # drop down terminal
-exec --no-startup-id dropdown-terminal.sh
+exec --no-startup-id ~/bin/dropdown-terminal.sh
 for_window [instance="dropdown-terminal"] floating enable;
 for_window [instance="dropdown-terminal"] move scratchpad; [instance="dropdown-terminal"] scratchpad show; move position 0px 24px; move scratchpad
 bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
 # to restart it (sometimes we kill the poor sod)
-bindsym $Mod+Shift+t exec --no-startup-id dropdown-terminal.sh
+bindsym $Mod+Shift+t exec --no-startup-id ~/bin/dropdown-terminal.sh
 
 
 ################################################################################
@@ -332,11 +335,9 @@ bindsym $Mod+u border none
 ################################################################################
 
 # focus & floating
-for_window [class="(?i)(?:lxapp\w+|peek)"] floating enable, focus
-for_window [class="(?i)(?:gpic\w+|gvim)"] floating enable, focus
-for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable, focus
-for_window [class="(?i)(?:$terminal|thunar)"] focus
-#for_window [class="(?i)(?:firefox)"] focus
+for_window [class="(?i)(?:lxapp\w+|peek)"] floating enable
+for_window [class="(?i)(?:gpic\w+|gvim)"] floating enable
+for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable
 
 # Assign Applications to specific workspaces (get class with xprop)
 assign [class="(?i)(?:firefox)"]              → $WS1

@@ -1,0 +1,45 @@
+[options]
+font = Inconsolata Regular 15
+cursor_blink = off
+cursor_shape = block
+allow_bold = true
+browser = firefox
+
+[colors]
+background = rgba(46, 55, 69, 0.8)
+foreground = #aab1be
+foreground_bold = #aab1be
+highlight = #2f2f2f
+
+# japanese indigo
+color0 = #313b49
+# dark grey
+color8 = #65737e
+
+# red
+color1 = #bf616a
+color9 = #bf616a
+
+# green
+color2 = #a3b38c
+color10 = #a3b38c
+
+# yellow
+color3 = #ebcb8b
+color11 = #ebcb8b
+
+# blue
+color4 = #81a1c1
+color12 = #81a1c1
+
+# magenta
+color5 =  #b48ead
+color13 =  #b48ead
+
+# cyan
+color6 = #96b5b4
+color14 = #96b5b4
+
+# white
+color7 = #65737e
+color15 = #f6f6f6

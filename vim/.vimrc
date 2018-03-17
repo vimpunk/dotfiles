@@ -41,7 +41,7 @@ Plug 'scrooloose/nerdcommenter'
 
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
-"Plug 'arcticicestudio/nord-vim'
+Plug 'arcticicestudio/nord-vim'
 "Plug 'mandreyel/vim-japanese-indigo'
 
 " Work in progress
@@ -61,7 +61,7 @@ nnoremap <space> <nop>
 
 filetype indent plugin on
 
-colorscheme Seasmoke
+colorscheme JapaneseIndigo
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).

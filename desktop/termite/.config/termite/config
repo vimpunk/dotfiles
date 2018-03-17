@@ -6,8 +6,7 @@ allow_bold = true
 browser = firefox
 
 [colors]
-#background = rgba(49, 59, 73, 0.97) # transparent version
-background = #313b49
+background = #2e3745
 foreground = #aab1be
 foreground_bold = #aab1be
 highlight = #2f2f2f
@@ -30,16 +29,16 @@ color3 = #ebcb8b
 color11 = #ebcb8b
 
 # blue
-color4 = #81a1c1
-color12 = #81a1c1
+color4 = #96b5b4
+color12 = #96b5b4
 
 # magenta
 color5 =  #b48ead
 color13 =  #b48ead
 
 # cyan
-color6 = #96b5b4
-color14 = #96b5b4
+color6 = #81a1c1
+color14 = #81a1c1
 
 # white
 color7 = #65737e

@@ -9,7 +9,7 @@ case $question in
         i3lock-fancy
         ;;
     *logout)
-        session-logout
+        command -v gnome-session-quit --logout >/dev/null 2>&1 || command -v session-logout >/dev/null 2>&1
         ;;
     *reboot)
         systemctl reboot

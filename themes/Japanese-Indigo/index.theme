@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Japanese-Indigo
+Comment=A Dark theme for Linux
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+Name=Japanese-Indigo
+GtkTheme=Japanese-Indigo
+IconTheme=Japanese-Indigo
+MetacityTheme=Japanese-Indigo
