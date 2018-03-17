@@ -4,7 +4,7 @@ static char * shade_toggled_prelight_xpm[] = {
 " 	c None",
 <<<<<<< HEAD
 ".	c #2e3745",
-"+	c #96b5b4 s active_color_1",
+"+	c #aab1be s active_color_1",
 =======
 ".	c #444444",
 "+	c #f0544c s active_color_1",

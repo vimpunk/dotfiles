@@ -28,10 +28,6 @@ color10 = #a3b38c
 color3 = #ebcb8b
 color11 = #ebcb8b
 
-# blue
-color4 = #96b5b4
-color12 = #96b5b4
-
 # magenta
 color5 =  #b48ead
 color13 =  #b48ead
@@ -39,6 +35,10 @@ color13 =  #b48ead
 # cyan
 color6 = #81a1c1
 color14 = #81a1c1
+
+# blue
+color4 = #96b5b4
+color12 = #96b5b4
 
 # white
 color7 = #65737e

@@ -3,22 +3,22 @@
 @import "functions";
 
 // default color scheme
-$bg_color: if($variant == "dark", #96b5b4, #2e3745);
-$fg_color: if($variant == "dark", #2e3745, #96b5b4);
-$base_color: if($variant == "dark", #96b5b4, #2e3745);
-$text_color: if($variant == "dark", #2e3745, #96b5b4);
-$button_bg_color: if($variant == "dark", #96b5b4, #2e3745);
-$button_fg_color: if($variant == "dark", #2e3745, #96b5b4);
-$header_button_bg_color: #96b5b4;
+$bg_color: if($variant == "dark", #aab1be, #2e3745);
+$fg_color: if($variant == "dark", #2e3745, #aab1be);
+$base_color: if($variant == "dark", #aab1be, #2e3745);
+$text_color: if($variant == "dark", #2e3745, #aab1be);
+$button_bg_color: if($variant == "dark", #aab1be, #2e3745);
+$button_fg_color: if($variant == "dark", #2e3745, #aab1be);
+$header_button_bg_color: #aab1be;
 $header_button_fg_color: #2e3745;
-$selected_bg_color: #96b5b4;
+$selected_bg_color: #aab1be;
 $selected_fg_color: #2e3745;
 $tooltip_bg_color: #2e3745;
-$tooltip_fg_color: #96b5b4;
+$tooltip_fg_color: #aab1be;
 
 // dark colors
 $dark_bg_color: #2e3745;
-$dark_fg_color: #96b5b4;
+$dark_fg_color: #aab1be;
 
 // shadows
 $dark_shadow: #000;
@@ -35,17 +35,17 @@ $white: #fff;
 
 // misc colors used by gtk+
 $info_fg_color: #fff;
-$info_bg_color: #03a9f4;
+$info_bg_color: #81a1c1;
 $warning_fg_color: #fff;
-$warning_bg_color: #ef6c00;
+$warning_bg_color: #d08770;
 $question_fg_color: #fff;
-$question_bg_color: #673ab7;
+$question_bg_color: #b48ead;
 $error_fg_color: #fff;
-$error_bg_color: #f44336;
-$link_color: #96b5b4;
-$success_color: #4caf50;
-$warning_color: #ef6c00;
-$error_color: #f44336;
+$error_bg_color: #bf616a;
+$link_color: #aab1be;
+$success_color: #a3b38c;
+$warning_color: #d08770;
+$error_color: #bf616a;
 
 $toolbar_bg_color: $bg_color;
 $toolbar_fg_color: $fg_color;
