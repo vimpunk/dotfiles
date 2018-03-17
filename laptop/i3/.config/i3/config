@@ -114,8 +114,6 @@ exec firefox
 exec redshift
 # launch a terminal on WS2 on startup
 exec --no-startup-id i3-msg 'workspace $WS2; exec $terminal'
-# launch a terminal at the projects folder on startup
-exec --no-startup-id i3-msg 'workspace $WS3; exec $terminal -d ~/projects'
 
 # drop down terminal
 exec --no-startup-id dropdown-terminal.sh
