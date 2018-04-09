@@ -38,7 +38,7 @@ set $li #65737e
 client.focused          $li   $bg     $fg     $li   $li
 client.unfocused        $li   $bg     $black  $bg     $bg
 client.focused_inactive $li   $bg     $black  $bg     $bg
-client.urgent           $purple    $bg     $purple    $purple    $purple
+client.urgent           $red    $bg     $red    $red    $red
 client.placeholder      $li   $bg     $bg     $bg     $bg
 client.background       $bg
 
@@ -57,10 +57,10 @@ bar {
         colors {
             background $bg
 
-            focused_workspace $cyan $cyan $bg
-            active_workspace $cyan $cyan $white
+            focused_workspace $fg $fg $bg
+            active_workspace $fg $fg $bg
             inactive_workspace $bg $bg $white
-            urgent_workspace $purple $purple $white
+            urgent_workspace $red $red $bg
         }
 }
 
@@ -101,7 +101,7 @@ set $terminal termite
 ################################################################################
 
 # run with each reload
-exec_always feh --bg-scale ~/.config/i3/wallpaper
+exec_always feh --bg-scale ~/.config/i3/wall
 exec_always xrandr --output DP1 --auto --left-of HDMI2
 
 #exec_always --no-startup-id start-compton
@@ -129,7 +129,6 @@ exec --no-startup-id ~/bin/dropdown-terminal.sh
 for_window [instance="dropdown-terminal"] floating enable;
 for_window [instance="dropdown-terminal"] move scratchpad; [instance="dropdown-terminal"] scratchpad show; move position 0px 24px; move scratchpad
 bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
-# to restart it (sometimes we kill the poor sod)
 bindsym $Mod+Shift+t exec --no-startup-id ~/bin/dropdown-terminal.sh
 
 

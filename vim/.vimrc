@@ -241,6 +241,7 @@ let g:LanguageClient_serverCommands = {
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ }
+let g:LanguageClient_changeThrottle = 1
 
 nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <leader>lg :call LanguageClient_textDocument_definition()<CR>

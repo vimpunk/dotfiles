@@ -3,7 +3,7 @@
 ! ------------------------------------------------------------------------------
 ! special
 *.foreground:   #aab1be
-*.background:   #2b3440
+*.background:   #2e3745
 *.cursorColor:  #aab1be
 
 ! black
@@ -118,3 +118,8 @@ UXTerm*rightScrollBar:     false
 UXTerm*jumpScroll:         true
 UXTerm*multiScroll:        true
 UXTerm*toolBar:            false
+
+
+! polybar
+polybar.value:  ALT1
+polybar.icon: ALT2

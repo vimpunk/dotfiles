@@ -6,39 +6,47 @@ allow_bold = true
 browser = firefox
 
 [colors]
+background = rgba(46,55,69,0.9)
 background = #2e3745
 foreground = #aab1be
 foreground_bold = #aab1be
 highlight = #2f2f2f
 
-# japanese indigo
+# dark
 color0 = #313b49
-# dark grey
 color8 = #65737e
 
 # red
 color1 = #bf616a
 color9 = #bf616a
 
-# green
-color2 = #a3b38c
-color10 = #a3b38c
-
 # yellow
-color3 = #ebcb8b
-color11 = #ebcb8b
+#color3 = #ebcb8b
+#color11 = #ebcb8b
+
+# orange
+color3 = #d08770
+color11 = #d08770
 
 # magenta
 color5 =  #b48ead
 color13 =  #b48ead
 
-# cyan
+# blue
 color6 = #81a1c1
 color14 = #81a1c1
 
-# blue
-color4 = #96b5b4
-color12 = #96b5b4
+# turquoise
+#color4 = #88c0d0
+#color12 = #88c0d0
+color2 = #88c0d0
+color10 = #88c0d0
+
+# green
+#color2 = #a3b38c
+#color10 = #a3b38c
+color4 = #a3b38c
+color12 = #a3b38c
 
 # white
 color7 = #65737e
