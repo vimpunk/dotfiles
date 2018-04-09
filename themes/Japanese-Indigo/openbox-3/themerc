@@ -1,7 +1,5 @@
-# Name: Japanese Indigo
-# Description: modification of the ArchLabs Dark theme
-# Author: mandreyel
-# Original Author: Matt Dobson <matt@archlabslinux.com>
+# Name: ArchLabs Dark
+# Author: Matt Dobson <matt@archlabslinux.com>
 # License: GPL-3.0+
 
 # Menu
@@ -35,7 +33,7 @@ menu.overlap.y:				     0
 window.active.title.separator.color: #2e3745
 
 # Active window
-window.active.border.color: #96b5b4
+window.active.border.color: #aab1be
 
 
 window.active.title.bg: flat solid
@@ -57,7 +55,7 @@ window.active.button.unpressed.bg.color: #2e3745
 window.active.button.unpressed.image.color: #eff1f5
 
 window.active.button.pressed.bg: flat solid
-window.active.button.pressed.bg.color: #96b5b4
+window.active.button.pressed.bg.color: #aab1be
 window.active.button.pressed.image.color: #eff1f5
 
 window.active.button.disabled.bg: flat solid
@@ -66,7 +64,7 @@ window.active.button.disabled.image.color: #bec0c6
 
 window.active.button.hover.bg: flat solid
 window.active.button.hover.bg.color: #2e3745
-window.active.button.hover.image.color: #96b5b4
+window.active.button.hover.image.color: #aab1be
 
 window.active.button.toggled.bg: parentrelative
 window.active.button.toggled.bg.color: 2B303B
@@ -94,7 +92,7 @@ window.inactive.button.unpressed.bg.color: #2e3745
 window.inactive.button.unpressed.image.color: #2e3745
 
 window.inactive.button.pressed.bg: flat solid
-window.inactive.button.pressed.bg.color: #96b5b4
+window.inactive.button.pressed.bg.color: #aab1be
 window.inactive.button.pressed.image.color: #eff1f5
 
 window.inactive.button.disabled.bg: flat solid
@@ -103,12 +101,12 @@ window.inactive.button.disabled.image.color: #2e3745
 
 window.inactive.button.hover.bg: flat solid
 window.inactive.button.hover.bg.color: #2e3745
-window.inactive.button.hover.image.color: #96b5b4
+window.inactive.button.hover.image.color: #aab1be
 
 
 # OSD
 osd.border.width: 1
-osd.border.color: #96b5b4
+osd.border.color: #aab1be
 
 osd.bg: flat solid
 osd.bg.color: #2e3745
@@ -123,7 +121,7 @@ osd.bg.shadow: 0
 
 osd.border.width: 2
 osd.hilight.bg: Solid Flat
-osd.hilight.bg.color: #96b5b4
+osd.hilight.bg.color: #aab1be
 osd.unhilight.bg: flat solid
 osd.unhilight.bg.color: #dfe1e8
 
@@ -132,14 +130,14 @@ osd.button.unpressed.bg.color: #dfe1e8
 #osd.button.unpressed.*.border.color: #2e3745
 
 osd.button.pressed.bg: flat border
-osd.button.pressed.bg.color: #96b5b4
+osd.button.pressed.bg.color: #aab1be
 #osd.button.pressed.*.border.color: #eff1f5
 
 osd.button.focused.bg: flat solid border
 osd.button.focused.bg.color: #2e3745
 #osd.button.focused.*.border.color: #dfe1e8
 
-osd.button.focused.box.color: #96b5b4
+osd.button.focused.box.color: #aab1be
 
 
 # Fonts
