@@ -32,6 +32,7 @@ Plug 'junegunn/fzf.vim'
 " For distraction free writing.
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-journal'
 
 Plug 'Yggdroot/indentLine'
 Plug 'airblade/vim-gitgutter'
@@ -88,6 +89,8 @@ set laststatus=2 " Always display the statusline.
 " Hack to be able save read-only files.
 cmap w!! w !sudo tee % >/dev/null
 
+" Always leave 5 lines above/below the cursor when nearing the top/bottom of the
+" window.
 set scrolloff=5
 " Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the visible
 " window, so we need to skip the rest of the way there with the movement
@@ -189,10 +192,10 @@ nnoremap <leader>O O<esc>
 " ----------------------------------------------------------------------------
 " Moving lines up and down
 " ----------------------------------------------------------------------------
-nnoremap <silent> <C-k> :move-2<cr>
-xnoremap <silent> <C-k> :move-2<cr>gv
-nnoremap <silent> <C-j> :move+<cr>
-xnoremap <silent> <C-j> :move'>+<cr>gv
+nnoremap <silent> <C-k> :move-2<CR>
+xnoremap <silent> <C-k> :move-2<CR>gv
+nnoremap <silent> <C-j> :move+<CR>
+xnoremap <silent> <C-j> :move'>+<CR>gv
 
 
 " ==============================================================================
@@ -239,6 +242,7 @@ set hidden " (Required for operations modifying multiple buffers like rename.)
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'c': ['cquery', '-std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ }
 let g:LanguageClient_changeThrottle = 1
