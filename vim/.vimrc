@@ -19,34 +19,48 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
+" REPL integration
+Plug 'metakirby5/codi.vim'
+
 " Async completion
-"Plug 'roxma/nvim-completion-manager'
-"if !has('nvim')
-    "Plug 'roxma/vim-hug-neovim-rpc'
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
 "endif
 
-" Fuzzy searching.
+" Fuzzy searching
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
-" For distraction free writing.
-Plug 'junegunn/goyo.vim'
+" Distraction free writing
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim'
 
 Plug 'Yggdroot/indentLine'
+
+" Git
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
+"Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-endwise'
+
+" Start screen
+Plug 'mhinz/vim-startify'
 
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-"Plug 'mandreyel/vim-japanese-indigo'
-
-" Work in progress
+Plug 'mandreyel/vim-japanese-indigo'
+Plug 'chriskempson/base16-vim/'
+" WIP
 Plug '~/code/seasmoke'
-Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -54,6 +68,9 @@ call plug#end()
 " ==============================================================================
 " Builtin settings
 " ==============================================================================
+
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
 
 " NOTE: this must go before all other mappings.
 let mapleader = ' '
@@ -224,11 +241,18 @@ augroup end
 " Plugin specific settings
 " ==============================================================================
 
-let g:indentLine_color_term = 239
-let g:goyo_width = 90
+let g:indentLine_color_term = 246
+let g:indentLine_color_gui = '#4f5b66'
+
+let g:goyo_width = 80
+let g:goyo_linenr = 1
+
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
 nnoremap <F10> :NERDTreeToggle<CR>
+
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_smart_case = 1
 
 " ------------------------------------------------------------------------------
 " LanguageClient
@@ -240,6 +264,8 @@ let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
+    \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
+    \ 'sh': ['bash-language-server', 'start'],
     \ }
 let g:LanguageClient_changeThrottle = 1
 
@@ -271,13 +297,6 @@ nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
 "nnoremap <Leader>P "+P
 "vnoremap <Leader>p "+p
 "vnoremap <leader>P "+P
-
-" Auto-completion.
-"Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"let g:deoplete#enable_at_startup = 1
-" deoplete dependencies:
-"Plug 'roxma/nvim-yarp'
-"Plug 'roxma/vim-hug-neovim-rpc'
 
 " deoplete TAB completion
 "inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
