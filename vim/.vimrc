@@ -249,10 +249,26 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-nnoremap <F10> :NERDTreeToggle<CR>
-
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
+
+nnoremap <F10> :NERDTreeToggle<CR>
+
+" ------------------------------------------------------------------------------
+" FZF
+" ------------------------------------------------------------------------------
+" Fuzzy search of loaded buffer names.
+nnoremap <leader>b :Buffers<CR>
+" Fuzzy recursive search starting from cwd.
+nnoremap <leader>f :Files<CR>
+" Fuzzy recursive search among all files in repo tracked by git.
+nnoremap <leader>gf :GFiles<CR>
+" Fuzzy search lines in loaded buffers.
+nnoremap <leader>al :Lines<CR>
+" Fuzzy search lines in current buffer.
+nnoremap <leader>cl :BLines<CR>
+" Ag (non-fuzzy) code search.
+nnoremap <leader>ag :Ag<CR>
 
 " ------------------------------------------------------------------------------
 " LanguageClient
