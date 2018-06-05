@@ -50,6 +50,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 "Plug 'tpope/vim-surround'
 "Plug 'tpope/vim-endwise'
+"Plug 'jiangmiao/auto-pairs'
+"Plug 'Yggdroot/hiPairs'
 
 " Start screen
 Plug 'mhinz/vim-startify'
@@ -102,7 +104,7 @@ set wildmenu " This changed my life.
 set wildmode=full
 set laststatus=2 " Always display the statusline.
 
-" Hack to be able save read-only files.
+" Hack to be able to save read-only files.
 cmap w!! w !sudo tee % >/dev/null
 
 set scrolloff=5
@@ -259,14 +261,14 @@ nnoremap <F10> :NERDTreeToggle<CR>
 " ------------------------------------------------------------------------------
 " Fuzzy search of loaded buffer names.
 nnoremap <leader>b :Buffers<CR>
-" Fuzzy recursive search starting from cwd.
+" Fuzzy recursive search starting from cwd. Abbrev.:
 nnoremap <leader>f :Files<CR>
-" Fuzzy recursive search among all files in repo tracked by git.
+" Fuzzy recursive search among all git-tracked files.
 nnoremap <leader>gf :GFiles<CR>
-" Fuzzy search lines in loaded buffers.
-nnoremap <leader>al :Lines<CR>
-" Fuzzy search lines in current buffer.
-nnoremap <leader>cl :BLines<CR>
+" Fuzzy search in loaded buffers.
+nnoremap <leader>ss :Lines<CR>
+" Fuzzy search in current buffer.
+nnoremap <leader>sl :BLines<CR>
 " Ag (non-fuzzy) code search.
 nnoremap <leader>ag :Ag<CR>
 
@@ -328,11 +330,6 @@ nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
 "nnoremap <C-K> <C-W><C-K>
 "nnoremap <C-L> <C-W><C-L>
 "nnoremap <C-H> <C-W><C-H>
-
-"" Always show line numbers, but only in current window.
-"set number
-":au WinEnter * :setlocal number
-":au WinLeave * :setlocal nonumber
 
 "" Automatically resize vertical splits.
 ":au WinEnter * :set winfixheight
