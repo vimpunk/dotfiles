@@ -32,8 +32,7 @@ Plug 'metakirby5/codi.vim'
 "endif
 
 " Fuzzy searching
-Plug '/usr/local/opt/fzf'
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Distraction free writing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
