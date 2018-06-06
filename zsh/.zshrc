@@ -31,3 +31,5 @@ alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/p
 # Vim ruined me...
 alias :q='exit'
 
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
