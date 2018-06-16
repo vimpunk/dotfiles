@@ -27,7 +27,7 @@ font                = Source Code Pro 12
 font                = Inconsolata Regular 12
 
 [colors]
-background      = rgba(43,48,59,0.9)
+background      = rgba(43,48,59,1.0)
 background      = rgba(37,41,51,0.90)
 background      = #252933
 # ArchLabs dark grey
@@ -35,8 +35,9 @@ background      = #2b303b
 # Oceanic-next dark green
 background      = #1B2B34
 # Twitter dark bg
-background      = #1B2836
 background      = rgba(27,40,54,0.9)
+background      = #1B2836
+# bottom most one overrides previous entries
 
 foreground      = #c0c5ce
 foreground_bold = #c0c5ce
