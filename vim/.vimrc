@@ -60,10 +60,11 @@ Plug 'mhinz/vim-startify'
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-Plug 'mandreyel/vim-japanese-indigo'
+"Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
 " WIP
 Plug '~/code/seasmoke'
+Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -81,7 +82,7 @@ nnoremap <space> <nop>
 
 filetype indent plugin on
 
-colorscheme Seasmoke
+colorscheme JapaneseIndigo
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
