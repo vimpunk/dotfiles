@@ -3,22 +3,22 @@
 @import "functions";
 
 // default color scheme
-$bg_color: if($variant == "dark", #aab1be, #2e3745);
-$fg_color: if($variant == "dark", #2e3745, #aab1be);
-$base_color: if($variant == "dark", #aab1be, #2e3745);
-$text_color: if($variant == "dark", #2e3745, #aab1be);
-$button_bg_color: if($variant == "dark", #aab1be, #2e3745);
-$button_fg_color: if($variant == "dark", #2e3745, #aab1be);
-$header_button_bg_color: #aab1be;
-$header_button_fg_color: #2e3745;
-$selected_bg_color: #aab1be;
-$selected_fg_color: #2e3745;
-$tooltip_bg_color: #2e3745;
-$tooltip_fg_color: #aab1be;
+$bg_color: if($variant == "dark", #a0a6b3, #29323e);
+$fg_color: if($variant == "dark", #29323e, #a0a6b3);
+$base_color: if($variant == "dark", #a0a6b3, #29323e);
+$text_color: if($variant == "dark", #29323e, #a0a6b3);
+$button_bg_color: if($variant == "dark", #a0a6b3, #29323e);
+$button_fg_color: if($variant == "dark", #29323e, #a0a6b3);
+$header_button_bg_color: #a0a6b3;
+$header_button_fg_color: #29323e;
+$selected_bg_color: #a0a6b3;
+$selected_fg_color: #29323e;
+$tooltip_bg_color: #29323e;
+$tooltip_fg_color: #a0a6b3;
 
 // dark colors
-$dark_bg_color: #2e3745;
-$dark_fg_color: #aab1be;
+$dark_bg_color: #29323e;
+$dark_fg_color: #a0a6b3;
 
 // shadows
 $dark_shadow: #000;
@@ -42,7 +42,7 @@ $question_fg_color: #fff;
 $question_bg_color: #b48ead;
 $error_fg_color: #fff;
 $error_bg_color: #bf616a;
-$link_color: #aab1be;
+$link_color: #a0a6b3;
 $success_color: #a3b38c;
 $warning_color: #d08770;
 $error_color: #bf616a;
@@ -70,8 +70,8 @@ $lightdm_bg_color: $dark_bg_color;
 $lightdm_fg_color: $dark_fg_color;
 
 $wm_bg: $titlebar_bg_color;
-$wm_border_focused: #2e3745;
-$wm_border_unfocused: #2e3745;
+$wm_border_focused: #29323e;
+$wm_border_unfocused: #29323e;
 $wm_title_focused: mix($titlebar_fg_color, $titlebar_bg_color, .1);
 $wm_title_unfocused: mix($titlebar_fg_color, $titlebar_bg_color, .4);
 $wm_icons_focused: mix($titlebar_fg_color, $titlebar_bg_color, .1);

@@ -3,9 +3,9 @@ static char * top_right_active_xpm[] = {
 "2 26 4 1",
 " 	c None",
 <<<<<<< HEAD
-".	c #aab1be",
-"+	c #aab1be",
-"@	c #2e3745",
+".	c #a0a6b3",
+"+	c #a0a6b3",
+"@	c #29323e",
 =======
 ".	c #484848",
 "+	c #343434",

@@ -49,9 +49,9 @@ Plug 'junegunn/gv.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-"Plug 'tpope/vim-surround'
-"Plug 'tpope/vim-endwise'
-"Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'jiangmiao/auto-pairs'
 "Plug 'Yggdroot/hiPairs'
 
 " Start screen
@@ -60,11 +60,10 @@ Plug 'mhinz/vim-startify'
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-"Plug 'mandreyel/vim-japanese-indigo'
+Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
 " WIP
 Plug '~/code/seasmoke'
-Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -255,6 +254,9 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
+let g:japanese_indigo_bg = 'normal'
+let g:japanese_indigo_fg = 'normal'
+
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
 
@@ -290,7 +292,7 @@ let g:LanguageClient_serverCommands = {
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
-let g:LanguageClient_changeThrottle = 1
+"let g:LanguageClient_changeThrottle = 1
 
 nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <leader>lg :call LanguageClient_textDocument_definition()<CR>

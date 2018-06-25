@@ -2,8 +2,8 @@
 ! theme colors
 ! ------------------------------------------------------------------------------
 ! special
-*.foreground:   #aab1be
-*.background:   #2e3745
+*.foreground:   #a0a6b3
+*.background:   #29323e
 *.cursorColor:  #aab1be
 
 ! black

@@ -7,8 +7,14 @@ browser = firefox
 
 [colors]
 background = rgba(46,55,69,0.9)
+# lighter
 background = #2e3745
+# darker
+background = #29323e
+# lighter
 foreground = #aab1be
+# darker
+foreground = #a0a6b3
 foreground_bold = #aab1be
 highlight = #2f2f2f
 

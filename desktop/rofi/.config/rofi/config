@@ -1,6 +1,6 @@
 rofi.color-enabled: true
-rofi.color-window: #2e3745, #65737e, #2e3745
-rofi.color-normal: #313b49, #aab1be, #313b49, #aab1be, #313b49
+rofi.color-window: #29323e, #65737e, #29323e
+rofi.color-normal: #313b49, #a0a6b3, #313b49, #a0a6b3, #313b49
 rofi.color-active: #313b49
 rofi.color-urgent: #313b49
 rofi.font: Inconsolata Regular 12
