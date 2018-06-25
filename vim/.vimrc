@@ -48,9 +48,12 @@ Plug 'junegunn/gv.vim'
 
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-"Plug 'tpope/vim-surround'
-"Plug 'tpope/vim-endwise'
-"Plug 'jiangmiao/auto-pairs'
+" Easily change, delete or add surroundings such as brackets, parentheses, quotes...
+Plug 'tpope/vim-surround'
+" Auto insert endings to structures like if, do, ifndef etc
+Plug 'tpope/vim-endwise'
+" Auto insert matching brackets, parentheses, quotes etc
+Plug 'jiangmiao/auto-pairs'
 "Plug 'Yggdroot/hiPairs'
 
 " Start screen
@@ -61,6 +64,7 @@ Plug 'mhinz/vim-startify'
 Plug 'arcticicestudio/nord-vim'
 Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
+Plug 'altercation/vim-colors-solarized'
 " WIP
 Plug '~/code/seasmoke'
 
@@ -80,8 +84,6 @@ nnoremap <space> <nop>
 
 filetype indent plugin on
 
-colorscheme JapaneseIndigo
-
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
 set backupdir=~/.vim/backup//
@@ -89,6 +91,8 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
 syntax on
+colorscheme JapaneseIndigo
+
 set number
 set relativenumber
 set nolist " Don't visualize tabs and line breaks.
@@ -251,6 +255,9 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
+let g:japanese_indigo_bg = 'normal'
+let g:japanese_indigo_fg = 'normal'
+
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
 
@@ -281,7 +288,7 @@ set hidden " (Required for operations modifying multiple buffers like rename.)
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
-    \ 'c': ['cquery', '--std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'c': ['cquery', '-std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
