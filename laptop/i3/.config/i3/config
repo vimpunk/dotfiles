@@ -102,7 +102,7 @@ exec_always --no-startup-id al-polybar-session
 exec_always --no-startup-id numlockx on
 exec_always --no-startup-id nitrogen --restore
 exec_always --no-startup-id xrdb -load ~/.Xresources
-exec_always --no-startup-id pkill trayer; trayer --edge bottom --align left --heighttype pixel --height 18 --widthtype request --SetDockType false --expand true --transparent true --alpha 255
+exec_always --no-startup-id pkill trayer; trayer --edge top --align center --heighttype pixel --height 18 --widthtype request --SetDockType false --expand true --transparent true --alpha 255
 
 # run once
 exec --no-startup-id xfsettingsd

@@ -38,6 +38,7 @@ Plug 'junegunn/fzf.vim'
 " Distraction free writing
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-journal'
 
 Plug 'Yggdroot/indentLine'
 
@@ -62,11 +63,12 @@ Plug 'mhinz/vim-startify'
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-Plug 'mandreyel/vim-japanese-indigo'
+"Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
 Plug 'altercation/vim-colors-solarized'
 " WIP
 Plug '~/code/seasmoke'
+Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -111,6 +113,8 @@ set laststatus=2 " Always display the statusline.
 " Hack to be able to save read-only files.
 cmap w!! w !sudo tee % >/dev/null
 
+" Always leave 5 lines above/below the cursor when nearing the top/bottom of the
+" window.
 set scrolloff=5
 " Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the visible
 " window, so we need to skip the rest of the way there with the movement
@@ -212,10 +216,10 @@ nnoremap <leader>O O<esc>
 " ----------------------------------------------------------------------------
 " Moving lines up and down
 " ----------------------------------------------------------------------------
-nnoremap <silent> <C-k> :move-2<cr>
-xnoremap <silent> <C-k> :move-2<cr>gv
-nnoremap <silent> <C-j> :move+<cr>
-xnoremap <silent> <C-j> :move'>+<cr>gv
+nnoremap <silent> <C-k> :move-2<CR>
+xnoremap <silent> <C-k> :move-2<CR>gv
+nnoremap <silent> <C-j> :move+<CR>
+xnoremap <silent> <C-j> :move'>+<CR>gv
 
 
 " ==============================================================================
