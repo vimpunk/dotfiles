@@ -6,7 +6,10 @@ allow_bold = true
 browser = firefox
 
 [colors]
-background = rgba(46,55,69,0.9)
+# lighter
+background = #2e3745
+# darker
+background = #29323e
 foreground = #aab1be
 foreground_bold = #aab1be
 highlight = #2f2f2f

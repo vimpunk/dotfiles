@@ -2,5 +2,5 @@
 static char * bottom_left_active_xpm[] = {
 "1 1 2 1",
 " 	c None",
-".	c #aab1be",
+".	c #a0a6b3",
 "."};

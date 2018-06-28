@@ -298,7 +298,7 @@ let g:LanguageClient_serverCommands = {
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
-let g:LanguageClient_changeThrottle = 1
+"let g:LanguageClient_changeThrottle = 1
 
 nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
 nnoremap <leader>lg :call LanguageClient_textDocument_definition()<CR>
