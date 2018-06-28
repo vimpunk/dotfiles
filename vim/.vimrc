@@ -63,12 +63,11 @@ Plug 'mhinz/vim-startify'
 " Colorschemes
 "Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-"Plug 'mandreyel/vim-japanese-indigo'
+Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
 Plug 'altercation/vim-colors-solarized'
 " WIP
 Plug '~/code/seasmoke'
-Plug '~/code/vim-japanese-indigo'
 
 call plug#end()
 
@@ -99,7 +98,7 @@ set number
 set relativenumber
 set nolist " Don't visualize tabs and line breaks.
 set linebreak " Don't break lines mid-word.
-set showcmd
+set showcmd " Show last command.
 set lazyredraw
 set encoding=utf-8
 set nocursorline
@@ -137,6 +136,7 @@ set wrap
 set breakindent " Preserve indentation when wrapping lines.
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
+let &showbreak='↳ '
 
 set softtabstop=0 " Turn off.
 set expandtab " Use spaces for tabs.
@@ -246,6 +246,7 @@ augroup end
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+command TrimWhitespace %s/\s\+$//e
 
 " ==============================================================================
 " Plugin specific settings
@@ -280,7 +281,7 @@ nnoremap <leader>gf :GFiles<CR>
 nnoremap <leader>ss :Lines<CR>
 " Fuzzy search in current buffer.
 nnoremap <leader>sl :BLines<CR>
-" Ag (non-fuzzy) code search.
+" Fuzzy search in project.
 nnoremap <leader>ag :Ag<CR>
 
 " ------------------------------------------------------------------------------
