@@ -119,8 +119,6 @@ colorscheme Seasmoke
 
 set number
 set relativenumber
-set nolist " Don't visualize tabs and line breaks.
-set linebreak " Don't break lines mid-word.
 set showcmd " Show last command.
 set lazyredraw
 set encoding=utf-8
@@ -159,9 +157,11 @@ noremap gV `[v`]
 " Formatting
 " ------------------------------------------------------------------------------ 
 set wrap
+set linebreak " Don't break lines mid-word.
 set breakindent " Preserve indentation when wrapping lines.
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
+set nolist " Don't visualize tabs and line breaks.
 let &showbreak='↳ '
 
 set softtabstop=0 " Turn off.
