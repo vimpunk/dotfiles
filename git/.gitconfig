@@ -12,3 +12,5 @@
 	tool = vimdiff
 [merge]
 	tool = vimdiff
+[mergetool]
+	prompt = false
