@@ -24,3 +24,5 @@ shopt -s cmdhist # save multi-line commands in history as single line
 shopt -s histappend # do not overwrite history
 shopt -s expand_aliases # expand aliases
 
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash

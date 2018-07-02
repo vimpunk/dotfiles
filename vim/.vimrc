@@ -11,16 +11,57 @@ endif
 
 call plug#begin('~/.vim/bundle')
 
-Plug 'rust-lang/rust.vim'
+" ------------------------------------------------------------------------------ 
+" Editing
+" ------------------------------------------------------------------------------ 
+Plug 'scrooloose/nerdcommenter'
+" Easily change, delete or add surroundings such as brackets, parentheses, quotes...
+Plug 'tpope/vim-surround'
+" Auto insert endings to structures like if, do, ifndef etc
+Plug 'tpope/vim-endwise'
+" Auto insert matching brackets, parentheses, quotes etc
+Plug 'jiangmiao/auto-pairs'
+" Extend % matching to HTML tags and others.
+Plug 'tmhedberg/matchit'
+" Mark indentation with thin vertical lines.
+Plug 'Yggdroot/indentLine'
 
+" ------------------------------------------------------------------------------ 
+" Core enhancements
+" ------------------------------------------------------------------------------ 
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+" Fuzzy searching
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+" Start screen
+Plug 'mhinz/vim-startify'
+
+" ------------------------------------------------------------------------------ 
+" Distraction free writing
+" ------------------------------------------------------------------------------ 
+Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-journal'
+
+" ------------------------------------------------------------------------------ 
+" Colorschemes
+" ------------------------------------------------------------------------------ 
+"Plug 'mhartington/oceanic-next'
+Plug 'arcticicestudio/nord-vim'
+Plug 'mandreyel/vim-japanese-indigo'
+Plug 'chriskempson/base16-vim/'
+Plug 'altercation/vim-colors-solarized'
+" WIP
+Plug '~/code/seasmoke'
+
+" ------------------------------------------------------------------------------ 
+" Languages
+" ------------------------------------------------------------------------------ 
 " Language Server Protocol
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
-
-" REPL integration
-Plug 'metakirby5/codi.vim'
 
 " Async completion
 "if has('nvim')
@@ -31,43 +72,25 @@ Plug 'metakirby5/codi.vim'
   "Plug 'roxma/vim-hug-neovim-rpc'
 "endif
 
-" Fuzzy searching
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+" REPL integration
+Plug 'metakirby5/codi.vim'
+" Alternate between C/C++ header and source files.
+Plug 'vim-scripts/a.vim', { 'for': ['c', 'c++'] }
+Plug 'rust-lang/rust.vim'
 
-" Distraction free writing
-Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vim-journal'
+" ------------------------------------------------------------------------------ 
+" Syntax
+" ------------------------------------------------------------------------------ 
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'cespare/vim-toml'
+Plug 'posva/vim-vue'
 
-Plug 'Yggdroot/indentLine'
-
+" ------------------------------------------------------------------------------ 
 " Git
+" ------------------------------------------------------------------------------ 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-Plug 'scrooloose/nerdcommenter'
-" Easily change, delete or add surroundings such as brackets, parentheses, quotes...
-Plug 'tpope/vim-surround'
-" Auto insert endings to structures like if, do, ifndef etc
-Plug 'tpope/vim-endwise'
-" Auto insert matching brackets, parentheses, quotes etc
-Plug 'jiangmiao/auto-pairs'
-"Plug 'Yggdroot/hiPairs'
-
-" Start screen
-Plug 'mhinz/vim-startify'
-
-" Colorschemes
-"Plug 'mhartington/oceanic-next'
-Plug 'arcticicestudio/nord-vim'
-Plug 'mandreyel/vim-japanese-indigo'
-Plug 'chriskempson/base16-vim/'
-Plug 'altercation/vim-colors-solarized'
-" WIP
-Plug '~/code/seasmoke'
 
 call plug#end()
 
@@ -92,12 +115,10 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
 syntax on
-colorscheme JapaneseIndigo
+colorscheme Seasmoke
 
 set number
 set relativenumber
-set nolist " Don't visualize tabs and line breaks.
-set linebreak " Don't break lines mid-word.
 set showcmd " Show last command.
 set lazyredraw
 set encoding=utf-8
@@ -129,13 +150,18 @@ inoremap jk <Esc>
 nnoremap <leader>ev :e $MYVIMRC<CR>
 nnoremap <leader>sv :source $MYVIMRC<CR>
 
+" Visually select the text that was last edited/pasted (Vimcast#26).
+noremap gV `[v`]
+
 " ------------------------------------------------------------------------------ 
 " Formatting
 " ------------------------------------------------------------------------------ 
 set wrap
+set linebreak " Don't break lines mid-word.
 set breakindent " Preserve indentation when wrapping lines.
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
+set nolist " Don't visualize tabs and line breaks.
 let &showbreak='↳ '
 
 set softtabstop=0 " Turn off.
@@ -246,8 +272,6 @@ augroup end
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
-command TrimWhitespace %s/\s\+$//e
-
 " ==============================================================================
 " Plugin specific settings
 " ==============================================================================
@@ -260,7 +284,7 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-let g:japanese_indigo_bg = 'normal'
+let g:japanese_indigo_bg = 'dark'
 let g:japanese_indigo_fg = 'normal'
 
 "let g:deoplete#enable_at_startup = 1
@@ -292,7 +316,7 @@ set hidden " (Required for operations modifying multiple buffers like rename.)
 " Language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'cpp': ['cquery', '-std=c++17', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'c': ['cquery', '-std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
@@ -347,3 +371,5 @@ nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
 "" Automatically resize vertical splits.
 ":au WinEnter * :set winfixheight
 ":au WinEnter * :wincmd =
+
+"command TrimWhitespace %s/\s\+$//e
