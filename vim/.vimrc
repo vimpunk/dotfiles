@@ -23,8 +23,8 @@ Plug 'tpope/vim-endwise'
 Plug 'jiangmiao/auto-pairs'
 " Extend % matching to HTML tags and others.
 Plug 'tmhedberg/matchit'
-" Mark indentation with thin vertical lines.
-Plug 'Yggdroot/indentLine'
+" Repeat plugin mappings.
+Plug 'tpope/vim-repeat'
 
 " ------------------------------------------------------------------------------ 
 " Core enhancements
@@ -35,6 +35,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Start screen
 Plug 'mhinz/vim-startify'
+" Mark indentation with thin vertical lines.
+Plug 'Yggdroot/indentLine'
 
 " ------------------------------------------------------------------------------ 
 " Distraction free writing
