@@ -115,7 +115,7 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
 syntax on
-colorscheme Seasmoke
+colorscheme JapaneseIndigo
 
 set number
 set relativenumber
@@ -147,8 +147,8 @@ inoremap jj <Esc>
 inoremap jk <Esc> 
 
 " Shortcuts to quickly edit and source .vimrc.
-nnoremap <leader>ev :e $MYVIMRC<CR>
-nnoremap <leader>sv :source $MYVIMRC<CR>
+nnoremap <leader>ve :e $MYVIMRC<CR>
+nnoremap <leader>vs :source $MYVIMRC<CR>
 
 " Visually select the text that was last edited/pasted (Vimcast#26).
 noremap gV `[v`]
@@ -284,7 +284,7 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-let g:japanese_indigo_bg = 'dark'
+let g:japanese_indigo_bg = 'normal'
 let g:japanese_indigo_fg = 'normal'
 
 "let g:deoplete#enable_at_startup = 1
@@ -301,12 +301,10 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>f :Files<CR>
 " Fuzzy recursive search among all git-tracked files.
 nnoremap <leader>gf :GFiles<CR>
-" Fuzzy search in loaded buffers.
-nnoremap <leader>ss :Lines<CR>
-" Fuzzy search in current buffer.
-nnoremap <leader>sl :BLines<CR>
 " Fuzzy search in project.
-nnoremap <leader>ag :Ag<CR>
+nnoremap <leader>ss :Ag<CR>
+" Fuzzy search in current buffer.
+nnoremap <leader>sb :BLines<CR>
 
 " ------------------------------------------------------------------------------
 " LanguageClient
