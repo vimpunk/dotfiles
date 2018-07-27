@@ -149,7 +149,7 @@ bindsym $Mod+Return exec --no-startup-id $terminal
 bindsym --release $Mod+Shift+c exec --no-startup-id scrot -s
 
 # screen shot with scrot
-#bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
+bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
 #; gpicview $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
 
 # logout

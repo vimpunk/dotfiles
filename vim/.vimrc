@@ -316,12 +316,13 @@ set hidden " (Required for operations modifying multiple buffers like rename.)
 " Language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'cpp': ['cquery', '-std=c++17', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
-    \ 'c': ['cquery', '-std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
+" Only run error checker once every second.
 let g:LanguageClient_changeThrottle = 1
 
 nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
