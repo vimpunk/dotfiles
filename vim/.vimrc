@@ -37,6 +37,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
+" Syntax aware visual selection.
+Plug 'terryma/vim-expand-region'
 
 " ------------------------------------------------------------------------------ 
 " Distraction free writing
