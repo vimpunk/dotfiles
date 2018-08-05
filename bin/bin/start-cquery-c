@@ -1,0 +1,1 @@
+cquery --log-file=/tmp/cq.log --init='{"extraClangArguments": ["-std=c99"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'
