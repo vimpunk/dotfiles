@@ -20,6 +20,8 @@ Session.vim
 '
 "
 "'"
+# vimdiff artifacts
+*.orig
 
 # Ignore tags created by etags, ctags, gtags (GNU global) and cscope
 TAGS

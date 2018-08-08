@@ -37,6 +37,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
+" Syntax aware visual selection.
+Plug 'terryma/vim-expand-region'
 
 " ------------------------------------------------------------------------------ 
 " Distraction free writing
@@ -60,6 +62,8 @@ Plug '~/code/seasmoke'
 " Languages
 " ------------------------------------------------------------------------------ 
 " Language Server Protocol
+"Plug 'natebosch/vim-lsc'
+
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
@@ -90,8 +94,8 @@ Plug 'posva/vim-vue'
 " ------------------------------------------------------------------------------ 
 " Git
 " ------------------------------------------------------------------------------ 
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
 call plug#end()
@@ -303,10 +307,10 @@ nnoremap <leader>b :Buffers<CR>
 nnoremap <leader>f :Files<CR>
 " Fuzzy recursive search among all git-tracked files.
 nnoremap <leader>gf :GFiles<CR>
-" Fuzzy search in loaded buffers.
-nnoremap <leader>sl :BLines<CR>
 " Fuzzy search in project.
 nnoremap <leader>ss :Ag<CR>
+" Fuzzy search in current buffer.
+nnoremap <leader>sb :BLines<CR>
 
 " ------------------------------------------------------------------------------
 " LanguageClient
@@ -316,12 +320,15 @@ set hidden " (Required for operations modifying multiple buffers like rename.)
 " Language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'cpp': ['cquery', '-std=c++17', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
-    \ 'c': ['cquery', '-std=c99', '--log-file=/tmp/cq.log', '--init={"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
     \ }
+
+" TODO something about the cpp langserver is really slowing down vim
+"\ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+" Only run error checker once every second.
 let g:LanguageClient_changeThrottle = 1
 
 nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
@@ -373,3 +380,29 @@ nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
 ":au WinEnter * :wincmd =
 
 "command TrimWhitespace %s/\s\+$//e
+
+" vim-lsc:
+"let g:lsc_server_commands = {
+    "\ 'rust': 'rustup run stable rls',
+    "\ 'cpp': 'start-cquery-cpp',
+    "\ 'c': 'start-cquery-c',
+    "\ 'python': 'pyls',
+    "\ 'ruby': '~/.gem/ruby/2.5.0/bin/language_server-ruby',
+    "\ 'sh': 'bash-language-server start',
+    "\ }
+
+"let g:lsc_auto_map = {
+    "\ 'GoToDefinition': '<leader>lg',
+    "\ 'FindReferences': '<leader>lo',
+    "\ 'Rename': '<leader>lr',
+    "\ 'NextReference': '<C-n>',
+    "\ 'PreviousReference': '<C-p>',
+    "\ 'FindCodeActions': '<leader>la',
+    "\ 'ShowHover': '<leader>lh',
+    "\ 'DocumentSymbol': '<leader>ls',
+    "\ 'FindImplementations': '<leader>li',
+    "\ 'Completion': 'completefunc',
+    "\}
+
+"highlight lscDiagnosticError guifg='#9d5057'
+"autocmd CompleteDone * silent! pclose
