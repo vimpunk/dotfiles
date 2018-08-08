@@ -12,7 +12,10 @@ Session.vim
 *~
 # Annoying artifacts
 '\'
+'\\'
+"\\"
 \
+\\
 \'
 '
 "
