@@ -25,6 +25,8 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tmhedberg/matchit'
 " Repeat plugin mappings.
 Plug 'tpope/vim-repeat'
+" Syntax aware visual selection.
+Plug 'terryma/vim-expand-region'
 
 " ------------------------------------------------------------------------------ 
 " Core enhancements
@@ -37,15 +39,16 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
-" Syntax aware visual selection.
-Plug 'terryma/vim-expand-region'
+" Enhanced session management (the first one is a dependency).
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 
 " ------------------------------------------------------------------------------ 
 " Distraction free writing
 " ------------------------------------------------------------------------------ 
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vim-journal'
+"Plug 'junegunn/vim-journal'
 
 " ------------------------------------------------------------------------------ 
 " Colorschemes
@@ -62,27 +65,28 @@ Plug '~/code/seasmoke'
 " Languages
 " ------------------------------------------------------------------------------ 
 " Language Server Protocol
-"Plug 'natebosch/vim-lsc'
-
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
 
 " Async completion
-"if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-  "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'roxma/nvim-yarp'
+  Plug 'Shougo/deoplete.nvim'
+endif
+
+"Plug 'natebosch/vim-lsc'
 
 " REPL integration
 Plug 'metakirby5/codi.vim'
 " Alternate between C/C++ header and source files.
 Plug 'vim-scripts/a.vim', { 'for': ['c', 'c++'] }
 Plug 'rust-lang/rust.vim'
+Plug 'elzr/vim-json'
 
 " ------------------------------------------------------------------------------ 
 " Syntax
@@ -278,6 +282,9 @@ augroup end
 :  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 :augroup END
 
+" .md file extensions should be treated as markdown rather than modula.
+autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+
 " ==============================================================================
 " Plugin specific settings
 " ==============================================================================
@@ -293,7 +300,9 @@ let g:limelight_conceal_ctermfg = 'DarkGray'
 let g:japanese_indigo_bg = 'normal'
 let g:japanese_indigo_fg = 'normal'
 
-"let g:deoplete#enable_at_startup = 1
+let g:session_autosave = 'no'
+
+let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
 
 nnoremap <F10> :NERDTreeToggle<CR>
