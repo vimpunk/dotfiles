@@ -172,7 +172,7 @@ set breakindent " Preserve indentation when wrapping lines.
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
-let &showbreak='↳ '
+let &showbreak='↳ ' " Pretty line break signaler.
 
 set softtabstop=0 " Turn off.
 set expandtab " Use spaces for tabs.
@@ -297,7 +297,7 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-let g:japanese_indigo_bg = 'normal'
+let g:japanese_indigo_bg = 'dark'
 let g:japanese_indigo_fg = 'normal'
 
 let g:session_autosave = 'no'
