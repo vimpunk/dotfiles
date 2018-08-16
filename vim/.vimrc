@@ -71,13 +71,13 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 " Async completion
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'roxma/nvim-yarp'
-  Plug 'Shougo/deoplete.nvim'
-endif
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'roxma/vim-hug-neovim-rpc'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'Shougo/deoplete.nvim'
+"endif
 
 "Plug 'natebosch/vim-lsc'
 
@@ -101,6 +101,7 @@ Plug 'posva/vim-vue'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
 call plug#end()
 
@@ -154,7 +155,9 @@ nnoremap <S-L> <S-L>5j
 
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
+inoremap JJ <Esc> 
 inoremap jk <Esc> 
+inoremap JK <Esc> 
 
 " Shortcuts to quickly edit and source .vimrc.
 nnoremap <leader>ve :e $MYVIMRC<CR>
@@ -174,7 +177,7 @@ set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
 let &showbreak='↳ ' " Pretty line break signaler.
 
-set softtabstop=0 " Turn off.
+set softtabstop=0 " Turn off. TODO why?
 set expandtab " Use spaces for tabs.
 set tabstop=4 " Length of <Tab> in spaces.
 set shiftwidth=4 " Number of spaces to use for auto indent.
@@ -192,8 +195,8 @@ set formatoptions+=l " Don't break long lines in insert mode.
 " experimental:
 set formatoptions+=1 " Break line before a single-letter word.
 set formatoptions+=n " Recognize numbered lists.
-"set formatoptions+=a " Auto format text every time text is changed.
-"set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
+set formatoptions+=a " Auto format text every time text is changed.
+set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
 
 " ------------------------------------------------------------------------------
 " Buffers
@@ -297,13 +300,13 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-let g:japanese_indigo_bg = 'dark'
+let g:japanese_indigo_bg = 'normal'
 let g:japanese_indigo_fg = 'normal'
 
 let g:session_autosave = 'no'
 
 let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_smart_case = 1
+let g:deoplete#enable_smart_case = 1
 
 nnoremap <F10> :NERDTreeToggle<CR>
 
