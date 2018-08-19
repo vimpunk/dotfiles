@@ -159,6 +159,10 @@ inoremap JJ <Esc>
 inoremap jk <Esc> 
 inoremap JK <Esc> 
 
+" Quicker way to resize a window.
+nnoremap <F2> <C-w><
+nnoremap <F3> <C-w>>
+
 " Shortcuts to quickly edit and source .vimrc.
 nnoremap <leader>ve :e $MYVIMRC<CR>
 nnoremap <leader>vs :source $MYVIMRC<CR>
