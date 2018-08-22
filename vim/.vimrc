@@ -83,8 +83,6 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 " REPL integration
 Plug 'metakirby5/codi.vim'
-" Alternate between C/C++ header and source files.
-Plug 'vim-scripts/a.vim', { 'for': ['c', 'c++'] }
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
 

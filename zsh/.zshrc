@@ -1,7 +1,7 @@
 #
 [[ $- != *i* ]] && return
 
-export PATH=$HOME/.local/bin:$HOME/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin
 export EDITOR='vim'
 
 setopt AUTO_CD # No cd needed to change directories
