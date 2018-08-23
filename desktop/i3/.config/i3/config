@@ -55,7 +55,7 @@ bar {
         font xft:Droid Sans Mono, FontAwesome 11
 
         colors {
-            background $bg
+            background #252c37
 
             focused_workspace $fg $fg $bg
             active_workspace $fg $fg $bg

@@ -217,6 +217,8 @@ nnoremap <S-tab> <c-w>W
 " ------------------------------------------------------------------------------
 nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
+nnoremap <leader>ft :tabfirst<cr>
+nnoremap <leader>lt :tablast<cr>
 
 " ------------------------------------------------------------------------------
 " Search
