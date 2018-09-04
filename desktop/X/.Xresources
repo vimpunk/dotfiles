@@ -8,6 +8,7 @@
 
 ! black
 *.color0:       #2b303b
+! (bone) white
 *.color8:       #65737e
 
 ! red

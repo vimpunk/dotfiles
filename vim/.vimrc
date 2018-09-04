@@ -79,12 +79,13 @@ Plug 'autozimu/LanguageClient-neovim', {
   "Plug 'Shougo/deoplete.nvim'
 "endif
 
+" Light weight language server plugin
 "Plug 'natebosch/vim-lsc'
 
-" REPL integration
-Plug 'metakirby5/codi.vim'
+Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
+Plug 'posva/vim-vue'
 
 " ------------------------------------------------------------------------------ 
 " Syntax
@@ -153,8 +154,10 @@ nnoremap <S-L> <S-L>5j
 
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
+inoremap jj <Esc> 
 inoremap JJ <Esc> 
 inoremap jk <Esc> 
+inoremap Jk <Esc> 
 inoremap JK <Esc> 
 
 " Quicker way to resize a window.
@@ -217,6 +220,10 @@ nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
 nnoremap <leader>ft :tabfirst<cr>
 nnoremap <leader>lt :tablast<cr>
+
+" Circular tab navigation.
+nnoremap <leader><tab>   :tabn<cr>
+nnoremap <leader><S-tab> :tabp<cr>
 
 " ------------------------------------------------------------------------------
 " Search
@@ -283,11 +290,11 @@ augroup end
 
 " Show relative line numbers when in command mode or switching to another
 " buffer, and show absolute line numbers when in insert mode.
-:augroup NumberToggle
-:  autocmd!
-:  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+augroup NumberToggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
 " .md file extensions should be treated as markdown rather than modula.
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
@@ -340,6 +347,7 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
+    \ 'vue': ['vls'],
     \ }
 
 " TODO something about the cpp langserver is really slowing down vim

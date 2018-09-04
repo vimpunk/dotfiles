@@ -29,17 +29,19 @@ set_from_resource $purple  color5      #85678F
 set_from_resource $cyan    color6      #5E8D87
 set_from_resource $grey    color7      #969CD3
 set_from_resource $white   color15     #F1F1F1
-set_from_resource $black   color8      #19043C
+set_from_resource $black   color0      #19043C
 set $orange #d08770
 set $turq #88c0d0
 set $li #65737e
+set $dk_bg #252c37
+set $md_bg #37414e
 
 # class                 border  bg      text    indictr child_border
-client.focused          $li   $bg     $fg     $li   $li
-client.unfocused        $li   $bg     $black  $bg     $bg
-client.focused_inactive $li   $bg     $black  $bg     $bg
+client.focused          $li     $bg     $fg     $li     $li
+client.unfocused        $md_bg  $bg     $black  $bg     $md_bg
+client.focused_inactive $md_bg  $bg     $black  $bg     $md_bg
 client.urgent           $red    $bg     $red    $red    $red
-client.placeholder      $li   $bg     $bg     $bg     $bg
+client.placeholder      $li     $bg     $bg     $bg     $bg
 client.background       $bg
 
 # border & title (must be set to border pixel for gaps to work)
@@ -55,7 +57,7 @@ bar {
         font xft:Droid Sans Mono, FontAwesome 11
 
         colors {
-            background #252c37
+            background $dk_bg
 
             focused_workspace $fg $fg $bg
             active_workspace $fg $fg $bg
