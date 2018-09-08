@@ -1,3 +1,6 @@
+" Turn off Vi compatibility. Has to be first.
+set nocompatible
+
 " ==============================================================================
 " Plugins
 " ==============================================================================
@@ -108,15 +111,14 @@ call plug#end()
 " ==============================================================================
 " Builtin settings
 " ==============================================================================
-
-let g:netrw_liststyle = 3
-let g:netrw_winsize = 25
-
 " NOTE: this must go before all other mappings.
 let mapleader = ' '
 nnoremap <space> <nop>
 
 filetype indent plugin on
+syntax on
+
+colorscheme JapaneseIndigo
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
@@ -124,8 +126,9 @@ set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 
-syntax on
-colorscheme JapaneseIndigo
+" Don't unload buffers when they're abandoned (also required for LSP operations
+" modifying multiple buffers like rename).
+set hidden
 
 set number
 set relativenumber
@@ -139,9 +142,6 @@ set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
 set wildmenu " This changed my life.
 set wildmode=full
 set laststatus=2 " Always display the statusline.
-
-" Hack to be able to save read-only files.
-cmap w!! w !sudo tee % >/dev/null
 
 " Always leave 5 lines above/below the cursor when nearing the top/bottom of the
 " window.
@@ -168,8 +168,14 @@ nnoremap <F3> <C-w>>
 nnoremap <leader>ve :e $MYVIMRC<CR>
 nnoremap <leader>vs :source $MYVIMRC<CR>
 
+" Hack to be able to save read-only files.
+cmap w!! w !sudo tee % >/dev/null
+
 " Visually select the text that was last edited/pasted (Vimcast#26).
 noremap gV `[v`]
+
+let g:netrw_liststyle = 3
+let g:netrw_winsize = 25
 
 " ------------------------------------------------------------------------------ 
 " Formatting
@@ -182,13 +188,13 @@ set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
 let &showbreak='↳ ' " Pretty line break signaler.
 
-set softtabstop=0 " Turn off. TODO why?
 set expandtab " Use spaces for tabs.
+set autoindent
 set tabstop=4 " Length of <Tab> in spaces.
 set shiftwidth=4 " Number of spaces to use for auto indent.
+set softtabstop=0 " Turn off. TODO why?
 set smarttab
 set cindent " Stricter rules for C/C++ programs.
-set autoindent
 
 set formatoptions="" " Reset fo.
 set formatoptions+=j " Remove comment leader when joining comment lines.
@@ -232,6 +238,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+
 " Clear search highlight.
 nnoremap <leader><space> :nohlsearch<CR>
 
@@ -338,8 +345,6 @@ nnoremap <leader>sb :BLines<CR>
 " ------------------------------------------------------------------------------
 " LanguageClient
 " ------------------------------------------------------------------------------
-set hidden " (Required for operations modifying multiple buffers like rename.)
-
 " Language servers
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],

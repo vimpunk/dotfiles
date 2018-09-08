@@ -33,7 +33,8 @@ set_from_resource $black   color0      #19043C
 set $orange #d08770
 set $turq #88c0d0
 set $li #65737e
-set $dk_bg #252c37
+set $mdk_bg #252c37
+set $dk_bg #1b2129
 set $md_bg #37414e
 
 # class                 border  bg      text    indictr child_border
