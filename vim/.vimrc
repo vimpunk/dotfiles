@@ -85,6 +85,13 @@ Plug 'autozimu/LanguageClient-neovim', {
 " Light weight language server plugin
 "Plug 'natebosch/vim-lsc'
 
+" Auto completion
+"Plug 'maxboisvert/vim-simple-complete'
+
+" Tab key completion
+Plug 'ajh17/VimCompletesMe'
+" TODO try this as an alternative: https://github.com/ervandew/supertab
+
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'

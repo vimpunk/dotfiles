@@ -7,8 +7,16 @@
 [alias]
     # Detailed commit history graph
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+
+    # List files which have changed since master.
+    files = !git diff --name-only $(git merge-base HEAD master)
+
     # List files which have changed since master, with diff stats.
     stat = !git diff --stat $(git merge-base HEAD master)
+
+    # Open all files changed since master in vim tabs and run fugitive :Gdiff in
+    # each tab and tell gitgutter to show +/- signs for changes since master.
+    review = !vim -p $(git files) +\"tabdo Gdiff master\" +\"let g:gitgutter_diff_base = 'master'\"
 [credential]
 	helper = cache --timeout=21600
 [diff]
