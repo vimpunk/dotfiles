@@ -56,7 +56,7 @@ Plug 'junegunn/limelight.vim'
 " ------------------------------------------------------------------------------ 
 " Colorschemes
 " ------------------------------------------------------------------------------ 
-"Plug 'mhartington/oceanic-next'
+Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
 Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
@@ -73,7 +73,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 
-" Async completion
+" Async completion TODO get this to work
 "if has('nvim')
   "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 "else
@@ -149,8 +149,8 @@ set scrolloff=5
 " Due to scrollof, Shift+{H,L} no longer go to the top/bottom of the visible
 " window, so we need to skip the rest of the way there with the movement
 " commands.
-nnoremap <S-H> <S-H>5k
-nnoremap <S-L> <S-L>5j
+nnoremap <S-h> <S-h>5k
+nnoremap <S-l> <S-l>5j
 
 " Quicker way to escape insert mode.
 inoremap jj <Esc> 
@@ -171,18 +171,31 @@ nnoremap <leader>vs :source $MYVIMRC<CR>
 " Hack to be able to save read-only files.
 cmap w!! w !sudo tee % >/dev/null
 
+" Map commonly mistyped commands.
+command! W w
+command! Q q
+command! WQ wq
+command! Wq wq
+command! Wqa wqa
+
 " Visually select the text that was last edited/pasted (Vimcast#26).
 noremap gV `[v`]
 
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 25
 
+if has('mouse')
+    set mouse=a
+endif
+
 " ------------------------------------------------------------------------------ 
 " Formatting
 " ------------------------------------------------------------------------------ 
 set wrap
 set linebreak " Don't break lines mid-word.
-set breakindent " Preserve indentation when wrapping lines.
+if exists('&breakindent')
+    set breakindent " Preserve indentation when wrapping lines.
+endif
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
