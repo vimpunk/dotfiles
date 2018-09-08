@@ -5,7 +5,10 @@
     editor = vim
 	excludesfile = ~/dotfiles/git/.gitignore
 [alias]
+    # Detailed commit history graph
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    # List files which have changed since master, with diff stats.
+    stat = !git diff --stat $(git merge-base HEAD master)
 [credential]
 	helper = cache --timeout=21600
 [diff]
