@@ -209,6 +209,12 @@ endif
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
+
+" Show tabs (since space is preferred).
+set listchars=tab:▸\ 
+set listchars+=trail:⋅ " Show trailing spaces.
+" Indicate that a line continues beyond the screen in no-wrap mode.
+set listchars+=extends:❯,precedes:❮
 let &showbreak='↳ ' " Pretty line break signaler.
 
 set expandtab " Use spaces for tabs.
