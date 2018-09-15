@@ -30,6 +30,8 @@ Plug 'tmhedberg/matchit'
 Plug 'tpope/vim-repeat'
 " Syntax aware visual selection.
 Plug 'terryma/vim-expand-region'
+" Expand abbreviations (mostly for inserting HTML elements).
+Plug 'mattn/emmet-vim'
 
 " ------------------------------------------------------------------------------ 
 " Core enhancements
@@ -56,11 +58,15 @@ Plug 'junegunn/limelight.vim'
 " ------------------------------------------------------------------------------ 
 " Colorschemes
 " ------------------------------------------------------------------------------ 
+Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-Plug 'mandreyel/vim-japanese-indigo'
 Plug 'chriskempson/base16-vim/'
 Plug 'altercation/vim-colors-solarized'
+Plug 'nightsense/stellarized' " This is great.
+Plug 'nightsense/seagrey'
+Plug 'nightsense/office'
+
 " WIP
 Plug '~/code/seasmoke'
 
@@ -217,13 +223,15 @@ set listchars+=trail:⋅ " Show trailing spaces.
 set listchars+=extends:❯,precedes:❮
 let &showbreak='↳ ' " Pretty line break signaler.
 
+" Tabs
 set expandtab " Use spaces for tabs.
-set autoindent
 set tabstop=4 " Length of <Tab> in spaces.
 set shiftwidth=4 " Number of spaces to use for auto indent.
 set softtabstop=0 " Turn off. TODO why?
 set smarttab
-set cindent " Stricter rules for C/C++ programs.
+
+" Indentation
+set smartindent " Instead of cindent as that seems to work poorly with non-C files.
 
 set formatoptions="" " Reset fo.
 set formatoptions+=j " Remove comment leader when joining comment lines.
@@ -309,11 +317,11 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 
 
 " ==============================================================================
-" Scripts
+" Scripts & Autocommands
 " ==============================================================================
 
-" Unobtrusively highlight column 91 to indicate that the line is too long
-" (this is a less obtrusive way of doing "set colorcolumn").
+" Unobtrusively highlight column 91 to indicate that the line is too long (this
+" is a less obtrusive way of doing "set colorcolumn"). TODO use tw
 fun! s:color()
     highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
@@ -347,9 +355,6 @@ let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
-let g:japanese_indigo_bg = 'normal'
-let g:japanese_indigo_fg = 'normal'
-
 let g:session_autosave = 'no'
 
 let g:deoplete#enable_at_startup = 1
@@ -370,6 +375,12 @@ nnoremap <leader>gf :GFiles<CR>
 nnoremap <leader>ss :Ag<CR>
 " Fuzzy search in current buffer.
 nnoremap <leader>sb :BLines<CR>
+" Fuzzy command search.
+nnoremap <leader>cc :Commands<CR>
+" Fuzzy command history search.
+nnoremap <leader>hc :History:<CR>
+" Fuzzy search history search.
+nnoremap <leader>hc :History/<CR>
 
 " ------------------------------------------------------------------------------
 " LanguageClient

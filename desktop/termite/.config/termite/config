@@ -13,11 +13,16 @@ background = rgba(46,55,69,0.9)
 background = #2e3745
 # darker
 background = #29323e
+# even darker
+background = #252c37
 # lighter
 foreground = #aab1be
 # darker
 foreground = #a0a6b3
+# even darker
+foreground = #9398a1
 foreground_bold = #aab1be
+foreground_bold = #a0a6b3
 highlight = #2f2f2f
 
 # dark
