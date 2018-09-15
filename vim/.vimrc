@@ -377,10 +377,29 @@ nnoremap <leader>ss :Ag<CR>
 nnoremap <leader>sb :BLines<CR>
 " Fuzzy command search.
 nnoremap <leader>cc :Commands<CR>
+" Fuzzy file history search.
+nnoremap <leader>hf :History<CR>
 " Fuzzy command history search.
 nnoremap <leader>hc :History:<CR>
 " Fuzzy search history search.
 nnoremap <leader>hc :History/<CR>
+
+" Customize fzf colors to match current color scheme.
+let g:fzf_colors = {
+    \ 'fg':      ['fg', 'Normal'],
+    \ 'bg':      ['bg', 'Normal'],
+    \ 'hl':      ['fg', 'Comment'],
+    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    \ 'hl+':     ['fg', 'Statement'],
+    \ 'info':    ['fg', 'PreProc'],
+    \ 'border':  ['fg', 'Ignore'],
+    \ 'prompt':  ['fg', 'Conditional'],
+    \ 'pointer': ['fg', 'Exception'],
+    \ 'marker':  ['fg', 'Keyword'],
+    \ 'spinner': ['fg', 'Label'],
+    \ 'header':  ['fg', 'Comment']
+    \ }
 
 " ------------------------------------------------------------------------------
 " LanguageClient
