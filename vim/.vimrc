@@ -365,26 +365,29 @@ nnoremap <F10> :NERDTreeToggle<CR>
 " ------------------------------------------------------------------------------
 " FZF
 " ------------------------------------------------------------------------------
-" Fuzzy search of loaded buffer names.
+" Search of loaded buffer names.
 nnoremap <leader>b :Buffers<CR>
-" Fuzzy recursive search starting from cwd. Abbrev.:
+" Recursive file name search starting from cwd.
 nnoremap <leader>f :Files<CR>
-" Fuzzy recursive search among all git-tracked files.
+" Recursive file name search among all git-tracked files.
 nnoremap <leader>gf :GFiles<CR>
-" Fuzzy search in project.
-nnoremap <leader>ss :Ag<CR>
-" Fuzzy search in current buffer.
-nnoremap <leader>sb :BLines<CR>
-" Fuzzy command search.
-nnoremap <leader>cc :Commands<CR>
-" Fuzzy file history search.
-nnoremap <leader>hf :History<CR>
-" Fuzzy command history search.
-nnoremap <leader>hc :History:<CR>
-" Fuzzy search history search.
-nnoremap <leader>hc :History/<CR>
 
-" Customize fzf colors to match current color scheme.
+" Search in project.
+nnoremap <leader>ss :Ag<CR>
+" Search in current buffer.
+nnoremap <leader>/ :BLines<CR>
+nnoremap <leader>? :BLines<CR>
+
+" Command search.
+nnoremap <leader>cc :Commands<CR>
+" Command history search.
+nnoremap <leader>hc :History:<CR>
+" File history search.
+nnoremap <leader>hf :History<CR>
+" Search history search.
+nnoremap <leader>h/ :History/<CR>
+
+" Customize fzf colors to always match current color scheme.
 let g:fzf_colors = {
     \ 'fg':      ['fg', 'Normal'],
     \ 'bg':      ['bg', 'Normal'],
