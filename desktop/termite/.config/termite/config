@@ -8,6 +8,9 @@ browser = firefox
 scrollback_lines = -1
 
 [colors]
+#######################
+# Japanese indigo theme
+#######################
 background = rgba(46,55,69,0.9)
 # lighter
 background = #2e3745
@@ -64,3 +67,48 @@ color12 = #a3b38c
 # white
 color7 = #65737e
 color15 = #f6f6f6
+
+#################
+# Solarized theme
+#################
+background = #002b36
+foreground = #93a1a1
+foreground_bold = #93a1a1
+highlight = #2f2f2f
+
+# dark
+color0 = #073642
+color8 = #586e75
+
+# red
+color1 = #cb4b16
+color9 = #cb4b16
+
+# yellow
+#color3 = #b58900
+#color11 = #b58900
+
+# orange
+color3 = #b58900
+color11 = #b58900
+
+# magenta
+color5 =  #c12f6e
+
+# blue
+color13 =  #2592ad
+color6 = #2592ad
+color14 = #2592ad
+
+# turquoise
+color2 = #2aa198
+color10 = #2aa198
+
+# green
+color4 = #859900
+color12 = #859900
+
+# white
+color7 = #586e75
+color15 = #f6f6f6
+

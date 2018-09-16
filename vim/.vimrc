@@ -59,6 +59,7 @@ Plug 'junegunn/limelight.vim'
 " Colorschemes
 " ------------------------------------------------------------------------------ 
 Plug 'mandreyel/vim-japanese-indigo'
+Plug 'mandreyel/vim-mnd-solarized'
 Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/base16-vim/'
@@ -131,7 +132,7 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-colorscheme JapaneseIndigo
+colorscheme mnd-solarized
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
