@@ -103,6 +103,8 @@ Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
+Plug 'skammer/vim-css-color'
+Plug 'gabrielelana/vim-markdown'
 
 " ------------------------------------------------------------------------------ 
 " Syntax
@@ -374,13 +376,13 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>gf :GFiles<CR>
 
 " Search in project.
-nnoremap <leader>ss :Ag<CR>
+nnoremap <leader>ss :Rg<CR>
 " Search in current buffer.
 nnoremap <leader>/ :BLines<CR>
 nnoremap <leader>? :BLines<CR>
 
 " Command search.
-nnoremap <leader>cc :Commands<CR>
+nnoremap <leader>sc :Commands<CR>
 " Command history search.
 nnoremap <leader>hc :History:<CR>
 " File history search.
