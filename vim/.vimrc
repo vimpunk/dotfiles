@@ -103,7 +103,6 @@ Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-Plug 'skammer/vim-css-color'
 Plug 'gabrielelana/vim-markdown'
 
 " ------------------------------------------------------------------------------ 
