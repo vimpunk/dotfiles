@@ -335,11 +335,23 @@ augroup ErrorHighlights
 augroup end
 
 " Show relative line numbers when in command mode or switching to another
-" buffer, and show absolute line numbers when in insert mode.
+" buffer, and show absolute line numbers when in insert mode. However, only set
+" relative number if number is also set. This avoids setting relative number
+" when no number is set, e.g. in vim docs.
+fun! s:SetRelativeNumber()
+    if &number
+        set relativenumber
+    endif
+endfun
+fun! s:UnsetRelativeNumber()
+    if &number
+        set norelativenumber
+    endif
+endfun
 augroup NumberToggle
   autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd BufEnter,FocusGained,InsertLeave * call s:SetRelativeNumber()
+  autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
 augroup END
 
 " .md file extensions should be treated as markdown rather than modula.
