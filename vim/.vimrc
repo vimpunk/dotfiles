@@ -29,9 +29,9 @@ Plug 'tmhedberg/matchit'
 " Repeat plugin mappings.
 Plug 'tpope/vim-repeat'
 " Syntax aware visual selection.
-Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-expand-region' " TODO test
 " Expand abbreviations (mostly for inserting HTML elements).
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim' " TODO test
 
 " ------------------------------------------------------------------------------ 
 " Core enhancements
@@ -101,6 +101,8 @@ Plug 'ajh17/VimCompletesMe'
 
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
+Plug 'mandreyel/vim-rust-syntax-patch'
+Plug 'rhysd/rust-doc.vim' " TODO test
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
 Plug 'gabrielelana/vim-markdown'
@@ -327,7 +329,9 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 fun! s:color()
     highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
+
 call s:color()
+
 augroup ErrorHighlights
     autocmd!
     autocmd Colorscheme * call s:color()
@@ -343,11 +347,13 @@ fun! s:SetRelativeNumber()
         set relativenumber
     endif
 endfun
+
 fun! s:UnsetRelativeNumber()
     if &number
         set norelativenumber
     endif
 endfun
+
 augroup NumberToggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave * call s:SetRelativeNumber()
