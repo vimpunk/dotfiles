@@ -56,7 +56,7 @@ Plug 'junegunn/limelight.vim'
 "Plug 'junegunn/vim-journal'
 
 " ------------------------------------------------------------------------------ 
-" Colorschemes
+" Color schemes
 " ------------------------------------------------------------------------------ 
 Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mandreyel/vim-mnd-solarized'
@@ -81,13 +81,13 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 
 " Async completion TODO get this to work
-"if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-  "Plug 'roxma/vim-hug-neovim-rpc'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'Shougo/deoplete.nvim'
-"endif
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'roxma/nvim-yarp'
+  Plug 'Shougo/deoplete.nvim'
+endif
 
 " Light weight language server plugin
 "Plug 'natebosch/vim-lsc'
@@ -146,7 +146,7 @@ set hidden
 
 set number
 set relativenumber
-set showcmd " Show last command.
+set showcmd " Show current command.
 set lazyredraw
 set encoding=utf-8
 set nocursorline
@@ -220,7 +220,7 @@ set nolist " Don't visualize tabs and line breaks.
 " Show tabs (since space is preferred).
 set listchars=tab:▸\ 
 set listchars+=trail:⋅ " Show trailing spaces.
-" Indicate that a line continues beyond the screen in no-wrap mode.
+" Indicate that a line continues beyond the screen in no-wrap mode (for vimdiff).
 set listchars+=extends:❯,precedes:❮
 let &showbreak='↳ ' " Pretty line break signaler.
 
@@ -323,22 +323,22 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 
 " Unobtrusively highlight column 91 to indicate that the line is too long (this
 " is a less obtrusive way of doing "set colorcolumn"). TODO use tw
-fun! s:color()
+fun! s:HighlightCharLimit()
     highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
-call s:color()
+call s:HighlightCharLimit()
 augroup ErrorHighlights
     autocmd!
-    autocmd Colorscheme * call s:color()
+    autocmd Colorscheme * call s:HighlightCharLimit()
     autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%91v')
 augroup end
 
 " Show relative line numbers when in command mode or switching to another
 " buffer, and show absolute line numbers when in insert mode.
 augroup NumberToggle
-  autocmd!
-  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-  autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
 " .md file extensions should be treated as markdown rather than modula.
@@ -409,9 +409,9 @@ let g:fzf_colors = {
 " LanguageClient
 " ------------------------------------------------------------------------------
 " Language servers
+    "\ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
