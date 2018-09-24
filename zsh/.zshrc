@@ -3,6 +3,7 @@
 
 export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.npm-global/bin
+export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
 export EDITOR='vim'
 
 setopt AUTO_CD # No cd needed to change directories

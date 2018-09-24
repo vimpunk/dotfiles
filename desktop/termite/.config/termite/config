@@ -68,9 +68,9 @@ color12 = #a3b38c
 color7 = #65737e
 color15 = #f6f6f6
 
-#################
-# Solarized theme
-#################
+#####################
+# MND Solarized theme
+#####################
 background = #002b36
 foreground = #93a1a1
 foreground_bold = #93a1a1
@@ -93,7 +93,7 @@ color3 = #b58900
 color11 = #b58900
 
 # magenta
-color5 =  #c12f6e
+color5 =  #c43090
 
 # blue
 color13 =  #2592ad
@@ -104,9 +104,9 @@ color14 = #2592ad
 color2 = #2aa198
 color10 = #2aa198
 
-# green
-color4 = #859900
-color12 = #859900
+# purple
+color4 = #6c71c4
+color12 = #6c71c4
 
 # white
 color7 = #586e75

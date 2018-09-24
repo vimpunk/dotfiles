@@ -29,9 +29,9 @@ Plug 'tmhedberg/matchit'
 " Repeat plugin mappings.
 Plug 'tpope/vim-repeat'
 " Syntax aware visual selection.
-Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-expand-region' " TODO test
 " Expand abbreviations (mostly for inserting HTML elements).
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim' " TODO test
 
 " ------------------------------------------------------------------------------ 
 " Core enhancements
@@ -101,8 +101,11 @@ Plug 'ajh17/VimCompletesMe'
 
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
+Plug 'mandreyel/vim-rust-syntax-patch'
+Plug 'rhysd/rust-doc.vim' " TODO test
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
+Plug 'gabrielelana/vim-markdown'
 
 " ------------------------------------------------------------------------------ 
 " Syntax
@@ -334,11 +337,25 @@ augroup ErrorHighlights
 augroup end
 
 " Show relative line numbers when in command mode or switching to another
-" buffer, and show absolute line numbers when in insert mode.
+" buffer, and show absolute line numbers when in insert mode. However, only set
+" relative number if number is also set. This avoids setting relative number
+" when no number is set, e.g. in vim docs.
+fun! s:SetRelativeNumber()
+    if &number
+        set relativenumber
+    endif
+endfun
+
+fun! s:UnsetRelativeNumber()
+    if &number
+        set norelativenumber
+    endif
+endfun
+
 augroup NumberToggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave * call s:SetRelativeNumber()
+  autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
 augroup END
 
 " .md file extensions should be treated as markdown rather than modula.
@@ -374,13 +391,13 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>gf :GFiles<CR>
 
 " Search in project.
-nnoremap <leader>ss :Ag<CR>
+nnoremap <leader>ss :Rg<CR>
 " Search in current buffer.
 nnoremap <leader>/ :BLines<CR>
 nnoremap <leader>? :BLines<CR>
 
 " Command search.
-nnoremap <leader>cc :Commands<CR>
+nnoremap <leader>sc :Commands<CR>
 " Command history search.
 nnoremap <leader>hc :History:<CR>
 " File history search.
