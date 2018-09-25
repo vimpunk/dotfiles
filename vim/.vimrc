@@ -101,7 +101,6 @@ Plug 'ajh17/VimCompletesMe'
 
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
-Plug 'mandreyel/vim-rust-syntax-patch'
 Plug 'rhysd/rust-doc.vim' " TODO test
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
