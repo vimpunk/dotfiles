@@ -49,6 +49,41 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 
 " ------------------------------------------------------------------------------ 
+" Languages
+" ------------------------------------------------------------------------------ 
+" Language Server Protocol
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+" Async completion
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'roxma/vim-hug-neovim-rpc'
+  Plug 'roxma/nvim-yarp'
+  Plug 'Shougo/deoplete.nvim'
+endif
+
+Plug 'metakirby5/codi.vim' " REPL integration
+Plug 'rust-lang/rust.vim'
+Plug 'rhysd/rust-doc.vim' " TODO test
+Plug 'elzr/vim-json'
+Plug 'posva/vim-vue'
+Plug 'gabrielelana/vim-markdown'
+Plug 'PotatoesMaster/i3-vim-syntax'
+Plug 'cespare/vim-toml'
+
+" ------------------------------------------------------------------------------ 
+" Git
+" ------------------------------------------------------------------------------ 
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
+
+" ------------------------------------------------------------------------------ 
 " Distraction free writing
 " ------------------------------------------------------------------------------ 
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
@@ -70,57 +105,6 @@ Plug 'nightsense/office'
 
 " WIP
 Plug '~/code/seasmoke'
-
-" ------------------------------------------------------------------------------ 
-" Languages
-" ------------------------------------------------------------------------------ 
-" Language Server Protocol
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-" Async completion TODO get this to work
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'roxma/nvim-yarp'
-  Plug 'Shougo/deoplete.nvim'
-endif
-
-" Light weight language server plugin
-"Plug 'natebosch/vim-lsc'
-
-" Auto completion
-"Plug 'maxboisvert/vim-simple-complete'
-
-" Tab key completion
-Plug 'ajh17/VimCompletesMe'
-" TODO try this as an alternative: https://github.com/ervandew/supertab
-
-Plug 'metakirby5/codi.vim' " REPL integration
-Plug 'rust-lang/rust.vim'
-Plug 'mandreyel/vim-rust-syntax-patch'
-Plug 'rhysd/rust-doc.vim' " TODO test
-Plug 'elzr/vim-json'
-Plug 'posva/vim-vue'
-Plug 'gabrielelana/vim-markdown'
-
-" ------------------------------------------------------------------------------ 
-" Syntax
-" ------------------------------------------------------------------------------ 
-Plug 'PotatoesMaster/i3-vim-syntax'
-Plug 'cespare/vim-toml'
-Plug 'posva/vim-vue'
-
-" ------------------------------------------------------------------------------ 
-" Git
-" ------------------------------------------------------------------------------ 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/gv.vim'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
 call plug#end()
 
@@ -429,17 +413,17 @@ let g:fzf_colors = {
 " LanguageClient
 " ------------------------------------------------------------------------------
 " Language servers
-    "\ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rustup', 'run', 'stable', 'rls'],
     \ 'python': ['pyls'],
     \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
     \ 'sh': ['bash-language-server', 'start'],
     \ 'vue': ['vls'],
+    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ }
-
 " TODO something about the cpp langserver is really slowing down vim
-"\ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+
 " Only run error checker once every second.
 let g:LanguageClient_changeThrottle = 1
 
@@ -455,6 +439,16 @@ nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
 " Dumpster
 "==========
 " Store currently unused or work-in-progress settings/scripts.
+
+" Light weight language server plugin
+"Plug 'natebosch/vim-lsc'
+
+" Auto completion
+"Plug 'maxboisvert/vim-simple-complete'
+
+" Tab key completion
+"Plug 'ajh17/VimCompletesMe' TODO try this as an alternative:
+"https://github.com/ervandew/supertab
 
 " Mark two or more spaces after some text as an error.
 "syntax match DoubleSpace /\S\zs {2,}/
