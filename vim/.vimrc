@@ -378,7 +378,7 @@ nnoremap <leader>f :Files<CR>
 nnoremap <leader>gf :GFiles<CR>
 
 " Search in project.
-nnoremap <leader>ss :Rg<CR>
+nnoremap <leader>ss :Ag<CR>
 " Search in current buffer.
 nnoremap <leader>/ :BLines<CR>
 nnoremap <leader>? :BLines<CR>
