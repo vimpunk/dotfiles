@@ -17,10 +17,16 @@
     # Open all files changed since master in vim tabs and run fugitive :Gdiff in
     # each tab and tell gitgutter to show +/- signs for changes since master.
     review = !vim -p $(git files) +\"tabdo Gdiff master\" +\"let g:gitgutter_diff_base = 'master'\"
+
+    # Should probably not use these two too much as it's better to know the
+    # actual commands, but just in case I forget them:
+    unstage = reset HEAD --
+    unmodify = checkout --
+    untrack = rm --cached
 [credential]
     helper = cache --timeout=21600
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [merge]
     tool = vimdiff
 [mergetool]
