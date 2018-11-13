@@ -373,7 +373,7 @@ nnoremap <F10> :NERDTreeToggle<CR>
 " Search of loaded buffer names.
 nnoremap <leader>b :Buffers<CR>
 " Recursive file name search starting from cwd.
-nnoremap <leader>f :Files<CR>
+nnoremap <leader>ff :Files<CR>
 " Recursive file name search among all git-tracked files.
 nnoremap <leader>gf :GFiles<CR>
 
