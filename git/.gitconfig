@@ -1,12 +1,12 @@
 [user]
-	email = mandreyel@protonmail.com
-	name = mandreyel
+    email = mandreyel@protonmail.com
+    name = mandreyel
 [core]
     editor = vim
-	excludesfile = ~/dotfiles/git/.gitignore
+    excludesfile = ~/dotfiles/git/.gitignore
 [alias]
     # Detailed commit history graph
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
     # List files which have changed since master.
     files = !git diff --name-only $(git merge-base HEAD master)
@@ -24,10 +24,10 @@
     unmodify = checkout --
     untrack = rm --cached
 [credential]
-	helper = cache --timeout=21600
+    helper = cache --timeout=21600
 [diff]
-	tool = vimdiff
+    tool = vimdiff
 [merge]
-	tool = vimdiff
+    tool = vimdiff
 [mergetool]
-	prompt = false
+    prompt = false
