@@ -32,6 +32,8 @@ alias update='sudo pacman -Syu'
 alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
 # Vim ruined me...
 alias :q='exit'
+alias gdb='gdb -q'
+alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 
 function note {
     vim ~/notes/$1
