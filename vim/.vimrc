@@ -181,9 +181,6 @@ command! Wqa wqa
 
 " Visually select the text that was last edited/pasted (Vimcast#26).
 noremap gV `[v`]
-" Reselect visual block after indent.
-vnoremap < <gv
-vnoremap > >gv
 
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 25
