@@ -323,8 +323,8 @@ bindsym $Mod+r mode "resize"
 ################################################################################
 
 # gaps
-gaps inner 5
-gaps outer 5
+gaps inner 1
+gaps outer 1
 
 new_window normal
 new_float normal
