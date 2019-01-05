@@ -12,6 +12,16 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+function! BuildComposer(info)
+  if a:info.status != 'unchanged' || a:info.force
+    if has('nvim')
+      !cargo build --release
+    else
+      !cargo build --release --no-default-features --features json-rpc
+    endif
+  endif
+endfunction
+
 call plug#begin('~/.vim/bundle')
 
 " ------------------------------------------------------------------------------ 
@@ -68,12 +78,15 @@ endif
 
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
+" TODO
+"Plug 'racer-rust/vim-racer' " RLS is not there yet so use racer until then.
 Plug 'rhysd/rust-doc.vim' " TODO test
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
 Plug 'gabrielelana/vim-markdown'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
+Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 " ------------------------------------------------------------------------------ 
 " Git
@@ -102,6 +115,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized' " This is great.
 Plug 'nightsense/seagrey'
 Plug 'nightsense/office'
+Plug 'Nequo/vim-allomancer'
 
 " WIP
 Plug '~/code/seasmoke'
@@ -418,6 +432,7 @@ let g:LanguageClient_serverCommands = {
     \ 'vue': ['vls'],
     \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
     \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
+    \ 'javascript': ['javascript-typescript-langserver'],
     \ }
 " TODO something about the cpp langserver is really slowing down vim
 
