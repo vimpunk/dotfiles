@@ -366,7 +366,8 @@ autocmd BufNewFile,BufFilePre,BufRead *.rs set tw=80
 let g:indentLine_color_term = 246
 let g:indentLine_color_gui = '#4f5b66'
 
-let g:goyo_width = 80
+let g:goyo_width = 90
+let g:goyo_height = 100
 let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
