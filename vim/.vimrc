@@ -61,26 +61,10 @@ Plug 'xolox/vim-session'
 " ------------------------------------------------------------------------------ 
 " Languages
 " ------------------------------------------------------------------------------ 
-" Language Server Protocol
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
-
-" Async completion
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'roxma/vim-hug-neovim-rpc'
-  Plug 'roxma/nvim-yarp'
-  Plug 'Shougo/deoplete.nvim'
-endif
-
+Plug 'w0rp/ale' " Language server client and lint engine.
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
-" TODO
-"Plug 'racer-rust/vim-racer' " RLS is not there yet so use racer until then.
 Plug 'rhysd/rust-doc.vim' " TODO test
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
@@ -375,8 +359,8 @@ let g:limelight_conceal_ctermfg = 'DarkGray'
 
 let g:session_autosave = 'no'
 
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_smart_case = 1
 
 nnoremap <F10> :NERDTreeToggle<CR>
 
@@ -423,31 +407,38 @@ let g:fzf_colors = {
     \ }
 
 " ------------------------------------------------------------------------------
-" LanguageClient
+" ALE
 " ------------------------------------------------------------------------------
-" Language servers
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
-    \ 'python': ['pyls'],
-    \ 'ruby': ['~/.gem/ruby/2.5.0/bin/language_server-ruby'],
-    \ 'sh': ['bash-language-server', 'start'],
-    \ 'vue': ['vls'],
-    \ 'cpp': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c++17"], "index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
-    \ 'c': ['cquery', '--log-file=/tmp/cq.log', '--init={"extraClangArguments": ["-std=c99"],"index": {"comments": 2}, "cacheDirectory": "/tmp/cquery"}'],
-    \ 'javascript': ['javascript-typescript-langserver'],
+let g:ale_completion_enabled = 1
+let g:ale_completion_max_suggestions = 30
+let g:ale_close_preview_on_insert = 1
+let g:ale_set_balloons = 1
+let g:ale_set_highlights = 1
+
+let g:ale_sign_error = "◉"
+let g:ale_sign_warning = "◉"
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+
+let g:ale_rust_rls_toolchain = 'stable' " Is this right? TODO
+let g:ale_linters = {
+    \ 'rust': ['rls'],
     \ }
-" TODO something about the cpp langserver is really slowing down vim
 
-" Only run error checker once every second.
-let g:LanguageClient_changeThrottle = 1
+nnoremap <leader>lh :ALEHover<CR>
+nnoremap <leader>lg :ALEGoToDefinition<CR>
+nnoremap <leader>lo :ALEFindReferences<CR>
+nnoremap <leader>ls :ALESymbolSearch 
 
-nnoremap <leader>lh :call LanguageClient_textDocument_hover()<CR>
-nnoremap <leader>lg :call LanguageClient_textDocument_definition()<CR>
-nnoremap <leader>lr :call LanguageClient_textDocument_rename()<CR>
-nnoremap <leader>lo :call LanguageClient_textDocument_references()<CR>
-nnoremap <leader>ls :call LanguageClient_textDocument_documentSymbol()<CR>
-nnoremap <leader>lf :call LanguageClient_textDocument_rangeFormatting()<CR>
+" Can't override ALE color highlights in the colorscheme, which is probably
+" loaded first, so overwrite them again here.
+hi link ALEError Error
+hi link ALEErrorLine Error
+hi link ALEErrorSign Error
 
+hi link ALEWarning Warning
+hi link ALEWarningLine Warning
+hi link ALEWarningSign Warning
 
 "==========
 " Dumpster
