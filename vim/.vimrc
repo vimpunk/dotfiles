@@ -78,6 +78,7 @@ endif
 
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
+Plug 'leafgarland/typescript-vim'
 " TODO
 "Plug 'racer-rust/vim-racer' " RLS is not there yet so use racer until then.
 Plug 'rhysd/rust-doc.vim' " TODO test
