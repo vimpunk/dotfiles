@@ -344,6 +344,7 @@ autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
 " rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
 autocmd BufNewFile,BufFilePre,BufRead *.rs set tw=80
 
+
 " ==============================================================================
 " Plugin specific settings
 " ==============================================================================
@@ -427,8 +428,11 @@ let g:ale_linters = {
 
 nnoremap <leader>lh :ALEHover<CR>
 nnoremap <leader>lg :ALEGoToDefinition<CR>
-nnoremap <leader>lo :ALEFindReferences<CR>
+nnoremap <leader>lr :ALEFindReferences<CR>
 nnoremap <leader>ls :ALESymbolSearch 
+nnoremap <leader>ld :ALEDetail<CR> 
+nnoremap <C-n> :ALEPreviousWrap<CR>
+nnoremap <C-p> :ALENextWrap<CR>
 
 " Can't override ALE color highlights in the colorscheme, which is probably
 " loaded first, so overwrite them again here.
