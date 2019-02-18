@@ -449,15 +449,8 @@ hi link ALEWarningSign Warning
 "==========
 " Store currently unused or work-in-progress settings/scripts.
 
-" Light weight language server plugin
-"Plug 'natebosch/vim-lsc'
-
 " Auto completion
 "Plug 'maxboisvert/vim-simple-complete'
-
-" Tab key completion
-"Plug 'ajh17/VimCompletesMe' TODO try this as an alternative:
-"https://github.com/ervandew/supertab
 
 " Mark two or more spaces after some text as an error.
 "syntax match DoubleSpace /\S\zs {2,}/
@@ -475,15 +468,6 @@ hi link ALEWarningSign Warning
 "vnoremap <Leader>p "+p
 "vnoremap <leader>P "+P
 
-" deoplete TAB completion
-"inoremap <silent><expr> <TAB> pumvisible() ? "\<C-n>" :
-    "\ <SID>check_back_space() ? "\<TAB>" :
-    "\ deoplete#mappings#manual_complete()
-"function! s:check_back_space() abort "{{{
-    "let col = col('.') - 1
-    "return !col || getline('.')[col - 1]  =~ '\s'
-"endfunction"}}}
-
 " Split navigations. currently conflicts with line movements
 "nnoremap <C-J> <C-W><C-J>
 "nnoremap <C-K> <C-W><C-K>
@@ -495,29 +479,3 @@ hi link ALEWarningSign Warning
 ":au WinEnter * :wincmd =
 
 "command TrimWhitespace %s/\s\+$//e
-
-" vim-lsc:
-"let g:lsc_server_commands = {
-    "\ 'rust': 'rustup run stable rls',
-    "\ 'cpp': 'start-cquery-cpp',
-    "\ 'c': 'start-cquery-c',
-    "\ 'python': 'pyls',
-    "\ 'ruby': '~/.gem/ruby/2.5.0/bin/language_server-ruby',
-    "\ 'sh': 'bash-language-server start',
-    "\ }
-
-"let g:lsc_auto_map = {
-    "\ 'GoToDefinition': '<leader>lg',
-    "\ 'FindReferences': '<leader>lo',
-    "\ 'Rename': '<leader>lr',
-    "\ 'NextReference': '<C-n>',
-    "\ 'PreviousReference': '<C-p>',
-    "\ 'FindCodeActions': '<leader>la',
-    "\ 'ShowHover': '<leader>lh',
-    "\ 'DocumentSymbol': '<leader>ls',
-    "\ 'FindImplementations': '<leader>li',
-    "\ 'Completion': 'completefunc',
-    "\}
-
-"highlight lscDiagnosticError guifg='#9d5057'
-"autocmd CompleteDone * silent! pclose
