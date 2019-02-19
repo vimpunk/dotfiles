@@ -24,9 +24,9 @@ endfunction
 
 call plug#begin('~/.vim/bundle')
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Editing
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'scrooloose/nerdcommenter'
 " Easily change, delete or add surroundings such as brackets, parentheses, quotes...
 Plug 'tpope/vim-surround'
@@ -43,9 +43,9 @@ Plug 'terryma/vim-expand-region' " TODO test
 " Expand abbreviations (mostly for inserting HTML elements).
 Plug 'mattn/emmet-vim' " TODO test
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Core enhancements
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Fuzzy searching
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -57,10 +57,12 @@ Plug 'Yggdroot/indentLine'
 " Enhanced session management (the first one is a dependency).
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Languages
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'w0rp/ale' " Language server client and lint engine.
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
@@ -73,24 +75,24 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Git
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Distraction free writing
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim'
 "Plug 'junegunn/vim-journal'
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Color schemes
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mandreyel/vim-mnd-solarized'
 Plug 'mhartington/oceanic-next'
@@ -153,12 +155,12 @@ nnoremap <S-h> <S-h>5k
 nnoremap <S-l> <S-l>5j
 
 " Quicker way to escape insert mode.
-inoremap jj <Esc> 
-inoremap jj <Esc> 
-inoremap JJ <Esc> 
-inoremap jk <Esc> 
-inoremap Jk <Esc> 
-inoremap JK <Esc> 
+inoremap jj <Esc>
+inoremap jj <Esc>
+inoremap JJ <Esc>
+inoremap jk <Esc>
+inoremap Jk <Esc>
+inoremap JK <Esc>
 
 " Quicker way to resize a window.
 nnoremap <F2> <C-w><
@@ -188,9 +190,9 @@ if has('mouse')
     set mouse=a
 endif
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Formatting
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 set wrap
 set linebreak " Don't break lines mid-word.
 if exists('&breakindent')
@@ -269,9 +271,9 @@ nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <expr> n 'Nn'[v:searchforward] . 'zz'
 nnoremap <expr> N 'nN'[v:searchforward] . 'zz'
 
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Movement
-" ------------------------------------------------------------------------------ 
+" ------------------------------------------------------------------------------
 " Navigate wrapped lines as though they were normal lines with line breaks.
 nnoremap j gj
 nnoremap k gk
@@ -429,8 +431,8 @@ let g:ale_linters = {
 nnoremap <leader>lh :ALEHover<CR>
 nnoremap <leader>lg :ALEGoToDefinition<CR>
 nnoremap <leader>lr :ALEFindReferences<CR>
-nnoremap <leader>ls :ALESymbolSearch 
-nnoremap <leader>ld :ALEDetail<CR> 
+nnoremap <leader>ls :ALESymbolSearch
+nnoremap <leader>ld :ALEDetail<CR>
 nnoremap <C-n> :ALEPreviousWrap<CR>
 nnoremap <C-p> :ALENextWrap<CR>
 
