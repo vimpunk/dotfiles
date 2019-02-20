@@ -12,6 +12,18 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+if empty(glob('~/.vim/swap'))
+    silent !mkdir ~/.vim/swap
+endif
+
+if empty(glob('~/.vim/backup'))
+    silent !mkdir ~/.vim/backup
+endif
+
+if empty(glob('~/.vim/undo'))
+    silent !mkdir ~/.vim/undo
+endif
+
 function! BuildComposer(info)
   if a:info.status != 'unchanged' || a:info.force
     if has('nvim')
