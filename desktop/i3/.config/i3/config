@@ -41,7 +41,8 @@ set $md_bg #37414e
 client.focused          $li     $bg     $fg     $li     $li
 client.unfocused        $md_bg  $bg     $black  $bg     $md_bg
 client.focused_inactive $md_bg  $bg     $black  $bg     $md_bg
-client.urgent           $red    $bg     $red    $red    $red
+client.urgent           $md_bg  $bg     $black  $bg     $md_bg
+#client.urgent           $red    $bg     $red    $red    $red
 client.placeholder      $li     $bg     $bg     $bg     $bg
 client.background       $bg
 
