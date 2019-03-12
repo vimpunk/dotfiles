@@ -5,6 +5,8 @@ export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
 export EDITOR='vim'
+export GOPATH=$HOME/go
+export PATH=$PATH:GOROOT/bin:$GOPATH/bin
 
 setopt AUTO_CD # No cd needed to change directories
 setopt BANG_HIST # Treat the '!' character specially during expansion.
