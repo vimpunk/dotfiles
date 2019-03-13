@@ -348,12 +348,6 @@ for_window [class="(?i)(?:lxapp\w+|peek)"] floating enable
 for_window [class="(?i)(?:gpic\w+|gvim)"] floating enable
 for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable
 
-# Assign Applications to specific workspaces (get class with xprop)
-assign [class="(?i)(?:firefox)"]              → $WS1
-assign [class="(?i)(?:geany)"]                → $WS6
-assign [class="(?i)(?:deluge|thunar)"]        → $WS8
-assign [class="(?i)(?:audacious|spotify)"]    → $WS9
-
 # focus, floating, & sticky
 for_window [title="(?i)(?:copying|deleting|moving|auth\w+)"] floating enable, sticky enable
 for_window [window_role="(?i)(?:pop-up|setup|task_dialog|preferen\w+)"]  floating enable, sticky enable
