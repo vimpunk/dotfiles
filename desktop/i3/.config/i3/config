@@ -37,35 +37,15 @@ set $mdk_bg #252c37
 set $dk_bg #1b2129
 set $md_bg #37414e
 
-# class                 border  bg      text    indictr child_border
-client.focused          $li     $bg     $fg     $li     $li
-client.unfocused        $md_bg  $bg     $black  $bg     $md_bg
-client.focused_inactive $md_bg  $bg     $black  $bg     $md_bg
-client.urgent           $md_bg  $bg     $black  $bg     $md_bg
-#client.urgent           $red    $bg     $red    $red    $red
-client.placeholder      $li     $bg     $bg     $bg     $bg
-client.background       $bg
-
-# border & title (must be set to border pixel for gaps to work)
-for_window [class="^.*"] border pixel 2, title_format "<b> %title </b>"
-
-# font
-font pango:Inconsolata Regular 12
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:monospace 8
 
 # TODO switch to polybar
 bar {
-        status_command i3blocks -c ~/.config/i3blocks.conf
-        position top
+        status_command i3status
+        position bottom
         font xft:Droid Sans Mono, FontAwesome 11
-
-        colors {
-            background $dk_bg
-
-            focused_workspace $fg $fg $bg
-            active_workspace $fg $fg $bg
-            inactive_workspace $bg $bg $white
-            urgent_workspace $red $red $bg
-        }
 }
 
 ################################################################################
@@ -92,14 +72,12 @@ set $WS8 "8"
 set $WS9 "9"
 set $WS10 "10"
 
-
 # monitors
 set $Mon1 HDMI1
 set $Mon2 HDMI2
 
 # the terminal emulator
-set $terminal termite
-
+set $terminal gnome-terminal
 
 ################################################################################
 # Autostart
@@ -126,16 +104,13 @@ exec xflux -l 47 -g 19
 #exec redshift
 # launch a terminal on WS2 on startup
 exec --no-startup-id i3-msg 'workspace $WS2; exec $terminal'
-# launch a terminal at the projects folder on startup
-exec --no-startup-id i3-msg 'workspace $WS3; exec $terminal -d ~/projects'
 
 # drop down terminal
-exec --no-startup-id ~/bin/dropdown-terminal.sh
+#exec --no-startup-id ~/bin/dropdown-terminal.sh # TODO fix
 for_window [instance="dropdown-terminal"] floating enable;
 for_window [instance="dropdown-terminal"] move scratchpad; [instance="dropdown-terminal"] scratchpad show; move position 0px 24px; move scratchpad
 bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
 bindsym $Mod+Shift+t exec --no-startup-id ~/bin/dropdown-terminal.sh
-
 
 ################################################################################
 # Bindings
@@ -146,7 +121,7 @@ bindsym $Mod+Shift+q kill
 bindsym Mod1+q kill
 
 # launchers
-bindsym $mod+d exec --no-startup-id ~/bin/rofi-gorice
+bindsym $mod+d exec dmenu_run
 
 bindsym $Mod+Return exec --no-startup-id $terminal
 
@@ -174,7 +149,6 @@ bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%
             paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 # toggle muting
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master toggle-mute
-
 
 ################################################################################
 # Workspace bindings
@@ -220,7 +194,6 @@ bindsym $Mod+Shift+0 move container to workspace $WS10; workspace $WS10
 bindsym $mod+Shift+bracketleft move workspace to output left
 bindsym $mod+Shift+bracketright move workspace to output right
 
-
 ################################################################################
 # Reload configs
 ################################################################################
@@ -233,7 +206,6 @@ bindsym $Mod+Shift+c reload
 
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
 
 ################################################################################
 # Container/window control
@@ -318,27 +290,6 @@ mode "resize" {
 
 bindsym $Mod+r mode "resize"
 
-
-################################################################################
-# Border & gaps
-################################################################################
-
-# gaps
-gaps inner 1
-gaps outer 1
-
-new_window normal
-new_float normal
-hide_edge_borders both
-popup_during_fullscreen smart
-bindsym $Mod+shift+b border toggle
-
-#changing border style
-bindsym $Mod+n border normal
-bindsym $Mod+y border 1pixel
-bindsym $Mod+u border none
-
-
 ################################################################################
 # Application settings
 ################################################################################
@@ -354,8 +305,6 @@ for_window [window_role="(?i)(?:pop-up|setup|task_dialog|preferen\w+)"]  floatin
 
 # set trayer to be borderless
 for_window [class="(?i)trayer"] border pixel 0
-
-
 
 # start on main workspaces when reloading i3 (keep me at the bottom)
 exec_always --no-startup-id i3-msg 'workspace $WS5, workspace $WS1'
