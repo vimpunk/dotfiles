@@ -17,10 +17,10 @@ general {
 }
 
 order += "volume master"
-order += "battery 0"
+#order += "battery 0"
 order += "disk /"
-#order += "disk /data"
-#order += "disk /home"
+order += "disk /disk0"
+order += "disk /disk1"
 #order += "run_watch DHCP"
 #order += "ipv6"
 #order += "run_watch VPN"
@@ -28,6 +28,9 @@ order += "wireless wlp4s0"
 order += "ethernet enp5s0"
 order += "cpu_temperature 0"
 order += "cpu_usage 0"
+order += "cpu_usage 1"
+order += "cpu_usage 2"
+order += "cpu_usage 3"
 order += "load"
 order += "tztime local"
 
@@ -88,19 +91,19 @@ disk "/" {
     threshold_type = percentage_avail
 }
 
-#disk "/data" {
-#    format = " %avail"
-#    prefix_type = custom
-#    low_threshold = 20
-#    threshold_type = percentage_avail
-#}
+disk "/disk0" {
+    format = " %avail"
+    prefix_type = custom
+    low_threshold = 20
+    threshold_type = percentage_avail
+}
 
-#disk "/data" {
-#        format = " %avail"
-#        prefix_type = custom
-#        low_threshold = 20
-#        threshold_type = percentage_avail
-#}
+disk "/disk1" {
+        format = " %avail"
+        prefix_type = custom
+        low_threshold = 20
+        threshold_type = percentage_avail
+}
 
 volume master {
     format = "%volume  "
