@@ -86,16 +86,13 @@ set $terminal gnome-terminal
 # run with each reload
 exec_always feh --bg-scale ~/.config/i3/wall
 exec_always xrandr --output DP1 --auto --left-of HDMI2
+exec_always --no-startup-id compton
 
-#exec_always --no-startup-id start-compton
-#exec_always --no-startup-id al-polybar-session
 #exec_always --no-startup-id numlockx on
-#exec_always --no-startup-id nitrogen --restore
 #exec_always --no-startup-id xrdb -load ~/.Xresources
 #exec_always --no-startup-id pkill trayer; trayer --edge bottom --align left --heighttype pixel --height 18 --widthtype request --SetDockType false --expand true --transparent true --alpha 255
 
 # run once
-exec compton
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
 
