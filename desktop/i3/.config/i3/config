@@ -77,7 +77,7 @@ set $Mon1 HDMI1
 set $Mon2 HDMI2
 
 # the terminal emulator
-set $terminal gnome-terminal
+set $terminal konsole
 
 ################################################################################
 # Autostart
@@ -99,8 +99,6 @@ exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
 exec firefox
 exec xflux -l 47 -g 19
 #exec redshift
-# launch a terminal on WS2 on startup
-exec --no-startup-id i3-msg 'workspace $WS2; exec $terminal'
 
 # drop down terminal
 #exec --no-startup-id ~/bin/dropdown-terminal.sh # TODO fix

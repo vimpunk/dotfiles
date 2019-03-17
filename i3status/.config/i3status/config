@@ -18,7 +18,7 @@ general {
 
 order += "volume master"
 #order += "battery 0"
-order += "disk /"
+order += "disk /home"
 order += "disk /disk0"
 order += "disk /disk1"
 #order += "run_watch DHCP"
@@ -84,7 +84,7 @@ cpu_temperature 0 {
     format = " %degrees°C"
 }
 
-disk "/" {
+disk "/home" {
     format = " %avail"
     prefix_type	= custom
     low_threshold = 20

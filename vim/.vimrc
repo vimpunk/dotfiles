@@ -79,7 +79,7 @@ Plug 'w0rp/ale' " Language server client and lint engine.
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
-Plug 'rhysd/rust-doc.vim' " TODO test
+"Plug 'rhysd/rust-doc.vim' " TODO didn't seem to work, open issue
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
 Plug 'gabrielelana/vim-markdown'
