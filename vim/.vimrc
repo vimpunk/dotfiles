@@ -445,8 +445,8 @@ nnoremap <leader>lg :ALEGoToDefinition<CR>
 nnoremap <leader>lr :ALEFindReferences<CR>
 nnoremap <leader>ls :ALESymbolSearch
 nnoremap <leader>ld :ALEDetail<CR>
-nnoremap <C-n> :ALEPreviousWrap<CR>
-nnoremap <C-p> :ALENextWrap<CR>
+nnoremap <C-p> :ALEPreviousWrap<CR>
+nnoremap <C-n> :ALENextWrap<CR>
 
 " Can't override ALE color highlights in the colorscheme, which is probably
 " loaded first, so overwrite them again here.
