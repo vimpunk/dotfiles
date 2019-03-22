@@ -425,6 +425,8 @@ let g:fzf_colors = {
 " ALE
 " ------------------------------------------------------------------------------
 let g:ale_completion_enabled = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_insert_leave = 1
 let g:ale_completion_max_suggestions = 30
 let g:ale_close_preview_on_insert = 1
 let g:ale_set_balloons = 1
