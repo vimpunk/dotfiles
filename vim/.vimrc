@@ -75,7 +75,8 @@ Plug 'vim-airline/vim-airline-themes'
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
-Plug 'w0rp/ale' " Language server client and lint engine.
+"Plug 'w0rp/ale' " Language server client and lint engine.
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
@@ -422,43 +423,35 @@ let g:fzf_colors = {
     \ }
 
 " ------------------------------------------------------------------------------
-" ALE
+" COC
 " ------------------------------------------------------------------------------
-let g:ale_completion_enabled = 1
-let g:ale_lint_on_text_changed = 1
-let g:ale_lint_on_insert_leave = 1
-let g:ale_completion_max_suggestions = 30
-let g:ale_close_preview_on_insert = 1
-let g:ale_set_balloons = 1
-let g:ale_set_highlights = 1
+let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
-let g:ale_sign_error = "◉"
-let g:ale_sign_warning = "◉"
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
+" Use `[c` and `]c` to navigate diagnostics.
+nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
+nmap <silent> ld <Plug>(coc-definition)
+nmap <silent> ly <Plug>(coc-type-definition)
+nmap <silent> li <Plug>(coc-implementation)
+nmap <silent> lr <Plug>(coc-references)
 
-let g:ale_rust_rls_toolchain = 'stable' " Is this right? TODO
-let g:ale_linters = {
-    \ 'rust': ['rls'],
-    \ }
+" Rename symbol under cursor.
+nmap <leader>rn <Plug>(coc-rename)
 
-nnoremap <leader>lh :ALEHover<CR>
-nnoremap <leader>lg :ALEGoToDefinition<CR>
-nnoremap <leader>lr :ALEFindReferences<CR>
-nnoremap <leader>ls :ALESymbolSearch
-nnoremap <leader>ld :ALEDetail<CR>
-nnoremap <C-p> :ALEPreviousWrap<CR>
-nnoremap <C-n> :ALENextWrap<CR>
+" Format selected region.
+vmap <leader>gq <Plug>(coc-format-selected)
+nmap <leader>gq <Plug>(coc-format-selected)
 
-" Can't override ALE color highlights in the colorscheme, which is probably
-" loaded first, so overwrite them again here.
-hi link ALEError Error
-hi link ALEErrorLine Error
-hi link ALEErrorSign Error
-
-hi link ALEWarning Warning
-hi link ALEWarningLine Warning
-hi link ALEWarningSign Warning
+" Use K to show documentation in preview window.
+function! s:ShowDocs()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+nnoremap <silent> K :call <SID>ShowDocs()<CR>
 
 "==========
 " Dumpster
