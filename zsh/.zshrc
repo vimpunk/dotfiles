@@ -7,6 +7,7 @@ export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
 export EDITOR='vim'
 export GOPATH=$HOME/go
 export PATH=$PATH:GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:$HOME/.npm-global/bin
 
 setopt AUTO_CD # No cd needed to change directories
 setopt BANG_HIST # Treat the '!' character specially during expansion.
@@ -46,3 +47,5 @@ function note {
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
