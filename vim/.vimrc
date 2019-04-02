@@ -109,15 +109,16 @@ Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mandreyel/vim-mnd-solarized'
 Plug 'mhartington/oceanic-next'
 Plug 'arcticicestudio/nord-vim'
-Plug 'chriskempson/base16-vim/'
 Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized' " This is great.
 Plug 'nightsense/seagrey'
 Plug 'nightsense/office'
 Plug 'Nequo/vim-allomancer'
-
-" WIP
-Plug '~/code/seasmoke'
+Plug 'rakr/vim-two-firewatch'
+Plug 'rakr/vim-one'
+Plug 'junegunn/seoul256.vim'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'cormacrelf/vim-colors-github'
 
 call plug#end()
 
@@ -132,7 +133,8 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-colorscheme mnd-solarized
+colorscheme github
+"colorscheme mnd-solarized
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
@@ -405,21 +407,21 @@ nnoremap <leader>hf :History<CR>
 nnoremap <leader>h/ :History/<CR>
 
 " Customize fzf colors to always match current color scheme.
-let g:fzf_colors = {
-    \ 'fg':      ['fg', 'Normal'],
-    \ 'bg':      ['bg', 'Normal'],
-    \ 'hl':      ['fg', 'Comment'],
-    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-    \ 'hl+':     ['fg', 'Statement'],
-    \ 'info':    ['fg', 'PreProc'],
-    \ 'border':  ['fg', 'Ignore'],
-    \ 'prompt':  ['fg', 'Conditional'],
-    \ 'pointer': ['fg', 'Exception'],
-    \ 'marker':  ['fg', 'Keyword'],
-    \ 'spinner': ['fg', 'Label'],
-    \ 'header':  ['fg', 'Comment']
-    \ }
+"let g:fzf_colors = {
+    "\ 'fg':      ['fg', 'Normal'],
+    "\ 'bg':      ['bg', 'Normal'],
+    "\ 'hl':      ['fg', 'Comment'],
+    "\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+    "\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+    "\ 'hl+':     ['fg', 'Statement'],
+    "\ 'info':    ['fg', 'PreProc'],
+    "\ 'border':  ['fg', 'Ignore'],
+    "\ 'prompt':  ['fg', 'Conditional'],
+    "\ 'pointer': ['fg', 'Exception'],
+    "\ 'marker':  ['fg', 'Keyword'],
+    "\ 'spinner': ['fg', 'Label'],
+    "\ 'header':  ['fg', 'Comment']
+    "\ }
 
 " ------------------------------------------------------------------------------
 " ALE
