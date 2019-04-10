@@ -86,7 +86,6 @@ Plug 'posva/vim-vue'
 Plug 'gabrielelana/vim-markdown'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
-Plug 'euclio/vim-markdown-composer', { 'do': function('BuildComposer') }
 
 " ------------------------------------------------------------------------------
 " Git
@@ -134,8 +133,9 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-colorscheme github
-"colorscheme mnd-solarized
+"let g:github_colors_soft=1
+"colorscheme github
+colorscheme mnd-solarized
 
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
@@ -321,7 +321,7 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 " Scripts & Autocommands
 " ==============================================================================
 
-" Unobtrusively highlight column 91 to indicate that the line is too long (this
+" Unobtrusively highlight column 82 to indicate that the line is too long (this
 " is a less obtrusive way of doing "set colorcolumn"). TODO use tw
 fun! s:HighlightCharLimit()
     highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
@@ -330,7 +330,7 @@ call s:HighlightCharLimit()
 augroup ErrorHighlights
     autocmd!
     autocmd Colorscheme * call s:HighlightCharLimit()
-    autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%91v')
+    autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
 augroup end
 
 " Show relative line numbers when in command mode or switching to another
