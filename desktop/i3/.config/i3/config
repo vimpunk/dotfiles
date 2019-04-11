@@ -120,6 +120,9 @@ bindsym $mod+d exec dmenu_run
 
 bindsym $Mod+Return exec --no-startup-id $terminal
 
+# vim-anywhere
+bindsym $mod+Shift+v exec ~/.vim-anywhere/bin/run
+
 # partial screen shot with scrot
 bindsym --release $Mod+Shift+c exec --no-startup-id scrot -s
 
