@@ -298,7 +298,7 @@ for_window [class="(?i)(?:gpic\w+|gvim)"] floating enable
 for_window [class="(?i)(?:qt5ct|pinentry)"] floating enable
 
 # focus, floating, & sticky
-for_window [title="(?i)(?:copying|deleting|moving|auth\w+)"] floating enable, sticky enable
+for_window [title="(?i)(?:copying|deleting|moving\w+)"] floating enable, sticky enable
 for_window [window_role="(?i)(?:pop-up|setup|task_dialog|preferen\w+)"]  floating enable, sticky enable
 
 # set trayer to be borderless
