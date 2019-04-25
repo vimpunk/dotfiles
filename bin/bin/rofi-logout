@@ -6,7 +6,7 @@ question=$(echo " lock| logout| reboot| shutdown" | rofi -sep "|" \
 
 case $question in
     *lock)
-        i3lock-fancy
+        i3lock
         ;;
     *logout)
         #command -v gnome-session-quit 2>/dev/null 2>&1 || command -v session-logout >/dev/null 2>&1
