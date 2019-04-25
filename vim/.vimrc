@@ -145,6 +145,24 @@ syntax on
 "colorscheme github
 colorscheme mnd-solarized
 
+" Enable CTRL+V and other general shortcuts in gvim.
+if has("gui_running")
+    " backspace and cursor keys wrap to previous/next line
+    " CTRL-X and SHIFT-Del are Cut
+    " CTRL-C and CTRL-Insert are Copy
+    " CTRL-V and SHIFT-Insert are Paste
+    " Use CTRL-Q to do what CTRL-V used to do
+    " Use CTRL-S for saving, also in Insert mode
+    " CTRL-Z is Undo; not in cmdline though
+    " CTRL-Y is Redo (although not repeat); not in cmdline though
+    " Alt-Space is System menu
+    " CTRL-A is Select all
+    " CTRL-Tab is Next window
+    " CTRL-F4 is Close window
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+endif
+
 " Don't pollute working directories (these need to exist, otherwise vim will
 " bother you every time you want to save a file).
 set backupdir=~/.vim/backup//
