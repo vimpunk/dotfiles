@@ -459,10 +459,10 @@ let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_
 " Use `[c` and `]c` to navigate diagnostics.
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-nmap <silent> ld <Plug>(coc-definition)
-nmap <silent> ly <Plug>(coc-type-definition)
-nmap <silent> li <Plug>(coc-implementation)
-nmap <silent> lr <Plug>(coc-references)
+nmap <silent> <leader>ld <Plug>(coc-definition)
+nmap <silent> <leader>ly <Plug>(coc-type-definition)
+nmap <silent> <leader>li <Plug>(coc-implementation)
+nmap <silent> <leader>lr <Plug>(coc-references)
 
 " Rename symbol under cursor.
 nmap <leader>rn <Plug>(coc-rename)
