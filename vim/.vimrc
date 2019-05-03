@@ -321,12 +321,6 @@ nnoremap k gk
 nnoremap $ g$
 nnoremap 0 g0
 
-" Movement in insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>a
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-
 " Make Y behave like other capitalized movement commands.
 nnoremap Y y$
 
