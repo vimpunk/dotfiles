@@ -4,6 +4,7 @@
 export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
+export PATH=$PATH:/var/lib/snapd/snap/bin/
 export EDITOR='vim'
 export GOPATH=$HOME/go
 export PATH=$PATH:GOROOT/bin:$GOPATH/bin
