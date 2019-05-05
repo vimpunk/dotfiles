@@ -95,6 +95,7 @@ exec_always --no-startup-id compton
 # run once
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id dunst
 
 exec firefox
 exec xflux -l 47 -g 19
