@@ -77,12 +77,7 @@ rm ~/.zshrc
     stow bin
     stow git
     stow i3status
-
-    # apply device specific config files
-    (
-        cd desktop
-        stow -t "${HOME}" i3
-    )
+    stow i3
 
     # apply global config files
     (
