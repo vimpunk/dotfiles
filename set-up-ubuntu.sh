@@ -36,7 +36,12 @@ sudo apt -y install docker-ce
 sudo usermod -a -G docker "${USER}"
 
 # dev tools
+<<<<<<< Updated upstream
 sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql redis cmake golang
+=======
+sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql libpq-dev redis cmake golang
+
+>>>>>>> Stashed changes
 # postgres doesn't link correctly right off the bat, because the linker can't
 # find libpq.so as there will only be a libpq.so.n, so create a symlink to that
 sudo ln -s /lib/x86_64-linux-gnu/libpq.so.[0-9] /lib/x86_64-linux-gnu/libpq.so
