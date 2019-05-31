@@ -32,6 +32,8 @@ sudo add-apt-repository \
    stable"
 sudo apt update
 sudo apt -y install docker-ce
+# add user to docker group so we can connect to the docker daemon socket
+sudo usermod -a -G docker "${USER}"
 
 # dev tools
 sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql redis cmake golang
