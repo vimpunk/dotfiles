@@ -11,8 +11,35 @@ cd "${HOME}"
 
 sudo apt update
 
-# install basic tools
-sudo apt -y install vim i3-wm stow git docker zsh curl shellcheck gcc g++ nodejs npm
+# packages to allow apt to use a repo over HTTPS
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    software-properties-common
+
+# env
+sudo apt -y install vim i3-wm dmenu compton scrot stow git zsh curl ssh silversearcher-ag
+
+# docker
+# add docker gpg keys
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+# docker stable repo ppa (note: use cosmic release as there are currently no
+# stable docker releases for disco)
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   cosmic \
+   stable"
+sudo apt update
+sudo apt -y install docker-ce
+
+# dev tools
+sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql redis cmake golang
+
+# postgres doesn't link correctly right off the bat, because the linker can't
+# find libpq.so as there will only be a libpq.so.n, so create a symlink to
+# that
+sudo ln -s /usr/x86_64-linux-gnu/libpq.so.* /usr/x86_64-linux-gnu/libpq.so
 
 # install rustup
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
@@ -26,11 +53,20 @@ cargo install rls rustfmt sccache
 # configuration
 ############################################################
 
+# start ssh server
+sudo systemctl enable ssh
+sudo systemctl start ssh
+# enable postgres
+sudo systemctl enable postgresql
+
 # change shell to zsh
 sudo usermod -s /usr/zsh mandreyel
 
 # clone configuration repo
 git clone https://github.com/mandreyel/dotfiles
+
+# remove default config files as otherwise stow will fail
+rm ~/.zshrc
 
 # execute in subshell for convenient cd-ing
 (
