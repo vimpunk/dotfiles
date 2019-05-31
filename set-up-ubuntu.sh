@@ -37,18 +37,14 @@ sudo usermod -a -G docker "${USER}"
 
 # dev tools
 sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql redis cmake golang
-
 # postgres doesn't link correctly right off the bat, because the linker can't
-# find libpq.so as there will only be a libpq.so.n, so create a symlink to
-# that
-sudo ln -s /usr/x86_64-linux-gnu/libpq.so.* /usr/x86_64-linux-gnu/libpq.so
+# find libpq.so as there will only be a libpq.so.n, so create a symlink to that
+sudo ln -s /lib/x86_64-linux-gnu/libpq.so.[0-9] /lib/x86_64-linux-gnu/libpq.so
 
-# install rustup
+# rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-
 # source cargo so it's available in this shell
 source ~/.cargo/env
-
 cargo install rls rustfmt sccache
 
 ############################################################
