@@ -380,6 +380,9 @@ augroup END
 
 " .md file extensions should be treated as markdown rather than modula.
 autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
+" Dockerfile.builder is the conventional file name for builder docker files so
+" set file extensions to dockerfile.
+autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
 " Overwriting `tw` in ftplugins/rust.vim doesn't work because I presume the
 " rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
 autocmd BufNewFile,BufFilePre,BufRead *.rs set tw=80
