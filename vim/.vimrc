@@ -346,12 +346,15 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 fun! s:HighlightCharLimit()
     highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
-call s:HighlightCharLimit()
-augroup ErrorHighlights
-    autocmd!
-    autocmd Colorscheme * call s:HighlightCharLimit()
-    autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
-augroup end
+
+if !has("gui_running")
+    call s:HighlightCharLimit()
+    augroup ErrorHighlights
+        autocmd!
+        autocmd Colorscheme * call s:HighlightCharLimit()
+        autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
+    augroup end
+endif
 
 " Show relative line numbers when in command mode or switching to another
 " buffer, and show absolute line numbers when in insert mode. However, only set
