@@ -77,7 +77,7 @@ set $Mon1 HDMI1
 set $Mon2 HDMI2
 
 # the terminal emulator
-set $terminal konsole
+set $terminal gnome-terminal
 
 ################################################################################
 # Autostart
