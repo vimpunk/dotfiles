@@ -28,7 +28,7 @@ PS1='[\u@\h \W]\$ '
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -lA'
-alias l='ls'
+alias l='ls -l'
 alias l.="ls -A | egrep '^\.'"
 alias merge='xrdb -merge ~/.Xresources'
 alias pmsyu='sudo pacman -Syu --color=auto'
