@@ -19,7 +19,7 @@ sudo apt-get install \
     software-properties-common
 
 # env
-sudo apt -y install vim i3 dmenu compton scrot stow git zsh curl ssh silversearcher-ag
+sudo apt -y install vim i3 dmenu compton feh scrot stow git zsh curl ssh silversearcher-ag
 
 # docker
 # add docker gpg keys

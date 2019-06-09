@@ -1,10 +1,4 @@
 #########################################
-#########################################
-# Desktop config
-#########################################
-#########################################
-
-#########################################
 ###         KEY DEFINITIONS          ####
 #########################################
 ##     $Mod = Super key or Mod4        ##
@@ -18,34 +12,14 @@
 ##          Tab = TAB key              ##
 #########################################
 
-# Xresources      var      value       fallback
-set_from_resource $bg      background  #19043C
-set_from_resource $fg      foreground  #F1F1F1
-set_from_resource $red     color1      #EE79A9
-set_from_resource $green   color2      #8C9440
-set_from_resource $yellow  color3      #DE935F
-set_from_resource $blue    color4      #05C6F1
-set_from_resource $purple  color5      #85678F
-set_from_resource $cyan    color6      #5E8D87
-set_from_resource $grey    color7      #969CD3
-set_from_resource $white   color15     #F1F1F1
-set_from_resource $black   color0      #19043C
-set $orange #d08770
-set $turq #88c0d0
-set $li #65737e
-set $mdk_bg #252c37
-set $dk_bg #1b2129
-set $md_bg #37414e
-
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:monospace 8
 
-# TODO switch to polybar
 bar {
-        status_command i3status
-        position bottom
-        font xft:Droid Sans Mono, FontAwesome 11
+    status_command i3status
+    position bottom
+    font xft:Droid Sans Mono, FontAwesome 11
 }
 
 ################################################################################
@@ -55,7 +29,7 @@ bar {
 # $Mod = Super (Mod4) or Alt (Mod1)
 set $Mod Mod1
 
-# direction keys
+# direction keys (use vim bindings)
 set $left h
 set $down j
 set $up k
@@ -72,41 +46,8 @@ set $WS8 "8"
 set $WS9 "9"
 set $WS10 "10"
 
-# monitors
-set $Mon1 HDMI1
-set $Mon2 HDMI2
-
 # the terminal emulator
 set $terminal gnome-terminal
-
-################################################################################
-# Autostart
-################################################################################
-
-# run with each reload
-exec_always feh --bg-scale ~/.config/i3/wall
-exec_always xrandr --output DP1 --auto --left-of HDMI2
-exec_always --no-startup-id compton
-
-#exec_always --no-startup-id numlockx on
-#exec_always --no-startup-id xrdb -load ~/.Xresources
-#exec_always --no-startup-id pkill trayer; trayer --edge bottom --align left --heighttype pixel --height 18 --widthtype request --SetDockType false --expand true --transparent true --alpha 255
-
-# run once
-exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id dunst
-
-exec firefox
-exec xflux -l 47 -g 19
-#exec redshift
-
-# drop down terminal
-#exec --no-startup-id ~/bin/dropdown-terminal.sh # TODO fix
-for_window [instance="dropdown-terminal"] floating enable;
-for_window [instance="dropdown-terminal"] move scratchpad; [instance="dropdown-terminal"] scratchpad show; move position 0px 24px; move scratchpad
-bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
-bindsym $Mod+Shift+t exec --no-startup-id ~/bin/dropdown-terminal.sh
 
 ################################################################################
 # Bindings
@@ -119,20 +60,22 @@ bindsym Mod1+q kill
 # launchers
 bindsym $mod+d exec dmenu_run
 
+# terminal shortcut
 bindsym $Mod+Return exec --no-startup-id $terminal
 
 # vim-anywhere
 bindsym $mod+Shift+v exec ~/.vim-anywhere/bin/run
 
+# screen shot with scrot
+bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
 # partial screen shot with scrot
 bindsym --release $Mod+Shift+c exec --no-startup-id scrot -s
 
-# screen shot with scrot
-bindsym Print exec --no-startup-id "scrot '%S.png' -e 'mv $f $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
-#; gpicview $$(xdg-user-dir PICTURES)/ArchLabs-%S-$wx$h.png'"
-
 # logout
 bindsym $Mod+x exec --no-startup-id ~/bin/rofi-logout
+
+# on-the-fly scratchpad
+bindsym $Mod+t [instance="dropdown-terminal"] scratchpad show
 
 # audio
 bindsym XF86AudioPlay exec playerctl play-pause
@@ -142,15 +85,15 @@ bindsym XF86AudioNext exec playerctl next
 
 # raise Volume
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+ && \
-            paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+    paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 # lower Volume
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%- && \
-            paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
+    paplay /usr/share/sounds/freedesktop/stereo/audio-volume-change.oga
 # toggle muting
 bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master toggle-mute
 
 ################################################################################
-# Workspace bindings
+# Workspaces
 ################################################################################
 
 # workspace assignment
@@ -194,7 +137,7 @@ bindsym $mod+Shift+bracketleft move workspace to output left
 bindsym $mod+Shift+bracketright move workspace to output right
 
 ################################################################################
-# Reload configs
+# Reload/restart
 ################################################################################
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
@@ -265,26 +208,26 @@ bindcode $Mod+23 layout toggle splitv splith
 
 # resize window (you can also use the mouse)
 mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+    # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym $left resize shrink width 10 px or 10 ppt
-        bindsym $down resize shrink height 10 px or 10 ppt
-        bindsym $up resize grow height 10 px or 10 ppt
-        bindsym $right resize grow width 10 px or 10 ppt
+    # Pressing left will shrink the window’s width.
+    # Pressing right will grow the window’s width.
+    # Pressing up will shrink the window’s height.
+    # Pressing down will grow the window’s height.
+    bindsym $left resize shrink width 10 px or 10 ppt
+    bindsym $down resize shrink height 10 px or 10 ppt
+    bindsym $up resize grow height 10 px or 10 ppt
+    bindsym $right resize grow width 10 px or 10 ppt
 
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Up resize grow height 10 px or 10 ppt
-        bindsym Down resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+    # same bindings, but for the arrow keys
+    bindsym Left resize shrink width 10 px or 10 ppt
+    bindsym Up resize grow height 10 px or 10 ppt
+    bindsym Down resize shrink height 10 px or 10 ppt
+    bindsym Right resize grow width 10 px or 10 ppt
 
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 
 bindsym $Mod+r mode "resize"
@@ -304,6 +247,23 @@ for_window [window_role="(?i)(?:pop-up|setup|task_dialog|preferen\w+)"]  floatin
 
 # set trayer to be borderless
 for_window [class="(?i)trayer"] border pixel 0
+
+################################################################################
+# Autostart
+################################################################################
+
+# run with each reload
+exec_always feh --bg-scale ~/.config/i3/wall
+#exec_always --no-startup-id compton
+
+# run once
+exec --no-startup-id nm-applet
+exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
+exec --no-startup-id dunst
+
+# start firefox on startup
+exec firefox
+exec xflux -l 47 -g 19
 
 # start on main workspaces when reloading i3 (keep me at the bottom)
 exec_always --no-startup-id i3-msg 'workspace $WS5, workspace $WS1'
