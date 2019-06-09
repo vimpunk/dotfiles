@@ -74,9 +74,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
-" Enhanced session management (the first one is a dependency).
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
