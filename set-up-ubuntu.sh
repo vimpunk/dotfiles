@@ -59,13 +59,14 @@ sudo systemctl start ssh
 sudo systemctl enable postgresql
 
 # change shell to zsh
-sudo usermod -s /usr/zsh mandreyel
+sudo usermod -s /usr/bin/zsh mandreyel
 
 # clone configuration repo
 git clone https://github.com/mandreyel/dotfiles
 
 # remove default config files as otherwise stow will fail
 rm ~/.zshrc
+rm ~/.bashrc
 
 # execute in subshell for convenient cd-ing
 (
