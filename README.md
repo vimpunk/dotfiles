@@ -11,3 +11,9 @@ One issue I have and feel hasn't been properly solved is the management of confi
 Another problem I encountered is the management of system wide config files (such as those in `/etc`). There is no good solution for this yet, so for now there is a separate `etc` directory, and when I need to apply settings in there (currently only global zsh files), I run from within `etc` the following command: `sudo stow -t /etc/<folder> <folder>` for folders and `sudo stow -t /etc <file>` for individual files.
 
 If you know of better solutions, please don't hesitate to let me know.
+
+## Ubuntu setup script
+
+```bash
+cd /tmp && wget https://raw.githubusercontent.com/mandreyel/dotfiles/master/set-up-ubuntu.sh && chmod +x set-up-ubuntu.sh && ./set-up-ubuntu.sh
+```
