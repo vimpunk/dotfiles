@@ -54,3 +54,9 @@ export RUSTC_WRAPPER=sccache
 
 eval "$(ssh-agent)"
 ssh-add
+
+# instead of installing gcloud locally, run commands in a pre-authenticated
+# gcloud docker container
+alias gcloud="docker run --rm -ti \
+-v $HOME/.config/gcloud:/root/.config/gcloud \
+google/cloud-sdk gcloud"
