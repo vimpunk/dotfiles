@@ -80,8 +80,8 @@ Plug 'vim-airline/vim-airline-themes'
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
-"Plug 'w0rp/ale' " Language server client and lint engine.
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'w0rp/ale' " Language server client and lint engine.
+"Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
@@ -448,35 +448,80 @@ let g:fzf_colors = {
     \ }
 
 " ------------------------------------------------------------------------------
+" ALE
+" ------------------------------------------------------------------------------
+let g:ale_completion_enabled = 1
+let g:ale_lint_on_text_changed = 1
+let g:ale_lint_on_insert_leave = 1
+let g:ale_completion_max_suggestions = 30
+let g:ale_close_preview_on_insert = 1
+let g:ale_set_balloons = 1
+let g:ale_set_highlights = 1
+
+let g:ale_sign_error = "◉"
+let g:ale_sign_warning = "◉"
+let g:ale_sign_error = '✖'
+let g:ale_sign_warning = '⚠'
+
+let g:ale_rust_rls_toolchain = 'stable' " Is this right? TODO
+let g:ale_linters = {
+    \ 'rust': ['rls'],
+    \ }
+let g:ale_fixers = {
+    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+    \ 'rust': ['rustfmt'],
+    \ }
+let g:ale_fix_on_save = 1 " autofix on saving
+let g:ale_completion_delay = 500
+
+nnoremap <leader>lh :ALEHover<CR>
+nnoremap <leader>lg :ALEGoToDefinition<CR>
+nnoremap <leader>lr :ALEFindReferences<CR>
+nnoremap <leader>ls :ALESymbolSearch
+nnoremap <leader>ld :ALEDetail<CR>
+nnoremap <C-p> :ALEPreviousWrap<CR>
+nnoremap <C-n> :ALENextWrap<CR>
+
+" Can't override ALE color highlights in the colorscheme, which is probably
+" loaded first, so overwrite them again here.
+hi link ALEError Error
+hi link ALEErrorLine Error
+hi link ALEErrorSign Error
+
+hi link ALEWarning Warning
+hi link ALEWarningLine Warning
+hi link ALEWarningSign Warning
+
+" ------------------------------------------------------------------------------
 " COC
 " ------------------------------------------------------------------------------
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+"let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+"let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
-" Use `[c` and `]c` to navigate diagnostics.
-nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
-nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>ld <Plug>(coc-definition)
-nmap <silent> <leader>ly <Plug>(coc-type-definition)
-nmap <silent> <leader>li <Plug>(coc-implementation)
-nmap <silent> <leader>lr <Plug>(coc-references)
+"" Use `[c` and `]c` to navigate diagnostics.
+"nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
+"nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
+"nmap <silent> <leader>ld <Plug>(coc-definition)
+"nmap <silent> <leader>ly <Plug>(coc-type-definition)
+"nmap <silent> <leader>li <Plug>(coc-implementation)
+"nmap <silent> <leader>lr <Plug>(coc-references)
 
-" Rename symbol under cursor.
-nmap <leader>rn <Plug>(coc-rename)
+"" Rename symbol under cursor.
+"nmap <leader>rn <Plug>(coc-rename)
 
-" Format selected region.
-vmap <leader>gq <Plug>(coc-format-selected)
-nmap <leader>gq <Plug>(coc-format-selected)
+"" Format selected region.
+"vmap <leader>gq <Plug>(coc-format-selected)
+"nmap <leader>gq <Plug>(coc-format-selected)
 
-" Use K to show documentation in preview window.
-function! s:ShowDocs()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-nnoremap <silent> K :call <SID>ShowDocs()<CR>
+"" Use K to show documentation in preview window.
+"function! s:ShowDocs()
+  "if &filetype == 'vim'
+    "execute 'h '.expand('<cword>')
+  "else
+    "call CocAction('doHover')
+  "endif
+"endfunction
+"nnoremap <silent> K :call <SID>ShowDocs()<CR>
 
 "==========
 " Dumpster
