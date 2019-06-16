@@ -30,9 +30,3 @@ shopt -s expand_aliases # expand aliases
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# instead of installing gcloud locally, run commands in a pre-authenticated
-# gcloud docker container
-alias gcloud="docker run --rm -ti \
-    -v $HOME/.config/gcloud:/root/.config/gcloud \
-    google/cloud-sdk gcloud"

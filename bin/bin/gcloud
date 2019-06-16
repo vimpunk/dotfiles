@@ -1,0 +1,5 @@
+#!/bin/bash
+
+docker run --rm -ti \
+    -v $HOME/.config/gcloud:/root/.config/gcloud \
+    google/cloud-sdk gcloud "$@"
