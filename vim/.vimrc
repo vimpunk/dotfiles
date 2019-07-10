@@ -77,6 +77,14 @@ Plug 'Yggdroot/indentLine'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
+"if has('nvim')
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+  "Plug 'Shougo/deoplete.nvim'
+  "Plug 'roxma/nvim-yarp'
+  "Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
@@ -241,7 +249,7 @@ set textwidth=80
 set nolist " Don't visualize tabs and line breaks.
 
 " Show tabs (since space is preferred).
-set listchars=tab:▸\ 
+set listchars=tab:▸\
 set listchars+=trail:⋅ " Show trailing spaces.
 " Indicate that a line continues beyond the screen in no-wrap mode (for vimdiff).
 set listchars+=extends:❯,precedes:❮
@@ -402,6 +410,10 @@ let g:session_autosave = 'no'
 
 "let g:deoplete#enable_at_startup = 1
 "let g:deoplete#enable_smart_case = 1
+"" use ALE for completion sources for all code
+"call deoplete#custom#option('sources', {
+"\ '_': ['ale'],
+"\})
 
 nnoremap <F10> :NERDTreeToggle<CR>
 
@@ -450,20 +462,22 @@ let g:fzf_colors = {
 " ------------------------------------------------------------------------------
 " ALE
 " ------------------------------------------------------------------------------
-let g:ale_completion_enabled = 1
 let g:ale_lint_on_text_changed = 1
 let g:ale_lint_on_insert_leave = 1
-let g:ale_completion_max_suggestions = 30
 let g:ale_close_preview_on_insert = 1
 let g:ale_set_balloons = 1
 let g:ale_set_highlights = 1
+
+let g:ale_completion_enabled = 1
+let g:ale_completion_max_suggestions = 30
+let g:ale_completion_delay = 500
 
 let g:ale_sign_error = "◉"
 let g:ale_sign_warning = "◉"
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
 
-let g:ale_rust_rls_toolchain = 'stable' " Is this right? TODO
+let g:ale_rust_rls_toolchain = 'stable'
 let g:ale_linters = {
     \ 'rust': ['rls'],
     \ }
@@ -472,7 +486,6 @@ let g:ale_fixers = {
     \ 'rust': ['rustfmt'],
     \ }
 let g:ale_fix_on_save = 1 " autofix on saving
-let g:ale_completion_delay = 500
 
 nnoremap <leader>lh :ALEHover<CR>
 nnoremap <leader>lg :ALEGoToDefinition<CR>
