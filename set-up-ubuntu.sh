@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -e
+set -e
 
 # execute everything from $HOME
 cd "${HOME}"
@@ -9,10 +9,10 @@ cd "${HOME}"
 # installs
 ############################################################
 
-sudo apt update
+sudo apt -y update
 
 # packages to allow apt to use a repo over HTTPS
-sudo apt-get install \
+sudo apt -y install \
     apt-transport-https \
     ca-certificates \
     curl \
@@ -26,53 +26,60 @@ curl --fail --silent --show-error --location \
     https://raw.github.com/cknadler/vim-anywhere/master/install | bash
 
 # dev tools
-sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql libpq-dev redis cmake golang sqlite3 sqlite3-dev
+sudo apt -y install shellcheck gcc g++ clang nodejs npm postgresql libpq-dev redis cmake golang sqlite3 libsqlite3-dev libmysqlclient-dev
+
 # docker
+#
 # add docker gpg keys
 curl --fail --silent --show-error --location \
     https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-# docker stable repo ppa (note: use cosmic release as there are currently no
-# stable docker releases for disco)
+# docker stable repo ppa
 sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-   cosmic \
+   disco \
    stable"
-sudo apt update
+sudo apt -y update
 sudo apt -y install docker-ce
 # add user to docker group so we can connect to the docker daemon socket
 sudo usermod -a -G docker "${USER}"
 
+# gcloud
+#
+# add gcloud gpg keys
+echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+# import gcloud public key
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+sudo apt -y update
+sudo apt -y install google-cloud-sdk
+# TODO: should we run this here?
+gcloud init
+
 # postgres doesn't link correctly right off the bat, because the linker can't
 # find libpq.so as there will only be a libpq.so.n, so create a symlink to that
-sudo ln -s /lib/x86_64-linux-gnu/libpq.so.[0-9] /lib/x86_64-linux-gnu/libpq.so
+#
+# TODO: is this still needed?
+#sudo ln -s /lib/x86_64-linux-gnu/libpq.so.[0-9] /lib/x86_64-linux-gnu/libpq.so
 
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # source cargo so it's available in this shell
 source ~/.cargo/env
-cargo install sccache
-cargo install diesel_cli --no-default-features --features "postgres sqlite"
+cargo install diesel_cli
 rustup component add rls rust-analysis rust-src rustfmt
 
 ############################################################
 # configuration
 ############################################################
 
-# start ssh server
-sudo systemctl enable ssh
-sudo systemctl start ssh
-# enable postgres
-sudo systemctl enable postgresql
-
 # change shell to zsh
-sudo usermod -s /usr/bin/zsh mandreyel
+sudo usermod -s /usr/bin/zsh "${USER}"
 
 # clone configuration repo
 git clone https://github.com/mandreyel/dotfiles
 
-# remove default config files as otherwise stow will fail
-rm ~/.zshrc
-rm ~/.bashrc
+# remove default config files (if they exist) as otherwise stow will fail
+[ -f ~/.zshrc ] && rm ~/.zshrc
+[ -f ~/.bashrc ] && rm ~/.bashrc
 
 # execute in subshell for convenient cd-ing
 (
