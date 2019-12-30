@@ -19,7 +19,7 @@ sudo apt -y install \
     software-properties-common
 
 # env
-sudo apt -y install vim vim-gtk3 i3 dmenu compton feh scrot stow git zsh curl ssh silversearcher-ag xclip mpv sshfs
+sudo apt -y install vim vim-gtk3 i3 dmenu compton feh scrot stow git zsh curl ssh silversearcher-ag xclip mpv sshfs htop iftop
 
 # vim anywhere
 curl --fail --silent --show-error --location \
