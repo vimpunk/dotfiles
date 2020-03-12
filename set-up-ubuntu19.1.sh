@@ -60,12 +60,35 @@ gcloud init
 # TODO: is this still needed?
 #sudo ln -s /lib/x86_64-linux-gnu/libpq.so.[0-9] /lib/x86_64-linux-gnu/libpq.so
 
+if [ ! -d ~/.local/bin ]; then
+    mkdir -p ~/.local/bin 
+fi
+
+# neovim
+(
+    cd ~/.local/bin
+    curl --location \
+        --output nvim \
+        https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+    chmod u+x nvim
+)
+
+
 # rust
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # source cargo so it's available in this shell
 source ~/.cargo/env
 cargo install diesel_cli
 rustup component add rls rust-analysis rust-src rustfmt
+
+# rust analyzer (need to build from source for now)
+(
+    cd /tmp
+    git clone https://github.com/rust-analyzer/rust-analyzer.git
+    cd rust-analyzer
+    # only build the lsp binary, we don't need the vscode extension
+    cargo xtask install --server
+)
 
 ############################################################
 # configuration

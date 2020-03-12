@@ -50,8 +50,10 @@ call plug#begin('~/.vim/bundle')
 Plug 'scrooloose/nerdcommenter'
 " Easily change, delete or add surroundings such as brackets, parentheses, quotes...
 Plug 'tpope/vim-surround'
-" Auto insert endings to structures like if, do, ifndef etc
-Plug 'tpope/vim-endwise'
+" Auto insert endings to structures like if, do, ifndef etc.
+"
+" NOTE: Disabled due to interference with coc.nvim autocompleteion.
+"Plug 'tpope/vim-endwise'
 " Auto insert matching brackets, parentheses, quotes etc
 Plug 'jiangmiao/auto-pairs'
 " Extend % matching to HTML tags and others.
@@ -78,19 +80,11 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'danro/rename.vim'
 
-"if has('nvim')
-  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-  "Plug 'Shougo/deoplete.nvim'
-  "Plug 'roxma/nvim-yarp'
-  "Plug 'roxma/vim-hug-neovim-rpc'
-"endif
-
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
-Plug 'w0rp/ale' " Language server client and lint engine.
-"Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+"Plug 'w0rp/ale' " Language server client and lint engine.
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
@@ -213,8 +207,9 @@ inoremap JK <Esc>
 nnoremap <F2> <C-w><
 nnoremap <F3> <C-w>>
 
-" Shortcuts to quickly edit and source .vimrc.
-nnoremap <leader>ve :e $MYVIMRC<CR>
+" Shortcuts to quickly edit and source .vimrc. (~/.vimrc path is specified as in
+" case of using neovim we want to edit vimrc and not init.vim)
+nnoremap <leader>ve :e ~/.vimrc<CR>
 nnoremap <leader>vs :source $MYVIMRC<CR>
 
 " Hack to be able to save read-only files.
@@ -232,6 +227,7 @@ noremap gV `[v`]
 
 let g:netrw_liststyle = 3
 let g:netrw_winsize = 25
+let g:netrw_browsex_viewer = "xdg-open"
 
 if has('mouse')
     set mouse=a
@@ -282,24 +278,16 @@ set formatoptions+=2 " Indent paragraph based on the second line rather than the
 " ------------------------------------------------------------------------------
 " Buffers
 " ------------------------------------------------------------------------------
-nnoremap ]b :bnext<cr>
-nnoremap [b :bprev<cr>
-
-" Circular split window navigation.
-nnoremap <tab>   <c-w>w
-nnoremap <S-tab> <c-w>W
+nnoremap ]b :bnext<CR>
+nnoremap [b :bprev<CR>
 
 " ------------------------------------------------------------------------------
 " Tabs
 " ------------------------------------------------------------------------------
-nnoremap ]t :tabn<cr>
-nnoremap [t :tabp<cr>
-nnoremap <leader>ft :tabfirst<cr>
-nnoremap <leader>lt :tablast<cr>
-
-" Circular tab navigation.
-nnoremap <leader><tab>   :tabn<cr>
-nnoremap <leader><S-tab> :tabp<cr>
+nnoremap ]t :tabn<CR>
+nnoremap [t :tabp<CR>
+nnoremap <leader>ft :tabfirst<CR>
+nnoremap <leader>lt :tablast<CR>
 
 " ------------------------------------------------------------------------------
 " Search
@@ -409,13 +397,6 @@ let g:limelight_conceal_ctermfg = 'DarkGray'
 
 let g:session_autosave = 'no'
 
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_smart_case = 1
-"" use ALE for completion sources for all code
-"call deoplete#custom#option('sources', {
-"\ '_': ['ale'],
-"\})
-
 nnoremap <F10> :NERDTreeToggle<CR>
 
 " ------------------------------------------------------------------------------
@@ -460,82 +441,205 @@ let g:fzf_colors = {
     \ 'header':  ['fg', 'Comment']
     \ }
 
-" ------------------------------------------------------------------------------
-" ALE
-" ------------------------------------------------------------------------------
-let g:ale_lint_on_text_changed = 1
-let g:ale_lint_on_insert_leave = 1
-let g:ale_close_preview_on_insert = 1
-let g:ale_set_balloons = 1
-let g:ale_set_highlights = 1
-
-let g:ale_completion_enabled = 1
-let g:ale_completion_max_suggestions = 30
-let g:ale_completion_delay = 500
-
-let g:ale_sign_error = "◉"
-let g:ale_sign_warning = "◉"
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
-
-let g:ale_rust_rls_toolchain = 'stable'
-let g:ale_linters = {
-    \ 'rust': ['rls'],
-    \ }
-let g:ale_fixers = {
-    \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-    \ 'rust': ['rustfmt'],
-    \ }
-let g:ale_fix_on_save = 1 " autofix on saving
-
-nnoremap <leader>lh :ALEHover<CR>
-nnoremap <leader>lg :ALEGoToDefinition<CR>
-nnoremap <leader>lr :ALEFindReferences<CR>
-nnoremap <leader>ls :ALESymbolSearch
-nnoremap <leader>ld :ALEDetail<CR>
-nnoremap <C-p> :ALEPreviousWrap<CR>
-nnoremap <C-n> :ALENextWrap<CR>
-
-" Can't override ALE color highlights in the colorscheme, which is probably
-" loaded first, so overwrite them again here.
-hi link ALEError Error
-hi link ALEErrorLine Error
-hi link ALEErrorSign Error
-
-hi link ALEWarning Warning
-hi link ALEWarningLine Warning
-hi link ALEWarningSign Warning
 
 " ------------------------------------------------------------------------------
 " COC
 " ------------------------------------------------------------------------------
-"let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-"let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
-"" Use `[c` and `]c` to navigate diagnostics.
-"nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
-"nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-"nmap <silent> <leader>ld <Plug>(coc-definition)
-"nmap <silent> <leader>ly <Plug>(coc-type-definition)
-"nmap <silent> <leader>li <Plug>(coc-implementation)
-"nmap <silent> <leader>lr <Plug>(coc-references)
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
 
-"" Rename symbol under cursor.
-"nmap <leader>rn <Plug>(coc-rename)
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 
-"" Format selected region.
-"vmap <leader>gq <Plug>(coc-format-selected)
-"nmap <leader>gq <Plug>(coc-format-selected)
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
 
-"" Use K to show documentation in preview window.
-"function! s:ShowDocs()
-  "if &filetype == 'vim'
-    "execute 'h '.expand('<cword>')
-  "else
-    "call CocAction('doHover')
-  "endif
-"endfunction
-"nnoremap <silent> K :call <SID>ShowDocs()<CR>
+" Use tab to trigger completion with characters ahead and for completion
+" navigation.
+"
+" NOTE: Use command ':verbose imap <tab>' and `:verbose imap <cr>` to make sure
+" tab and cr are not mapped by other plugins before enabling this mapping.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>CheckBackSpace() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:CheckBackSpace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>y <Plug>(coc-type-definition)
+nmap <silent> <leader>i <Plug>(coc-implementation)
+nmap <silent> <leader>r <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
+
+function! s:ShowDocumentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup MyCocGroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+  " Autoformat file on save.
+  autocmd BufWritePost * Format
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+"" Remap keys for applying codeAction to the current line.
+"" TODO: what's this?
+"nmap <leader>ac  <Plug>(coc-codeaction)
+"" Apply AutoFix to problem on the current line.
+"nmap <leader>qf  <Plug>(coc-fix-current)
+
+"" Introduce function text object
+"" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+"" TODO: what's this?
+"xmap if <Plug>(coc-funcobj-i)
+"xmap af <Plug>(coc-funcobj-a)
+"omap if <Plug>(coc-funcobj-i)
+"omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+"nmap <silent> <TAB> <Plug>(coc-range-select)
+"xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+"" Add `:Fold` command to fold current buffer.
+"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+"" Add `:OR` command for organize imports of the current buffer.
+"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<CR>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<CR>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<CR>
+"" Find symbol of current document.
+"nnoremap <silent> <space>o  :<C-u>CocList outline<CR>
+"" Search workspace symbols.
+"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<CR>
+"" Do default action for next item.
+"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"" Do default action for previous item.
+"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+""let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+""let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+
+"" ------------------------------------------------------------------------------
+"" ALE
+"" ------------------------------------------------------------------------------
+"let g:ale_lint_on_text_changed = 1
+"let g:ale_lint_on_insert_leave = 1
+"let g:ale_close_preview_on_insert = 1
+"let g:ale_set_balloons = 1
+
+"let g:ale_completion_enabled = 1
+"let g:ale_completion_max_suggestions = 30
+"let g:ale_completion_delay = 500
+
+
+"let g:ale_sign_error = "◉"
+"let g:ale_sign_warning = "◉"
+"let g:ale_sign_error = '✖'
+"let g:ale_sign_warning = '⚠'
+
+"" use unofficial rust-analyzer
+"" https://github.com/dense-analysis/ale/issues/2832#issuecomment-596081235
+"let g:ale_rust_rls_config = {
+	"\ 'rust': {
+		"\ 'all_targets': 1,
+		"\ 'build_on_save': 1,
+		"\ 'clippy_preference': 'on'
+	"\ }
+	"\ }
+"let g:ale_rust_rls_toolchain = ''
+"let g:ale_rust_rls_executable = 'rust-analyzer'
+"let g:ale_linters = {
+    "\ 'rust': ['rls']
+    "\ }
+"let g:ale_fixers = {
+    "\ '*': ['remove_trailing_lines', 'trim_whitespace'],
+    "\ 'rust': ['rustfmt']
+    "\ }
+"let g:ale_fix_on_save = 1 " autofix on saving
+
+"nnoremap <leader>lh :ALEHover<CR>
+"nnoremap <leader>lg :ALEGoToDefinition<CR>
+"nnoremap <leader>lr :ALEFindReferences<CR>
+"nnoremap <leader>ls :ALESymbolSearch
+"nnoremap <leader>ld :ALEDetail<CR>
+"nnoremap <C-p> :ALEPreviousWrap<CR>
+"nnoremap <C-n> :ALENextWrap<CR>
+
+"" Can't override ALE color highlights in the colorscheme, which is probably
+"" loaded first, so overwrite them again here.
+"hi link ALEError Error
+"hi link ALEErrorLine Error
+"hi link ALEErrorSign Error
+
+"hi link ALEWarning Warning
+"hi link ALEWarningLine Warning
+"hi link ALEWarningSign Warning
+
 
 "==========
 " Dumpster
