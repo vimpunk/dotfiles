@@ -6,30 +6,31 @@ set nocompatible
 " ==============================================================================
 
 if has('nvim')
-    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 else
-    " Download vim-plug if it's not installed on this machine.
-    if empty(glob('~/.vim/autoload/plug.vim'))
-        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-    endif
+  " Download vim-plug if it's not installed on this machine.
+  if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 endif
 
+" if the swap, backup,undo directories don't exist, create them
 if empty(glob('~/.vim/swap'))
-    silent !mkdir ~/.vim/swap
+  silent !mkdir ~/.vim/swap
 endif
 
 if empty(glob('~/.vim/backup'))
-    silent !mkdir ~/.vim/backup
+  silent !mkdir ~/.vim/backup
 endif
 
 if empty(glob('~/.vim/undo'))
-    silent !mkdir ~/.vim/undo
+  silent !mkdir ~/.vim/undo
 endif
 
 function! BuildComposer(info)
@@ -147,20 +148,20 @@ colorscheme mnd-solarized
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
-    " backspace and cursor keys wrap to previous/next line
-    " CTRL-X and SHIFT-Del are Cut
-    " CTRL-C and CTRL-Insert are Copy
-    " CTRL-V and SHIFT-Insert are Paste
-    " Use CTRL-Q to do what CTRL-V used to do
-    " Use CTRL-S for saving, also in Insert mode
-    " CTRL-Z is Undo; not in cmdline though
-    " CTRL-Y is Redo (although not repeat); not in cmdline though
-    " Alt-Space is System menu
-    " CTRL-A is Select all
-    " CTRL-Tab is Next window
-    " CTRL-F4 is Close window
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
+  " backspace and cursor keys wrap to previous/next line
+  " CTRL-X and SHIFT-Del are Cut
+  " CTRL-C and CTRL-Insert are Copy
+  " CTRL-V and SHIFT-Insert are Paste
+  " Use CTRL-Q to do what CTRL-V used to do
+  " Use CTRL-S for saving, also in Insert mode
+  " CTRL-Z is Undo; not in cmdline though
+  " CTRL-Y is Redo (although not repeat); not in cmdline though
+  " Alt-Space is System menu
+  " CTRL-A is Select all
+  " CTRL-Tab is Next window
+  " CTRL-F4 is Close window
+  source $VIMRUNTIME/mswin.vim
+  behave mswin
 endif
 
 " Don't pollute working directories (these need to exist, otherwise vim will
@@ -239,7 +240,7 @@ endif
 set wrap
 set linebreak " Don't break lines mid-word.
 if exists('&breakindent')
-    set breakindent " Preserve indentation when wrapping lines.
+  set breakindent " Preserve indentation when wrapping lines.
 endif
 set breakat&vim " Reset chars at which line is broken to vim defaults.
 set textwidth=80
@@ -338,16 +339,16 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 " Unobtrusively highlight column 82 to indicate that the line is too long (this
 " is a less obtrusive way of doing "set colorcolumn"). TODO use tw
 fun! s:HighlightCharLimit()
-    highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
+  highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
 endfun
 
 if !has("gui_running")
-    call s:HighlightCharLimit()
-    augroup ErrorHighlights
-        autocmd!
-        autocmd Colorscheme * call s:HighlightCharLimit()
-        autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
-    augroup end
+  call s:HighlightCharLimit()
+  augroup ErrorHighlights
+    autocmd!
+    autocmd Colorscheme * call s:HighlightCharLimit()
+    autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
+  augroup end
 endif
 
 " Show relative line numbers when in command mode or switching to another
@@ -355,31 +356,42 @@ endif
 " relative number if number is also set. This avoids setting relative number
 " when no number is set, e.g. in vim docs.
 fun! s:SetRelativeNumber()
-    if &number
-        set relativenumber
-    endif
+  if &number
+    set relativenumber
+  endif
 endfun
 
 fun! s:UnsetRelativeNumber()
-    if &number
-        set norelativenumber
-    endif
+  if &number
+    set norelativenumber
+  endif
 endfun
 
 augroup NumberToggle
   autocmd!
   autocmd BufEnter,FocusGained,InsertLeave * call s:SetRelativeNumber()
   autocmd BufLeave,FocusLost,InsertEnter   * call s:UnsetRelativeNumber()
-augroup END
+augroup end
 
-" .md file extensions should be treated as markdown rather than modula.
-autocmd BufNewFile,BufFilePre,BufRead *.md set filetype=markdown.pandoc
-" Dockerfile.builder is the conventional file name for builder docker files so
-" set file extensions to dockerfile.
-autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
-" Overwriting `tw` in ftplugins/rust.vim doesn't work because I presume the
-" rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
-autocmd BufNewFile,BufFilePre,BufRead *.rs set tw=80
+augroup FileTypeSettings
+  " .md file extensions should be treated as markdown rather than modula.
+  autocmd BufNewFile,BufFilePre,BufRead *.md
+              \ setl filetype=markdown.pandoc
+              \ formatoptions-=a
+              \ noautoindent
+              \ textwidth=80
+
+  " Dockerfile.builder is the conventional file name for builder docker files so
+  " set file extensions to dockerfile.
+  autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
+
+  " Overwriting `tw` in ftplugins/rust.vim doesn't work because I presume the
+  " rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
+  autocmd FileType rust set textwidth=80
+
+  " file types for which we want 2 space wide tabs
+  autocmd FileType json,proto,vim,vue,yaml setl tabstop=2 shiftwidth=2
+augroup end
 
 
 " ==============================================================================
@@ -426,20 +438,20 @@ nnoremap <leader>h/ :History/<CR>
 
 " Customize fzf colors to always match current color scheme.
 let g:fzf_colors = {
-    \ 'fg':      ['fg', 'Normal'],
-    \ 'bg':      ['bg', 'Normal'],
-    \ 'hl':      ['fg', 'Comment'],
-    \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-    \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-    \ 'hl+':     ['fg', 'Statement'],
-    \ 'info':    ['fg', 'PreProc'],
-    \ 'border':  ['fg', 'Ignore'],
-    \ 'prompt':  ['fg', 'Conditional'],
-    \ 'pointer': ['fg', 'Exception'],
-    \ 'marker':  ['fg', 'Keyword'],
-    \ 'spinner': ['fg', 'Label'],
-    \ 'header':  ['fg', 'Comment']
-    \ }
+      \ 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment']
+      \ }
 
 
 " ------------------------------------------------------------------------------
@@ -448,7 +460,7 @@ let g:fzf_colors = {
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=300
+set updatetime=1000
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -494,6 +506,7 @@ nmap <silent> <leader>d <Plug>(coc-definition)
 nmap <silent> <leader>y <Plug>(coc-type-definition)
 nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
+nmap <silent> <leader>n <Plug>(coc-rename)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
@@ -516,11 +529,11 @@ nmap <leader>f  <Plug>(coc-format-selected)
 augroup MyCocGroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected') tabstop=2 shiftwidth=2
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Autoformat file on save.
-  autocmd BufWritePost * Format
+  "autocmd BufWritePost * Format
 augroup end
 
 " Applying codeAction to the selected region.
