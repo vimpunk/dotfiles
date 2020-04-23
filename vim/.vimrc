@@ -142,9 +142,21 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-"let g:github_colors_soft=1
-"colorscheme github
-colorscheme mnd-solarized
+" To set the background automatically based on the time at which vim is
+" launched.
+" 
+" Usually during 3-5PM the sun is shining on the monitor, so it's better to have
+" a light colorscheme then due to higher contrast and glare, but otherwise
+" a dark colorscheme is preferred.
+if strftime('%H') >= 15 && strftime('%H') < 17
+  set background=light
+  "let g:github_colors_soft=1
+  "colorscheme github
+  colorscheme stellarized
+else
+  set background=dark
+  colorscheme mnd-solarized
+endif
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
