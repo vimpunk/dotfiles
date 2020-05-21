@@ -77,8 +77,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'danro/rename.vim'
 
 " ------------------------------------------------------------------------------
@@ -86,13 +84,12 @@ Plug 'danro/rename.vim'
 " ------------------------------------------------------------------------------
 "Plug 'w0rp/ale' " Language server client and lint engine.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'metakirby5/codi.vim' " REPL integration
+"Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
-"Plug 'rhysd/rust-doc.vim' " TODO didn't seem to work, open issue
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-Plug 'gabrielelana/vim-markdown'
+Plug 'gabrielelana/vim-markdown' " seems slow, TODO: profile
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 
@@ -101,8 +98,8 @@ Plug 'cespare/vim-toml'
 " ------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+" browse git commits (it's great)
 Plug 'junegunn/gv.vim'
-Plug 'Xuyuanp/nerdtree-git-plugin', { 'on':  'NERDTreeToggle' }
 
 " ------------------------------------------------------------------------------
 " Distraction free writing
@@ -117,16 +114,12 @@ Plug 'junegunn/limelight.vim'
 Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mandreyel/vim-mnd-solarized'
 Plug 'mhartington/oceanic-next'
-Plug 'arcticicestudio/nord-vim'
 Plug 'altercation/vim-colors-solarized'
 Plug 'nightsense/stellarized' " This is great.
 Plug 'nightsense/seagrey'
-Plug 'nightsense/office'
-Plug 'Nequo/vim-allomancer'
-Plug 'rakr/vim-two-firewatch'
 Plug 'rakr/vim-one'
-Plug 'junegunn/seoul256.vim'
-Plug 'NLKNguyen/papercolor-theme'
+Plug 'junegunn/seoul256.vim' " light variant is great
+Plug 'NLKNguyen/papercolor-theme' " good github alternative (less bright)
 Plug 'cormacrelf/vim-colors-github'
 
 call plug#end()
@@ -142,21 +135,24 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
+colorscheme mnd-solarized
+
 " To set the background automatically based on the time at which vim is
 " launched.
 " 
-" Usually during 3-5PM the sun is shining on the monitor, so it's better to have
-" a light colorscheme then due to higher contrast and glare, but otherwise
-" a dark colorscheme is preferred.
-if strftime('%H') >= 15 && strftime('%H') < 17
-  set background=light
-  "let g:github_colors_soft=1
-  "colorscheme github
-  colorscheme stellarized
-else
-  set background=dark
-  colorscheme mnd-solarized
-endif
+" Usually in the morning and in in the afternoon at 3-5 PM the sun is shining on
+" the monitor, so it's better to have a light colorscheme then due to higher
+" contrast and glare, but otherwise a dark colorscheme is preferred.
+"
+" NOTE: for some reason the colorscheme doesn't set correctly if `mnd-solarized`
+" (or some other dark colorscheme) is not set before the light one so the above
+" colorscheme is before this conditional for a reason
+function! Light()
+    if (strftime('%H') >= 8 && strftime('%H') < 10) || (strftime('%H') >= 15 && strftime('%H') < 18)
+      set bg=light
+      colorscheme stellarized
+    endif
+endfunction
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
@@ -285,7 +281,6 @@ set formatoptions+=l " Don't break long lines in insert mode.
 " experimental:
 set formatoptions+=1 " Break line before a single-letter word.
 set formatoptions+=n " Recognize numbered lists.
-set formatoptions+=a " Auto format text every time text is changed.
 set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
 
 " ------------------------------------------------------------------------------
@@ -342,6 +337,16 @@ nnoremap <silent> <C-k> :move-2<CR>
 xnoremap <silent> <C-k> :move-2<CR>gv
 nnoremap <silent> <C-j> :move+<CR>
 xnoremap <silent> <C-j> :move'>+<CR>gv
+
+" ----------------------------------------------------------------------------
+" Statusline
+" ----------------------------------------------------------------------------
+" reset
+set statusline=
+" current file
+set statusline+=\ %f
+" whether current buffer is modified
+set statusline+=\ %m
 
 
 " ==============================================================================
@@ -407,8 +412,10 @@ augroup end
 
 
 " ==============================================================================
-" Plugin specific settings
+" Plugin settings
 " ==============================================================================
+
+let g:vim_json_syntax_conceal = 0
 
 let g:indentLine_color_term = 246
 let g:indentLine_color_gui = '#4f5b66'
@@ -549,9 +556,9 @@ augroup MyCocGroup
 augroup end
 
 " Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
+" Example: `<leader>cap` for current paragraph
+xmap <leader>c  <Plug>(coc-codeaction-selected)
+nmap <leader>c  <Plug>(coc-codeaction-selected)
 
 "" Remap keys for applying codeAction to the current line.
 "" TODO: what's this?
@@ -585,28 +592,24 @@ command! -nargs=0 Format :call CocAction('format')
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
-set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
 " Show all diagnostics.
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<CR>
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
 " Manage extensions.
-nnoremap <silent> <space>e  :<C-u>CocList extensions<CR>
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
 " Show commands.
-nnoremap <silent> <space>c  :<C-u>CocList commands<CR>
+"nnoremap <silent> <leader>c  :<C-u>CocList commands<CR>
 "" Find symbol of current document.
-"nnoremap <silent> <space>o  :<C-u>CocList outline<CR>
+"nnoremap <silent> <leader>o  :<C-u>CocList outline<CR>
 "" Search workspace symbols.
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<CR>
+"nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<CR>
 "" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+"nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
 "" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-" Resume latest coc list.
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-""let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-""let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+"nnoremap <silent> <leader>k  :<C-u>CocPrev<CR> Resume latest coc list.
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 
 
 "" ------------------------------------------------------------------------------
