@@ -10,6 +10,9 @@ export GOPATH=$HOME/go
 export PATH=$PATH:GOROOT/bin:$GOPATH/bin
 export PATH=$PATH:$HOME/.npm-global/bin
 
+export HISTSIZE=1000000000
+export SAVEHIST=$HISTSIZE
+
 setopt AUTO_CD # No cd needed to change directories
 setopt BANG_HIST # Treat the '!' character specially during expansion.
 setopt EXTENDED_HISTORY
@@ -41,15 +44,24 @@ alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 if which nvim 2>&1 1>/dev/null; then
     alias vim=nvim
 fi
+if which evcxr 2>&1 1>/dev/null; then
+    alias repl=evcxr
+fi
 
 function note {
-    vim ~/notes/$1
+    vim "$HOME/notes/$1"
 }
 
+[ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+
+if [ -d "$HOME/.nvm" ]; then
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+fi
+
+if [ -d "$HOME/.yarn" ]; then
+    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+fi
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
