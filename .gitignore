@@ -1,5 +1,6 @@
 vim/.vim/bundle/*
 vim/.vim/backup/*
+vim/.vim/sessions/*
 vim/.vim/undo/*
 vim/.vim/swap/*
 vim/.vim/.netrwhist

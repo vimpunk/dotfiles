@@ -65,3 +65,9 @@ if [ -d "$HOME/.yarn" ]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+dadjoke() {
+    curl https://icanhazdadjoke.com
+}
+
+eval "$(starship init zsh)"

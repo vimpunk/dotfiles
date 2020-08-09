@@ -135,6 +135,8 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
+let g:github_colors_soft = 1
+"colorscheme github
 colorscheme mnd-solarized
 
 " To set the background automatically based on the time at which vim is
@@ -150,7 +152,7 @@ colorscheme mnd-solarized
 function! Light()
     if (strftime('%H') >= 8 && strftime('%H') < 10) || (strftime('%H') >= 15 && strftime('%H') < 18)
       set bg=light
-      colorscheme stellarized
+      "colorscheme stellarized
     endif
 endfunction
 
@@ -242,6 +244,9 @@ if has('mouse')
     set mouse=a
 endif
 
+set spelllang=en
+set spell
+
 " ------------------------------------------------------------------------------
 " Formatting
 " ------------------------------------------------------------------------------
@@ -271,7 +276,7 @@ set smarttab
 " Indentation
 set smartindent " Instead of cindent as that seems to work poorly with non-C files.
 
-set formatoptions="" " Reset fo.
+set formatoptions="" " Reset formatoptions.
 set formatoptions+=j " Remove comment leader when joining comment lines.
 set formatoptions+=c " Auto format text in plaintext files, or comments in source files.
 set formatoptions+=r " Auto insert comment leader after hitting <Enter>.

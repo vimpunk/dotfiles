@@ -16,8 +16,8 @@ general {
     color_bad = '#e89393'
 }
 
+order += "battery 0"
 order += "volume master"
-#order += "battery 0"
 order += "disk /home"
 order += "disk /disk0"
 order += "disk /disk1"
