@@ -1,0 +1,4 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": ["css", "rust"],
+  "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer"
+}
