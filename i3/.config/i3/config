@@ -264,8 +264,9 @@ exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib64/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id dunst
 #exec --no-startup-id compton -b
+
 # use the external monitor
-exec --no-startup-id xrandr --output eDP1 --off --output DP3 --auto
+#exec --no-startup-id xrandr --output eDP1 --off --output DP3 --auto
 
 # start firefox on startup
 exec firefox
