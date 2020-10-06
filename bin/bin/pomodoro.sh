@@ -11,17 +11,17 @@
 
 notify_work_time () {
   notify-send "Time to Work" "Focus" -u critical -a 'Pomodoro'
-  paplay /usr/share/sounds/freedesktop/stereo/window-attention.oga
+  paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga
 }
 
 notify_short_break_time () {
   notify-send "Short Break Time" -u critical -a 'Pomodoro'
-  paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+  paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga
 }
 
 notify_long_break_time () {
   notify-send "Long Break Time" "Take a Rest" -u critical -a 'Pomodoro'
-  paplay /usr/share/sounds/freedesktop/stereo/complete.oga
+  paplay /usr/share/sounds/freedesktop/stereo/alarm-clock-elapsed.oga
 }
 
 work_time=1500 # 25 min
