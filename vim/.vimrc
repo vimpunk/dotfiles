@@ -122,6 +122,10 @@ Plug 'junegunn/seoul256.vim' " light variant is great
 Plug 'NLKNguyen/papercolor-theme' " good github alternative (less bright)
 Plug 'cormacrelf/vim-colors-github'
 
+Plug 'https://github.com/vim-scripts/pyte'
+Plug 'https://github.com/reedes/vim-colors-pencil'
+Plug 'https://github.com/zefei/cake16'
+
 call plug#end()
 
 
@@ -135,26 +139,18 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-let g:github_colors_soft = 1
-"colorscheme github
-colorscheme mnd-solarized
-
 " To set the background automatically based on the time at which vim is
 " launched.
-" 
-" Usually in the morning and in in the afternoon at 3-5 PM the sun is shining on
-" the monitor, so it's better to have a light colorscheme then due to higher
-" contrast and glare, but otherwise a dark colorscheme is preferred.
 "
-" NOTE: for some reason the colorscheme doesn't set correctly if `mnd-solarized`
-" (or some other dark colorscheme) is not set before the light one so the above
-" colorscheme is before this conditional for a reason
-function! Light()
-    if (strftime('%H') >= 8 && strftime('%H') < 10) || (strftime('%H') >= 15 && strftime('%H') < 18)
-      set bg=light
-      "colorscheme stellarized
-    endif
-endfunction
+" Light during the day, dark during night.
+if (strftime('%H') >= 16 && strftime('%H') < 18)
+  set bg=light
+  colorscheme PaperColor
+  "let g:github_colors_soft = 1
+  "colorscheme github
+else
+  colorscheme mnd-solarized
+endif
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
