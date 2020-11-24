@@ -70,9 +70,10 @@ Plug 'mattn/emmet-vim' " TODO test
 " Core enhancements
 " ------------------------------------------------------------------------------
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
-" Fuzzy searching
+" Fuzzy searching: note that we're not actually using the fzf.vim plugin due to
+" coc.nvim providing most of the functionality. Instead, we just let vim-plug
+" manage the system fzf installation.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 " Start screen
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
@@ -82,9 +83,7 @@ Plug 'danro/rename.vim'
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
-"Plug 'w0rp/ale' " Language server client and lint engine.
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'metakirby5/codi.vim' " REPL integration
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
@@ -139,17 +138,15 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
+colorscheme mnd-solarized
+
 " To set the background automatically based on the time at which vim is
 " launched.
 "
 " Light during the day, dark during night.
-if (strftime('%H') >= 16 && strftime('%H') < 18)
-  set bg=light
-  colorscheme PaperColor
-  "let g:github_colors_soft = 1
-  "colorscheme github
-else
-  colorscheme mnd-solarized
+if (strftime('%H') >= 8 || strftime('%H') <= 16)
+  "set bg=light
+  "colorscheme PaperColor
 endif
 
 " Enable CTRL+V and other general shortcuts in gvim.
@@ -241,7 +238,6 @@ if has('mouse')
 endif
 
 set spelllang=en
-set spell
 
 " ------------------------------------------------------------------------------
 " Formatting
@@ -403,6 +399,9 @@ augroup FileTypeSettings
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
 
+  " Python should have a max line length of 79, otherwise the linter complains.
+  autocmd FileType python set textwidth=79
+
   " Overwriting `tw` in ftplugins/rust.vim doesn't work because I presume the
   " rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
   autocmd FileType rust set textwidth=80
@@ -432,55 +431,12 @@ let g:session_autosave = 'no'
 nnoremap <F10> :NERDTreeToggle<CR>
 
 " ------------------------------------------------------------------------------
-" FZF
-" ------------------------------------------------------------------------------
-" Search of loaded buffer names.
-nnoremap <leader>b :Buffers<CR>
-" Recursive file name search starting from cwd.
-nnoremap <leader>ff :Files<CR>
-" Recursive file name search among all git-tracked files.
-nnoremap <leader>gf :GFiles<CR>
-
-" Search in project.
-nnoremap <leader>ss :Ag<CR>
-" Search in current buffer.
-nnoremap <leader>/ :BLines<CR>
-nnoremap <leader>? :BLines<CR>
-
-" Command search.
-nnoremap <leader>sc :Commands<CR>
-" Command history search.
-nnoremap <leader>hc :History:<CR>
-" File history search.
-nnoremap <leader>hf :History<CR>
-" Search history search.
-nnoremap <leader>h/ :History/<CR>
-
-" Customize fzf colors to always match current color scheme.
-let g:fzf_colors = {
-      \ 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment']
-      \ }
-
-
-" ------------------------------------------------------------------------------
-" COC
+" COC.nvim
 " ------------------------------------------------------------------------------
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
-set updatetime=1000
+set updatetime=5000
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -506,16 +462,16 @@ function! s:CheckBackSpace() abort
 endfunction
 
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-if has('patch8.1.1068')
-  " Use `complete_info` if your (Neo)Vim version supports it.
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
 else
-  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  inoremap <silent><expr> <c-@> coc#refresh()
 endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+      \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `[g` and `]g` to navigate diagnostics
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
@@ -528,67 +484,48 @@ nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
 nmap <silent> <leader>n <Plug>(coc-rename)
 
+" Applying codeAction to the selected region.
+" Example: `<leader>cap` for current paragraph
+xmap <leader>c <Plug>(coc-codeaction-selected)
+nmap <leader>c <Plug>(coc-codeaction-selected)
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
 
 function! s:ShowDocumentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
 
 augroup MyCocGroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected') tabstop=2 shiftwidth=2
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+      \ tabstop=2 shiftwidth=2
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Autoformat file on save.
-  "autocmd BufWritePost * Format
+  autocmd BufWritePost * Format
 augroup end
 
-" Applying codeAction to the selected region.
-" Example: `<leader>cap` for current paragraph
-xmap <leader>c  <Plug>(coc-codeaction-selected)
-nmap <leader>c  <Plug>(coc-codeaction-selected)
-
-"" Remap keys for applying codeAction to the current line.
-"" TODO: what's this?
-"nmap <leader>ac  <Plug>(coc-codeaction)
-"" Apply AutoFix to problem on the current line.
-"nmap <leader>qf  <Plug>(coc-fix-current)
-
-"" Introduce function text object
-"" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-"" TODO: what's this?
-"xmap if <Plug>(coc-funcobj-i)
-"xmap af <Plug>(coc-funcobj-a)
-"omap if <Plug>(coc-funcobj-i)
-"omap af <Plug>(coc-funcobj-a)
-
-" Use <TAB> for selections ranges.
-" NOTE: Requires 'textDocument/selectionRange' support from the language server.
-" coc-tsserver, coc-python are the examples of servers that support it.
-"nmap <silent> <TAB> <Plug>(coc-range-select)
-"xmap <silent> <TAB> <Plug>(coc-range-select)
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
-
-"" Add `:Fold` command to fold current buffer.
-"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-"" Add `:OR` command for organize imports of the current buffer.
-"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Add (Neo)Vim's native statusline support.
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
@@ -596,112 +533,58 @@ command! -nargs=0 Format :call CocAction('format')
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings using CoCList:
-" Show all diagnostics.
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
-" Manage extensions.
-nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
-" Show commands.
-"nnoremap <silent> <leader>c  :<C-u>CocList commands<CR>
-"" Find symbol of current document.
-"nnoremap <silent> <leader>o  :<C-u>CocList outline<CR>
-"" Search workspace symbols.
-"nnoremap <silent> <leader>s  :<C-u>CocList -I symbols<CR>
-"" Do default action for next item.
-"nnoremap <silent> <leader>j  :<C-u>CocNext<CR>
-"" Do default action for previous item.
-"nnoremap <silent> <leader>k  :<C-u>CocPrev<CR> Resume latest coc list.
+" resume previous search
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
-
+" show all diagnostics
+nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
+" show extensions
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
+" show currently loaded buffers
+nnoremap <silent> <leader>b  :<C-u>CocList buffers<CR>
+" search words in $(pwd)
+nnoremap <silent> <leader>ss  :<C-u>CocList grep<CR>
+" search files in $(pwd)
+nnoremap <silent> <leader>ff  :<C-u>CocList files<CR>
+" search command history
+nnoremap <silent> <leader>hc  :<C-u>CocList cmdhistory<CR>
+" search search history
+nnoremap <silent> <leader>h/  :<C-u>CocList searchhistory<CR>
 
 "" ------------------------------------------------------------------------------
-"" ALE
+"" FZF
 "" ------------------------------------------------------------------------------
-"let g:ale_lint_on_text_changed = 1
-"let g:ale_lint_on_insert_leave = 1
-"let g:ale_close_preview_on_insert = 1
-"let g:ale_set_balloons = 1
+"" Search of loaded buffer names.
+"nnoremap <leader>b :Buffers<CR>
+"" Recursive file name search starting from cwd.
+"nnoremap <leader>ff :Files<CR>
 
-"let g:ale_completion_enabled = 1
-"let g:ale_completion_max_suggestions = 30
-"let g:ale_completion_delay = 500
+"" Search in project.
+"nnoremap <leader>ss :Ag<CR>
+"" Search in current buffer.
+"nnoremap <leader>/ :BLines<CR>
+"nnoremap <leader>? :BLines<CR>
 
+"" Command search.
+"nnoremap <leader>sc :Commands<CR>
+"" Command history search.
+"nnoremap <leader>hc :History:<CR>
+"" Search history search.
+"nnoremap <leader>h/ :History/<CR>
 
-"let g:ale_sign_error = "◉"
-"let g:ale_sign_warning = "◉"
-"let g:ale_sign_error = '✖'
-"let g:ale_sign_warning = '⚠'
+"" Customize fzf colors to always match current color scheme.
+"let g:fzf_colors = {
+      "\ 'fg':      ['fg', 'Normal'],
+      "\ 'bg':      ['bg', 'Normal'],
+      "\ 'hl':      ['fg', 'Comment'],
+      "\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      "\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      "\ 'hl+':     ['fg', 'Statement'],
+      "\ 'info':    ['fg', 'PreProc'],
+      "\ 'border':  ['fg', 'Ignore'],
+      "\ 'prompt':  ['fg', 'Conditional'],
+      "\ 'pointer': ['fg', 'Exception'],
+      "\ 'marker':  ['fg', 'Keyword'],
+      "\ 'spinner': ['fg', 'Label'],
+      "\ 'header':  ['fg', 'Comment']
+      "\ }
 
-"" use unofficial rust-analyzer
-"" https://github.com/dense-analysis/ale/issues/2832#issuecomment-596081235
-"let g:ale_rust_rls_config = {
-	"\ 'rust': {
-		"\ 'all_targets': 1,
-		"\ 'build_on_save': 1,
-		"\ 'clippy_preference': 'on'
-	"\ }
-	"\ }
-"let g:ale_rust_rls_toolchain = ''
-"let g:ale_rust_rls_executable = 'rust-analyzer'
-"let g:ale_linters = {
-    "\ 'rust': ['rls']
-    "\ }
-"let g:ale_fixers = {
-    "\ '*': ['remove_trailing_lines', 'trim_whitespace'],
-    "\ 'rust': ['rustfmt']
-    "\ }
-"let g:ale_fix_on_save = 1 " autofix on saving
-
-"nnoremap <leader>lh :ALEHover<CR>
-"nnoremap <leader>lg :ALEGoToDefinition<CR>
-"nnoremap <leader>lr :ALEFindReferences<CR>
-"nnoremap <leader>ls :ALESymbolSearch
-"nnoremap <leader>ld :ALEDetail<CR>
-"nnoremap <C-p> :ALEPreviousWrap<CR>
-"nnoremap <C-n> :ALENextWrap<CR>
-
-"" Can't override ALE color highlights in the colorscheme, which is probably
-"" loaded first, so overwrite them again here.
-"hi link ALEError Error
-"hi link ALEErrorLine Error
-"hi link ALEErrorSign Error
-
-"hi link ALEWarning Warning
-"hi link ALEWarningLine Warning
-"hi link ALEWarningSign Warning
-
-
-"==========
-" Dumpster
-"==========
-" Store currently unused or work-in-progress settings/scripts.
-
-" Auto completion
-"Plug 'maxboisvert/vim-simple-complete'
-
-" Mark two or more spaces after some text as an error.
-"syntax match DoubleSpace /\S\zs {2,}/
-"highlight link DoubleSpace Error
-
-" These only work when vim is compiled with +clipboard flag set:
-" Copy to system clipboard.
-"vnoremap <Leader>y "+y
-"nnoremap <Leader>Y "+yg_
-"nnoremap <Leader>y "+y
-
-" Paste from system clipboard.
-"nnoremap <Leader>p "+p
-"nnoremap <Leader>P "+P
-"vnoremap <Leader>p "+p
-"vnoremap <leader>P "+P
-
-" Split navigations. currently conflicts with line movements
-"nnoremap <C-J> <C-W><C-J>
-"nnoremap <C-K> <C-W><C-K>
-"nnoremap <C-L> <C-W><C-L>
-"nnoremap <C-H> <C-W><C-H>
-
-"" Automatically resize vertical splits.
-":au WinEnter * :set winfixheight
-":au WinEnter * :wincmd =
-
-"command TrimWhitespace %s/\s\+$//e

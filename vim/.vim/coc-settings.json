@@ -1,3 +1,13 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["css", "markdown", "rust", "ts", "js", "python"]
+  "coc.preferences.formatOnSaveFiletypes": [
+    "css",
+    "markdown",
+    "rust",
+    "ts",
+    "js",
+    "python"
+  ],
+  "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer",
+  "diagnostic.messageTarget": "echo",
+  "suggest.autoTrigger": "always"
 }

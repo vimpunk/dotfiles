@@ -1,4 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": ["css", "rust"],
-  "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer"
+  "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer",
+  "diagnostic.messageTarget": "echo",
+  "suggest.autoTrigger": "always"
 }
