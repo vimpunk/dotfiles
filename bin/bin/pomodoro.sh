@@ -33,8 +33,8 @@ case "$1" in
             echo "Starting Pomodoro"
             # we want to show counter from 1
             counter=1
-            # 3 big rounds
-            for i in {0..2}; do
+            # 2 big rounds
+            for i in {0..1}; do
                 # 4 pomodoros per round
                 for i in {0..3}; do
                     # work
