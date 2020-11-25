@@ -267,10 +267,11 @@ exec --no-startup-id dunst
 
 # use the external monitor
 #exec --no-startup-id xrandr --output eDP1 --off --output DP3 --auto
+#exec --no-startup-id xrandr --output eDP1 --off
 
 # start firefox on startup
 exec firefox
-exec xflux -l 47 -g 19
+exec xflux -l -77.9527 -g 166.4895
 
 # start on main workspaces when reloading i3 (keep me at the bottom)
 exec_always --no-startup-id i3-msg 'workspace $WS5, workspace $WS1'

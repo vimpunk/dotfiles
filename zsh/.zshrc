@@ -41,9 +41,6 @@ alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/p
 alias :q='exit'
 alias gdb='gdb -q'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
-if which nvim 2>&1 1>/dev/null; then
-    alias vim=nvim
-fi
 if which evcxr 2>&1 1>/dev/null; then
     alias repl=evcxr
 fi

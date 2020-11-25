@@ -105,7 +105,6 @@ Plug 'junegunn/gv.vim'
 " ------------------------------------------------------------------------------
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim'
-"Plug 'junegunn/vim-journal'
 
 " ------------------------------------------------------------------------------
 " Color schemes
@@ -188,7 +187,6 @@ set autoread " Reload file if it has been changed outside of vim but not inside.
 set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
 set wildmenu " This changed my life.
 set wildmode=full
-set laststatus=2 " Always display the statusline.
 
 " Always leave 5 lines above/below the cursor when nearing the top/bottom of the
 " window.
@@ -338,6 +336,7 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 " ----------------------------------------------------------------------------
 " Statusline
 " ----------------------------------------------------------------------------
+set laststatus=2 " Always display the statusline.
 " reset
 set statusline=
 " current file
@@ -424,6 +423,9 @@ let g:goyo_width = 90
 let g:goyo_height = 100
 let g:goyo_linenr = 1
 
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
 let g:session_autosave = 'no'
@@ -434,8 +436,7 @@ nnoremap <F10> :NERDTreeToggle<CR>
 " COC.nvim
 " ------------------------------------------------------------------------------
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
+" seeing red all the time drives me crazy, so increase code check interval
 set updatetime=5000
 
 " Don't pass messages to |ins-completion-menu|.
@@ -473,7 +474,7 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `[g` and `]g` to navigate diagnostics
+" Navigate diagnostics
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 
@@ -488,8 +489,8 @@ nmap <silent> <leader>n <Plug>(coc-rename)
 " Example: `<leader>cap` for current paragraph
 xmap <leader>c <Plug>(coc-codeaction-selected)
 nmap <leader>c <Plug>(coc-codeaction-selected)
-" Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply codeAction to the current line.
+"nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
@@ -539,8 +540,8 @@ nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
 " show extensions
 nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
-" show currently loaded buffers
-nnoremap <silent> <leader>b  :<C-u>CocList buffers<CR>
+" show files in most recently used order
+nnoremap <silent> <leader>b  :<C-u>CocList mru<CR>
 " search words in $(pwd)
 nnoremap <silent> <leader>ss  :<C-u>CocList grep<CR>
 " search files in $(pwd)
