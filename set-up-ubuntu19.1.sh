@@ -78,7 +78,7 @@ fi
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # source cargo so it's available in this shell
 source ~/.cargo/env
-cargo install diesel_cli
+cargo install diesel_cli git-delta ripgrep tokei cargo-bloat cargo-feature-analyst starship evxcr_repl
 rustup component add rls rust-analysis rust-src rustfmt
 
 # rust analyzer (need to build from source for now)

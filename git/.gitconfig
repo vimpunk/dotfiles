@@ -3,6 +3,7 @@
     name = mandreyel
 [core]
     editor = vim
+    pager = delta
     excludesfile = ~/dotfiles/git/.gitignore
 [alias]
     # Detailed commit history graph
@@ -27,6 +28,8 @@
     helper = cache --timeout=21600
 [diff]
     tool = vimdiff
+[interactive]
+    diffFilter = delta --color-only
 [merge]
     tool = vimdiff
 [mergetool]
