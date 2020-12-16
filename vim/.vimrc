@@ -53,8 +53,6 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 " Auto insert endings to structures like if, do, ifndef etc.
 "
-" NOTE: Disabled due to interference with coc.nvim autocompleteion.
-"Plug 'tpope/vim-endwise'
 " Auto insert matching brackets, parentheses, quotes etc
 Plug 'jiangmiao/auto-pairs'
 " Extend % matching to HTML tags and others.
@@ -79,6 +77,7 @@ Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
 Plug 'danro/rename.vim'
+Plug 'liuchengxu/eleline.vim'
 
 " ------------------------------------------------------------------------------
 " Languages
@@ -88,7 +87,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-Plug 'gabrielelana/vim-markdown' " seems slow, TODO: profile
+" TODO: seems slow, profile
+Plug 'gabrielelana/vim-markdown'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 
@@ -289,8 +289,6 @@ nnoremap [b :bprev<CR>
 " ------------------------------------------------------------------------------
 nnoremap ]t :tabn<CR>
 nnoremap [t :tabp<CR>
-nnoremap <leader>ft :tabfirst<CR>
-nnoremap <leader>lt :tablast<CR>
 
 " ------------------------------------------------------------------------------
 " Search
@@ -337,12 +335,12 @@ xnoremap <silent> <C-j> :move'>+<CR>gv
 " Statusline
 " ----------------------------------------------------------------------------
 set laststatus=2 " Always display the statusline.
-" reset
-set statusline=
-" current file
-set statusline+=\ %f
-" whether current buffer is modified
-set statusline+=\ %m
+"" reset
+"set statusline=
+"" current file
+"set statusline+=\ %f
+"" whether current buffer is modified
+"set statusline+=\ %m
 
 
 " ==============================================================================
@@ -512,6 +510,8 @@ augroup MyCocGroup
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
       \ tabstop=2 shiftwidth=2
+  " Autocomplete in markdown seems to slow down vim too much to be worth it.
+  autocmd FileType markdown let b:coc_suggest_disable = 1
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Autoformat file on save.
@@ -540,12 +540,13 @@ nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
 " show extensions
 nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
-" show files in most recently used order
-nnoremap <silent> <leader>b  :<C-u>CocList mru<CR>
+" search for lines in current buffer
+nnoremap <silent> <leader>l  :<C-u>CocList lines<CR>
 " search words in $(pwd)
-nnoremap <silent> <leader>ss  :<C-u>CocList grep<CR>
-" search files in $(pwd)
-nnoremap <silent> <leader>ff  :<C-u>CocList files<CR>
+nnoremap <silent> <leader>s  :<C-u>CocList grep<CR>
+" search files in $(pwd) in most recently used order
+nnoremap <silent> <leader>f  :<C-u>CocList files<CR>
+nnoremap <silent> <leader>b  :<C-u>CocList mru<CR>
 " search command history
 nnoremap <silent> <leader>hc  :<C-u>CocList cmdhistory<CR>
 " search search history

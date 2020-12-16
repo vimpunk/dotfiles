@@ -9,5 +9,6 @@
   ],
   "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer",
   "diagnostic.messageTarget": "float",
-  "suggest.autoTrigger": "always"
+  "suggest.autoTrigger": "always",
+  "list.source.files.args": ["--hidden", "--files"]
 }
