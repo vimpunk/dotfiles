@@ -5,15 +5,20 @@
     editor = vim
     pager = delta
     excludesfile = ~/dotfiles/git/.gitignore
+[pretty]
+	better-oneline = "format:%C(auto)%h%d %s %Cblue[%cn]"
 [alias]
     # Detailed commit history graph
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
-    # List files which have changed since master.
-    files = !git diff --name-only $(git merge-base HEAD master)
+    # test
+	tree = log --pretty=better-oneline --all --graph
+    ls = log --pretty=better-oneline
+    ll = log --pretty=better-oneline --numstat
+    details = "!f() { git ll "$1"^.."$1"; }; f"
 
     # List files which have changed since master, with diff stats.
-    stat = !git diff --stat $(git merge-base HEAD master)
+    files = !git diff --stat $(git merge-base HEAD master)
 
     # Open all files changed since master in vim tabs and run fugitive :Gdiff in
     # each tab and tell gitgutter to show +/- signs for changes since master.
@@ -24,6 +29,10 @@
     unstage = reset HEAD --
     unmodify = checkout --
     untrack = rm --cached
+
+    s = status
+    c = checkout
+    d = diff
 [credential]
     helper = cache --timeout=21600
 [diff]
