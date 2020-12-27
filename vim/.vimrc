@@ -59,10 +59,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tmhedberg/matchit'
 " Repeat plugin mappings.
 Plug 'tpope/vim-repeat'
-" Syntax aware visual selection.
-Plug 'terryma/vim-expand-region' " TODO test
-" Expand abbreviations (mostly for inserting HTML elements).
-Plug 'mattn/emmet-vim' " TODO test
 
 " ------------------------------------------------------------------------------
 " Core enhancements
@@ -77,7 +73,6 @@ Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
 Plug 'danro/rename.vim'
-Plug 'liuchengxu/eleline.vim'
 
 " ------------------------------------------------------------------------------
 " Languages
@@ -87,7 +82,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-" TODO: seems slow, profile
+" Slow with coc.nvim, don't forget to disable autocomplete for markdown files.
 Plug 'gabrielelana/vim-markdown'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
@@ -123,6 +118,24 @@ Plug 'cormacrelf/vim-colors-github'
 Plug 'https://github.com/vim-scripts/pyte'
 Plug 'https://github.com/reedes/vim-colors-pencil'
 Plug 'https://github.com/zefei/cake16'
+
+" ------------------------------------------------------------------------------
+" Misc
+" ------------------------------------------------------------------------------
+Plug 'simplenote-vim/simplenote.vim'
+source ~/.simplenoterc
+
+" ------------------------------------------------------------------------------
+" Experimental
+" ------------------------------------------------------------------------------
+" Syntax aware visual selection.
+Plug 'terryma/vim-expand-region' " TODO: test
+" Expand abbreviations (mostly for inserting HTML elements).
+Plug 'mattn/emmet-vim' " TODO: test
+Plug 'tpope/vim-dadbod', { 'on': 'DB' }
+"Plug 'liuchengxu/eleline.vim'
+"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+Plug 'liuchengxu/vista.vim'
 
 call plug#end()
 
@@ -387,7 +400,7 @@ augroup end
 augroup FileTypeSettings
   " .md file extensions should be treated as markdown rather than modula.
   autocmd BufNewFile,BufFilePre,BufRead *.md
-              \ setl filetype=markdown.pandoc
+              \ setl filetype=markdown
               \ formatoptions-=a
               \ noautoindent
               \ textwidth=80
