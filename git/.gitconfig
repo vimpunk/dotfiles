@@ -13,7 +13,7 @@
 
     # test
 	tree = log --pretty=better-oneline --all --graph
-    ls = log --pretty=better-oneline
+    l = log --pretty=better-oneline
     ll = log --pretty=better-oneline --numstat
     details = "!f() { git ll "$1"^.."$1"; }; f"
 
@@ -24,11 +24,12 @@
     # each tab and tell gitgutter to show +/- signs for changes since master.
     review = !vim -p $(git files) +\"tabdo Gdiff master\" +\"let g:gitgutter_diff_base = 'master'\"
 
-    # Should probably not use these two too much as it's better to know the
+    # Should probably not use these too much as it's better to know the
     # actual commands, but just in case I forget them:
     unstage = reset HEAD --
     unmodify = checkout --
     untrack = rm --cached
+    rollback = !git reset --soft HEAD~ && git reset HEAD
 
     s = status
     c = checkout
