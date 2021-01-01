@@ -1,14 +1,31 @@
-#
+# TODO: what does this do? this was here by default
 [[ $- != *i* ]] && return
 
-export PATH=$HOME/.local/bin:$HOME/bin:$PATH:$HOME/.cargo/bin
-export PATH=$PATH:$HOME/.npm-global/bin
-export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
-export PATH=$PATH:/var/lib/snapd/snap/bin/
+# ==============================================================================
+# Path
+# ==============================================================================
+
 export EDITOR='vim'
 export GOPATH=$HOME/go
+
+# own scripts
+export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/bin
+# rust
+export PATH=$PATH:$HOME/.cargo/bin
+# ruby
+export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
+# snap
+export PATH=$PATH:/var/lib/snapd/snap/bin/
+# go
 export PATH=$PATH:GOROOT/bin:$GOPATH/bin
+# npm/yarn
 export PATH=$PATH:$HOME/.npm-global/bin
+export PATH=$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
+
+# ==============================================================================
+# Settings
+# ==============================================================================
 
 export HISTSIZE=1000000000
 export SAVEHIST=$HISTSIZE
@@ -26,45 +43,82 @@ setopt HIST_SAVE_NO_DUPS # Don't write duplicate entries in the history file.
 setopt INC_APPEND_HISTORY # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY # Share history between all sessions.
 
-PS1='[\u@\h \W]\$ '
+# ==============================================================================
+# Aliases
+# ==============================================================================
 
 alias ls='ls --color=auto'
 alias la='ls -A'
 alias ll='ls -lA'
 alias l='ls -l'
+# show dotfiles
 alias l.="ls -A | egrep '^\.'"
-alias merge='xrdb -merge ~/.Xresources'
-alias pmsyu='sudo pacman -Syu --color=auto'
-alias update='sudo pacman -Syu'
-alias mirrors='sudo reflector --score 100 --fastest 25 --sort rate --save /etc/pacman.d/mirrorlist --verbose'
+
 # Vim ruined me...
 alias :q='exit'
+# ignore welcome banner
 alias gdb='gdb -q'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
-if which evcxr 2>&1 1>/dev/null; then
-    alias repl=evcxr
-fi
+alias repl=evcxr
+alias note='vim -c SimplenoteList'
 
-function note {
-    vim "$HOME/notes/$1"
+# ==============================================================================
+# Vim mode
+# ==============================================================================
+
+# use vim keybindings
+bindkey -v
+# use jk to escape inert mode
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins '^w' backward-kill-word
+bindkey -M viins '^U' backward-kill-line
+# cycle through history as in emacs mode
+bindkey '^P' up-history
+bindkey '^N' down-history
+
+# ==============================================================================
+# Plugins
+# ==============================================================================
+
+# Compiles a zsh plugin script into zsh byte code for faster startup times.
+function source-compiled {
+    plugin_path=$1
+    compiled_path=$1.zwc
+    # If there is no *.zsh.zwc or it's older than *.zsh, compile *.zsh into *.zsh.zwc.
+    if [[ ! "${compiled_path}" -nt "${plugin_path}" ]]; then
+      zcompile "${plugin_path}"
+    fi
+    source "${plugin_path}"
 }
 
-[ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+my_zsh_plugins_dir=~/dotfiles/zsh-plugins/
 
+# NOTE: has to be before all uses of `zsh-defer`
+source "${my_zsh_plugins_dir}/zsh-defer/zsh-defer.plugin.zsh"
+
+zsh-defer source-compiled "${my_zsh_plugins_dir}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+bindkey '^F' autosuggest-execute
+bindkey '^A' autosuggest-accept
+
+zsh-defer source-compiled "${my_zsh_plugins_dir}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+
+# ==============================================================================
+# Tools
+# ==============================================================================
+
+# fzf
+# NOTE: has to be after setting vim mode
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm
 if [ -d "$HOME/.nvm" ]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
 
-if [ -d "$HOME/.yarn" ]; then
-    export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-dadjoke() {
-    curl https://icanhazdadjoke.com
-}
+# ==============================================================================
+# Prompt
+# ==============================================================================
 
 eval "$(starship init zsh)"
