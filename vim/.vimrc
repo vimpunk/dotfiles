@@ -248,7 +248,7 @@ if has('mouse')
     set mouse=a
 endif
 
-set spelllang=en
+"set spelllang=en
 
 " ------------------------------------------------------------------------------
 " Formatting
@@ -399,15 +399,17 @@ augroup end
 
 augroup FileTypeSettings
   " .md file extensions should be treated as markdown rather than modula.
-  autocmd BufNewFile,BufFilePre,BufRead *.md
-              \ setl filetype=markdown
-              \ formatoptions-=a
-              \ noautoindent
-              \ textwidth=80
+  autocmd BufNewFile,BufFilePre,BufRead *.md setl filetype=markdown
+
+  " simplenote files should be treated as markdown
+  autocmd BufNewFile,BufFilePre,BufRead SN_* setl filetype=markdown
 
   " Dockerfile.builder is the conventional file name for builder docker files so
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
+
+  " No text width limit for markdown.
+  autocmd FileType markdown set noautoindent textwidth=1000
 
   " Python should have a max line length of 79, otherwise the linter complains.
   autocmd FileType python set textwidth=79
