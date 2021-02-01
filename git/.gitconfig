@@ -34,6 +34,8 @@
     s = status
     c = checkout
     d = diff
+
+    mru = !git for-each-ref --sort=-committerdate refs/heads/ | tac
 [credential]
     helper = cache --timeout=21600
 [diff]
