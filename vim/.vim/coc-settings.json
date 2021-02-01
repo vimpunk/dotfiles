@@ -1,7 +1,6 @@
 {
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
-    "markdown",
     "rust",
     "ts",
     "js",
@@ -11,5 +10,6 @@
   "rust-analyzer.checkOnSave.command": "clippy",
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
-  "list.source.files.args": ["--hidden", "--files"]
+  "list.source.files.args": ["--hidden", "--files"],
+  "list.source.files.excludePatterns": ["**/.git/**"]
 }
