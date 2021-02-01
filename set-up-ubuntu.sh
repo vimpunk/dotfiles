@@ -85,6 +85,10 @@ fi
 
 # node version manager and latest node
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
+# export nvm for this session to install node
+export NVM_DIR=$HOME/.nvm
+$NVM_DIR/nvm.sh
+# install latest node
 nvm install node
 
 # neovim
@@ -138,7 +142,7 @@ rustup component add \
 sudo usermod -s /usr/bin/zsh "${USER}"
 
 # clone configuration repo
-git clone --recursive-submodules https://github.com/mandreyel/dotfiles
+git clone https://github.com/mandreyel/dotfiles
 
 # remove default config files (if they exist) as otherwise stow will fail
 [ -f ~/.zshrc ] && rm ~/.zshrc
@@ -146,6 +150,8 @@ git clone --recursive-submodules https://github.com/mandreyel/dotfiles
 
 (
     cd dotfiles
+
+    git submodule update --init --recursive
 
     # apply local ($HOME) config files
     stow vim
