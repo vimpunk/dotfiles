@@ -68,6 +68,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " coc.nvim providing most of the functionality. Instead, we just let vim-plug
 " manage the system fzf installation.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 " Start screen
 Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
@@ -77,13 +78,13 @@ Plug 'danro/rename.vim'
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
 " Slow with coc.nvim, don't forget to disable autocomplete for markdown files.
-Plug 'gabrielelana/vim-markdown'
+Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 
@@ -118,12 +119,6 @@ Plug 'cormacrelf/vim-colors-github'
 Plug 'https://github.com/vim-scripts/pyte'
 Plug 'https://github.com/reedes/vim-colors-pencil'
 Plug 'https://github.com/zefei/cake16'
-
-" ------------------------------------------------------------------------------
-" Misc
-" ------------------------------------------------------------------------------
-Plug 'simplenote-vim/simplenote.vim'
-source ~/.simplenoterc
 
 " ------------------------------------------------------------------------------
 " Experimental
@@ -356,6 +351,8 @@ set laststatus=2 " Always display the statusline.
 "set statusline+=\ %m
 
 
+nnoremap <leader>gc /<<<<<<< HEAD\\|=======\\|>>>>>>><CR>
+
 " ==============================================================================
 " Scripts & Autocommands
 " ==============================================================================
@@ -401,9 +398,6 @@ augroup FileTypeSettings
   " .md file extensions should be treated as markdown rather than modula.
   autocmd BufNewFile,BufFilePre,BufRead *.md setl filetype=markdown
 
-  " simplenote files should be treated as markdown
-  autocmd BufNewFile,BufFilePre,BufRead SN_* setl filetype=markdown
-
   " Dockerfile.builder is the conventional file name for builder docker files so
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
@@ -445,12 +439,15 @@ let g:session_autosave = 'no'
 
 nnoremap <F10> :NERDTreeToggle<CR>
 
+let g:vista_default_executive = 'coc'
+let g:vista_sidebar_position = 'vertical topleft'
+
 " ------------------------------------------------------------------------------
 " COC.nvim
 " ------------------------------------------------------------------------------
 
 " seeing red all the time drives me crazy, so increase code check interval
-set updatetime=5000
+set updatetime=200
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
@@ -484,7 +481,7 @@ endif
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Navigate diagnostics
@@ -529,16 +526,16 @@ augroup MyCocGroup
   autocmd FileType markdown let b:coc_suggest_disable = 1
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  " Autoformat file on save.
-  autocmd BufWritePost * Format
+  "" Autoformat file on save.
+  "autocmd BufWritePost * Format
 augroup end
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 " Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<CR>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<CR>" : "\<Left>"
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
@@ -547,6 +544,11 @@ command! -nargs=0 Format :call CocAction('format')
 " NOTE: Please see `:h coc-status` for integrations with external plugins that
 " provide custom statusline: lightline.vim, vim-airline.
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" resume previous search
+nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
+" show coc extensions
+nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
 
 " Mappings using CoCList:
 " resume previous search
@@ -566,6 +568,25 @@ nnoremap <silent> <leader>b  :<C-u>CocList mru<CR>
 nnoremap <silent> <leader>hc  :<C-u>CocList cmdhistory<CR>
 " search search history
 nnoremap <silent> <leader>h/  :<C-u>CocList searchhistory<CR>
+
+
+"" ------------------------------------------------------------------------------
+"" Clap
+"" ------------------------------------------------------------------------------
+
+"nnoremap <silent> <leader>c  :<C-u>Clap quickfix<CR>
+"" search for lines in current buffer
+"nnoremap <silent> <leader>l  :<C-u>Clap blines<CR>
+"" search words in $(pwd)
+"nnoremap <silent> <leader>s  :<C-u>Clap grep2<CR>
+"" search files in $(pwd)
+"nnoremap <silent> <leader>f  :<C-u>Clap files<CR>
+"" search buffers
+"nnoremap <silent> <leader>b  :<C-u>Clap buffers<CR>
+"" search command history
+"nnoremap <silent> <leader>hc  :<C-u>Clap hist:<CR>
+"" search search history
+"nnoremap <silent> <leader>h/  :<C-u>Clap hist/<CR>
 
 "" ------------------------------------------------------------------------------
 "" FZF
