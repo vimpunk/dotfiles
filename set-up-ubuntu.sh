@@ -26,9 +26,7 @@ sudo apt -y install \
 sudo apt -y install \
     vim \
     vim-gtk3 \
-    i3 \
     dmenu \
-    compton \
     feh \
     scrot \
     stow \
@@ -100,7 +98,29 @@ nvm install node
     chmod u+x nvim
 )
 
+################################################################################
+# regolith
+################################################################################
+
+sudo add-apt-repository ppa:regolith-linux/release
+
+if [ "${device}" == "laptop" ]; then
+    sudo apt install regolith-desktop-mobile
+else
+    sudo apt install regolith-desktop-standard
+fi
+
+# set colorscheme
+regolith-look set solarized-dark
+
+# the regolith config will be "stowed" below
+
+echo "Regolith installed. Changes will take effect on next restart."
+
+################################################################################
 # rust
+################################################################################
+
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 # source cargo so it's available in this shell
 source ~/.cargo/env
@@ -159,8 +179,7 @@ git clone https://github.com/mandreyel/dotfiles
     stow bash
     stow bin
     stow git
-    stow i3status
-    stow i3
+    stow regolith
 
     # apply global config files
     (
@@ -179,4 +198,6 @@ git clone https://github.com/mandreyel/dotfiles
 vim +PlugInstall +qall
 
 # install coc-nvim plugins
+# FIXME: this doesn't work
+# possibly look at https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#automation-script
 vim "+CocInstall coc-rls coc-lists" +qall

@@ -1,0 +1,9 @@
+i3-wm.mod: Mod1
+i3-wm.alt: Mod4
+i3-wm.binding.file_search: Mod4
+i3-wm.binding.ws_next2: Mod4+Right
+i3-wm.binding.ws_prev2: Mod4+Left
+i3-wm.binding.take_next_free: Mod4+grave
+i3-wm.binding.look_selector: Mod4+l
+i3xrocks.value.font: JetBrains Mono Medium 10
+gnome.terminal.font: JetBrains Mono 10
