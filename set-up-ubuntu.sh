@@ -72,7 +72,7 @@ function start_section {
 
 function end_section {
     echo $1
-    echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+    echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n"
 }
 
 # Applies the configuration of the first argument, which is a unit in the
@@ -359,7 +359,7 @@ function setup_vim {
 setup_vim
 
 # general sysadmin tools
-function install_system_tool {
+function install_system_tools {
     start_section "Installing system tools."
 
     sudo apt -y install \
