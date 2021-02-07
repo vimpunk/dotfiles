@@ -3,8 +3,60 @@
 set -o nounset    # error when referencing undefined variable
 set -o errexit    # exit when command fails
 
+# parse CLI args
+
+for arg in "$@"; do 
+    case "${arg}" in 
+    --mobile)
+        mobile=true
+    ;;
+    --no-db)
+        skip_dbs=true
+    ;;
+    --no-cpp)
+        skip_cpp=true
+    ;;
+    --no-node)
+        skip_node=true
+    ;;
+    --no-rust-tools)
+        skip_rust_tools=true
+    ;;
+    --no-nvim)
+        skip_nvim=true
+    ;;
+    --minimal)
+        skip_dbs=true
+        skip_cpp=true
+        skip_node=true
+        skip_rust_tools=true
+        skip_nvim=true
+    ;;
+    -h|--help)
+        help="
+Usage: $(basename $0) [OPTIONS]
+
+Options:
+    --mobile        Configure installation for laptops. Defaults to false.
+    --no-cpp        Skip installation of C/C++ toolchains.
+    --no-db         Skip installation of databases (postgres, redis, sqlite).
+    --no-node       Skip installation of node.
+    --no-nvim       Skip installation of neovim.
+    --no-rust-tools Skip installation of optional Rust tooling.
+    --minimal       Skip all above optional installations.
+    -h, --help      Show this help message.
+"
+
+        echo "${help}"
+    ;;
+    esac
+    # next arg
+    shift
+done
+
 ubuntu_release="$(lsb_release --codename --short)"
 echo "Setting up Ubuntu ${ubuntu_release}.\n\n"
+
 
 # Prints the error message given as the first argument and exits.
 function error {
@@ -193,7 +245,7 @@ setup_rust
 function setup_regolith {
     sudo add-apt-repository ppa:regolith-linux/release
 
-    if [ "${device}" == "laptop" ]; then
+    if [ "${mobile}" == "true" ]; then
         start_section "Installing latest Regolith for mobile."
         sudo apt -y install regolith-desktop-mobile
     else
