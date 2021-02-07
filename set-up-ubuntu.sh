@@ -112,6 +112,8 @@ fi
 
 # set colorscheme
 regolith-look set solarized-dark
+# memory status indicator
+sudo apt install i3xrocks-memory
 
 # the regolith config will be "stowed" below
 

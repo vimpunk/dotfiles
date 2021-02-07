@@ -7,3 +7,5 @@ i3-wm.binding.take_next_free: Mod4+grave
 i3-wm.binding.look_selector: Mod4+l
 i3xrocks.value.font: JetBrains Mono Medium 10
 gnome.terminal.font: JetBrains Mono 10
+i3-wm.bar.font: pango:Source Code Pro Medium 10, FontAwesome 10
+i3-wm.font: pango:Source Code Pro Medium 9
