@@ -37,7 +37,7 @@ for arg in "$@"; do
 Usage: $(basename $0) [OPTIONS]
 
 Options:
-    --mobile        Configure installation for laptops. Defaults to false.
+    --mobile        Configure installation for laptops. Defaults to true.
     --no-cpp        Skip installation of C/C++ toolchains.
     --no-db         Skip installation of databases (postgres, redis, sqlite).
     --no-node       Skip installation of node.
@@ -54,6 +54,7 @@ Options:
     shift
 done
 
+mobile=${mobile:-true}
 ubuntu_release="$(lsb_release --codename --short)"
 echo "Setting up Ubuntu ${ubuntu_release}.\n\n"
 
@@ -379,6 +380,18 @@ function install_apps {
         mpv
 
     # TODO: signal
+
+    # spotify
+    curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
+    echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
+    sudo apt-get -y update && sudo apt-get -y install spotify-client
+
+    # syncthing
+    sudo apt -y install syncthing
+    sudo systemctl enable "syncthing@${USER}.service"
+    sudo systemctl start "syncthing@${USER}.service"
+
+    # TODO: pw manager
 
     end_section "Apps installed."
 }
