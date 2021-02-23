@@ -25,6 +25,9 @@ for arg in "$@"; do
     --no-nvim)
         skip_nvim=true
     ;;
+    --no-docker)
+        skip_docker=true
+    ;;
     --minimal)
         skip_dbs=true
         skip_cpp=true
@@ -48,15 +51,24 @@ Options:
 "
 
         echo "${help}"
+        exit 0
     ;;
     esac
     # next arg
     shift
 done
 
+# initialize defaults, otherwise the script fails due to set -u
+skip_dbs=${skip_dbs:-false}
+skip_cpp=${skip_cpp:-false}
+skip_node=${skip_node:-false}
+skip_rust_tools=${skip_rust_tools:-false}
+skip_nvim=${skip_nvim:-false}
+skip_docker=${skip_docker:-false}
+
 mobile=${mobile:-true}
 ubuntu_release="$(lsb_release --codename --short)"
-echo "Setting up Ubuntu ${ubuntu_release}.\n\n"
+echo -e "Setting up Ubuntu ${ubuntu_release}.\n\n"
 
 
 # Prints the error message given as the first argument and exits.
@@ -69,11 +81,13 @@ function error {
 function start_section {
     echo "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"
     echo $1
+    echo "======================================================================"
 }
 
 function end_section {
+    echo "======================================================================"
     echo $1
-    echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n"
+    echo -e ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n"
 }
 
 # Applies the configuration of the first argument, which is a unit in the
@@ -103,6 +117,7 @@ function before_install {
     start_section "Running pre-install hook."
 
     sudo apt -y update
+    sudo apt -y upgrade
 
     # packages to allow apt to use a repo over HTTPS
     sudo apt -y install \
@@ -114,8 +129,10 @@ function before_install {
         git \
         software-properties-common
 
-    echo "Cloning dotfiles repo."
-    git clone https://github.com/mandreyel/dotfiles
+    if [ ! -e dotfiles ]; then
+        echo "Cloning dotfiles repo."
+        git clone https://github.com/mandreyel/dotfiles
+    fi
 
     end_section "Pre-install hook complete."
 }
@@ -166,7 +183,8 @@ function install_lang_toolchains {
         wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
         # export nvm for this session to install node
         export NVM_DIR=$HOME/.nvm
-        $NVM_DIR/nvm.sh
+        # load nvm
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
         # install latest node
         nvm install node
         echo "Node (and nvm) installed: $(node --version)"
@@ -197,7 +215,9 @@ function install_docker {
     end_section "Docker installed: $(docker --version)"
 }
 
-install_docker
+if [ "${skip_docker}" != true ]; then
+    install_docker
+fi
 
 function setup_rust {
     start_section "Installing latest Rust toolchain."
@@ -255,10 +275,11 @@ function setup_regolith {
     fi
 
     # colorscheme
+    sudo apt -y install regolith-look-solarized-dark
     regolith-look set solarized-dark
 
     # memory status indicator
-    sudo apt install -y i3xrocks-memory
+    sudo apt -y install i3xrocks-memory
 
     # override default config
     apply_conf regolith
@@ -278,11 +299,11 @@ function setup_shell {
         silversearcher-ag \
         xclip
 
+    source ~/.cargo/env
     cargo install \
         starship \
         ripgrep \
-        tokei \
-        evxcr_repl
+        tokei
 
     # change shell to zsh
     sudo usermod -s /usr/bin/zsh "${USER}"
