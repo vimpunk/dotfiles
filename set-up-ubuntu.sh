@@ -400,7 +400,11 @@ function install_apps {
     sudo apt -y install \
         mpv
 
-    # TODO: signal
+    # signal
+    wget -O- https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
+    echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |\
+        sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+    sudo apt -y update && sudo apt -y install signal-desktop
 
     # spotify
     curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
