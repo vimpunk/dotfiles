@@ -398,7 +398,8 @@ function install_apps {
     start_section "Installing apps."
 
     sudo apt -y install \
-        mpv
+        mpv \
+        transmission-gtk
 
     # signal
     wget -O- https://updates.signal.org/desktop/apt/keys.asc | sudo apt-key add -
