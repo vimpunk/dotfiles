@@ -345,10 +345,6 @@ function setup_vim {
         vim \
         vim-gtk3
 
-    # vim anywhere
-    curl --fail --silent --show-error --location \
-        https://raw.github.com/cknadler/vim-anywhere/master/install | bash
-
     # neovim
     if [ "${skip_nvim}" != true ]; then
         echo "Installing neovim."
