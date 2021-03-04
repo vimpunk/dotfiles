@@ -6,7 +6,6 @@
     "js",
     "python"
   ],
-  "rust-analyzer.serverPath": "/home/marc/.cargo/bin/rust-analyzer",
   "rust-analyzer.checkOnSave.command": "clippy",
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
