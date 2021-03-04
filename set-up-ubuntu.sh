@@ -28,12 +28,16 @@ for arg in "$@"; do
     --no-docker)
         skip_docker=true
     ;;
+    --no-apps)
+        skip_apps=true
+    ;;
     --minimal)
         skip_dbs=true
         skip_cpp=true
         skip_node=true
         skip_rust_tools=true
         skip_nvim=true
+        skip_apps=true
     ;;
     -h|--help)
         help="
@@ -45,6 +49,8 @@ Options:
     --no-db         Skip installation of databases (postgres, redis, sqlite).
     --no-node       Skip installation of node.
     --no-nvim       Skip installation of neovim.
+    --no-docker     Skip installation of docker.
+    --no-apps       Skip installation of apps like spotify, signal, etc.
     --no-rust-tools Skip installation of optional Rust tooling.
     --minimal       Skip all above optional installations.
     -h, --help      Show this help message.
@@ -59,14 +65,15 @@ Options:
 done
 
 # initialize defaults, otherwise the script fails due to set -u
+mobile=${mobile:-true}
 skip_dbs=${skip_dbs:-false}
 skip_cpp=${skip_cpp:-false}
 skip_node=${skip_node:-false}
 skip_rust_tools=${skip_rust_tools:-false}
 skip_nvim=${skip_nvim:-false}
 skip_docker=${skip_docker:-false}
+skip_apps=${skip_apps:-false}
 
-mobile=${mobile:-true}
 ubuntu_release="$(lsb_release --codename --short)"
 echo -e "Setting up Ubuntu ${ubuntu_release}.\n\n"
 
@@ -418,4 +425,6 @@ function install_apps {
     end_section "Apps installed."
 }
 
-install_apps
+if [ "${skip_apps}" != true ]; then
+    install_apps
+fi
