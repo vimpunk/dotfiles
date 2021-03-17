@@ -398,6 +398,9 @@ augroup FileTypeSettings
   " .md file extensions should be treated as markdown rather than modula.
   autocmd BufNewFile,BufFilePre,BufRead *.md setl filetype=markdown
 
+  " Tiltfiles essentially have python syntax
+  autocmd BufNewFile,BufFilePre,BufRead Tiltfile setl filetype=python
+
   " Dockerfile.builder is the conventional file name for builder docker files so
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
@@ -500,7 +503,7 @@ nmap <silent> <leader>n <Plug>(coc-rename)
 xmap <leader>c <Plug>(coc-codeaction-selected)
 nmap <leader>c <Plug>(coc-codeaction-selected)
 " Apply codeAction to the current line.
-"nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 

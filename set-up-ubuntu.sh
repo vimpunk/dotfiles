@@ -271,7 +271,7 @@ setup_rust
 ################################################################################
 
 function setup_regolith {
-    sudo add-apt-repository ppa:regolith-linux/release
+    sudo add-apt-repository -y ppa:regolith-linux/release
 
     if [ "${mobile}" == "true" ]; then
         start_section "Installing latest Regolith for mobile."
