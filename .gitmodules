@@ -7,3 +7,6 @@
 [submodule "zsh-plugins/zsh-defer"]
 	path = zsh-plugins/zsh-defer
 	url = https://github.com/romkatv/zsh-defer.git
+[submodule "zsh-plugins/zsh-nvm"]
+	path = zsh-plugins/zsh-nvm
+	url = https://github.com/lukechilds/zsh-nvm
