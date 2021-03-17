@@ -18,7 +18,8 @@ export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
 # snap
 export PATH=$PATH:/var/lib/snapd/snap/bin/
 # go
-export PATH=$PATH:GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:$GOPATH/bin
 # npm/yarn
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
@@ -67,6 +68,7 @@ alias note='vim -c SimplenoteList'
 # ==============================================================================
 
 # use vim keybindings
+# NOTE: has to be before fzf
 bindkey -v
 # use jk to escape inert mode
 bindkey -M viins 'jk' vi-cmd-mode
@@ -93,6 +95,11 @@ function source-compiled {
 
 my_zsh_plugins_dir=~/dotfiles/zsh-plugins/
 
+# lazy load nvm for faster terminal startup times
+export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim' 'sudoedit')
+source "${my_zsh_plugins_dir}/zsh-nvm/zsh-nvm.plugin.zsh"
+
 # NOTE: has to be before all uses of `zsh-defer`
 source "${my_zsh_plugins_dir}/zsh-defer/zsh-defer.plugin.zsh"
 
@@ -109,13 +116,6 @@ zsh-defer source-compiled "${my_zsh_plugins_dir}/fast-syntax-highlighting/fast-s
 # fzf
 # NOTE: has to be after setting vim mode
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# nvm
-if [ -d "$HOME/.nvm" ]; then
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-fi
 
 # ==============================================================================
 # Prompt
