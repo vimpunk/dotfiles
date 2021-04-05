@@ -5,6 +5,9 @@
     editor = vim
     pager = delta
     excludesfile = ~/dotfiles/git/.gitignore
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = GitHub
 [pretty]
 	better-oneline = "format:%C(auto)%h%d %s %Cblue[%cn]"
 [alias]
@@ -36,6 +39,7 @@
     d = diff
 
     mru = !git for-each-ref --sort=-committerdate refs/heads/ | tac
+    branch-first = !git log master..$(git rev-parse --abbrev-ref HEAD) --oneline | tail -1
 [credential]
     helper = cache --timeout=21600
 [diff]

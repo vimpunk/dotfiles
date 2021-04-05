@@ -7,7 +7,9 @@
     "python"
   ],
   "rust-analyzer.checkOnSave.command": "clippy",
-  "rust-analyzer.diagnostic.disable": ["proc-macro", "unresolved-proc-macro"],
+  "rust-analyzer.diagnostics.disabled": ["proc-macro", "unresolved-proc-macro"],
+  "rust-analyzer.assist.importMergeBehavior": "last",
+  "rust-analyzer.cargo.allFeatures": true,
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
   "list.source.files.args": ["--hidden", "--files"],

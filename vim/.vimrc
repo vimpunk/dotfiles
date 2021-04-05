@@ -357,21 +357,6 @@ nnoremap <leader>gc /<<<<<<< HEAD\\|=======\\|>>>>>>><CR>
 " Scripts & Autocommands
 " ==============================================================================
 
-" Unobtrusively highlight column 82 to indicate that the line is too long (this
-" is a less obtrusive way of doing "set colorcolumn"). TODO use tw
-fun! s:HighlightCharLimit()
-  highlight LineWidthLimit ctermfg=black ctermbg=grey guibg=#243447
-endfun
-
-if !has("gui_running")
-  call s:HighlightCharLimit()
-  augroup ErrorHighlights
-    autocmd!
-    autocmd Colorscheme * call s:HighlightCharLimit()
-    autocmd BufReadPost,BufNew * call matchadd('LineWidthLimit', '\%82v')
-  augroup end
-endif
-
 " Show relative line numbers when in command mode or switching to another
 " buffer, and show absolute line numbers when in insert mode. However, only set
 " relative number if number is also set. This avoids setting relative number
@@ -500,12 +485,12 @@ nmap <silent> <leader>n <Plug>(coc-rename)
 
 " Applying codeAction to the selected region.
 " Example: `<leader>cap` for current paragraph
-xmap <leader>c <Plug>(coc-codeaction-selected)
-nmap <leader>c <Plug>(coc-codeaction-selected)
+"xmap <leader>c <Plug>(coc-codeaction-selected)
+"nmap <leader>c <Plug>(coc-codeaction-selected)
 " Apply codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>qa  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+"nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
