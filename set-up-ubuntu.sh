@@ -134,7 +134,8 @@ function before_install {
         ssh \
         stow \
         git \
-        software-properties-common
+        software-properties-common \
+        libssl-dev
 
     if [ ! -e dotfiles ]; then
         echo "Cloning dotfiles repo."
