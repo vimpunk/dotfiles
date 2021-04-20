@@ -367,6 +367,7 @@ function setup_vim {
                 https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
             chmod u+x nvim
         )
+        apply_conf nvim
         echo "Neovim installed: $(nvim --version)"
     fi
 
@@ -374,10 +375,6 @@ function setup_vim {
     apply_conf vim
     # install all plugins
     vim +PlugInstall +qall
-    # install coc-nvim plugins
-    # FIXME: this doesn't work
-    # possibly look at https://github.com/neoclide/coc.nvim/wiki/Install-coc.nvim#automation-script
-    vim "+CocInstall coc-rls coc-lists" +qall
 
     end_section "Vim installed: $(vim --version)"
 }

@@ -489,6 +489,7 @@ nmap <silent> <leader>n <Plug>(coc-rename)
 "nmap <leader>c <Plug>(coc-codeaction-selected)
 " Apply codeAction to the current line.
 nmap <leader>qa  <Plug>(coc-codeaction)
+nmap <leader>qc  <Plug>(coc-codeaction-cursor)
 " Apply AutoFix to problem on the current line.
 "nmap <leader>qf  <Plug>(coc-fix-current)
 

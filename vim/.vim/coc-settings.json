@@ -12,6 +12,7 @@
   "rust-analyzer.cargo.allFeatures": true,
   "rust-analyzer.inlayHints.enable": true,
   "rust-analyzer.inlayHints.chainingHints": true,
+  "rust-analyzer.inlayHints.maxLength": null,
   "rust-analyzer.inlayHints.typeHints": true,
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
