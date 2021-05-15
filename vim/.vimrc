@@ -5,14 +5,14 @@ set nocompatible
 " Plugins
 " ==============================================================================
 
+" Download vim-plug if it's not installed on this machine.
 if has('nvim')
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-  silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+  if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+          \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  endif
 else
-  " Download vim-plug if it's not installed on this machine.
   if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
           \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -179,6 +179,7 @@ endif
 set backupdir=~/.vim/backup//
 set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
+set undofile
 
 " Don't unload buffers when they're abandoned (also required for LSP operations
 " modifying multiple buffers like rename).
@@ -212,10 +213,6 @@ inoremap JJ <Esc>
 inoremap jk <Esc>
 inoremap Jk <Esc>
 inoremap JK <Esc>
-
-" Quicker way to resize a window.
-nnoremap <F2> <C-w><
-nnoremap <F3> <C-w>>
 
 " Shortcuts to quickly edit and source .vimrc. (~/.vimrc path is specified as in
 " case of using neovim we want to edit vimrc and not init.vim)
@@ -404,6 +401,13 @@ augroup FileTypeSettings
   autocmd FileType json,proto,vim,vue,yaml setl tabstop=2 shiftwidth=2
 augroup end
 
+" Jump to last edit position on opening file
+" https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim#L439
+if has("autocmd")
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 
 " ==============================================================================
 " Plugin settings
@@ -443,6 +447,9 @@ set shortmess+=c
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
 set signcolumn=yes
+
+" Coc plugins
+let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer']
 
 " Use tab to trigger completion with characters ahead and for completion
 " navigation.
@@ -521,10 +528,15 @@ augroup end
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
 " Note coc#float#scroll works on neovim >= 0.4.0 or vim >= 8.2.0750
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<CR>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<CR>" : "\<Left>"
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " Add `:Format` command to format current buffer.
 command! -nargs=0 Format :call CocAction('format')
