@@ -28,6 +28,9 @@ for arg in "$@"; do
     --no-docker)
         skip_docker=true
     ;;
+    --no-k8s)
+        skip_k8s=true
+    ;;
     --no-apps)
         skip_apps=true
     ;;
@@ -50,6 +53,7 @@ Options:
     --no-node       Skip installation of node.
     --no-nvim       Skip installation of neovim.
     --no-docker     Skip installation of docker.
+    --no-k8s        Skip installation of k8s.
     --no-apps       Skip installation of apps like spotify, signal, etc.
     --no-rust-tools Skip installation of optional Rust tooling.
     --minimal       Skip all above optional installations.
@@ -72,6 +76,7 @@ skip_node=${skip_node:-false}
 skip_rust_tools=${skip_rust_tools:-false}
 skip_nvim=${skip_nvim:-false}
 skip_docker=${skip_docker:-false}
+skip_k8s=${skip_k8s:-false}
 skip_apps=${skip_apps:-false}
 
 ubuntu_release="$(lsb_release --codename --short)"
@@ -227,6 +232,43 @@ if [ "${skip_docker}" != true ]; then
     install_docker
 fi
 
+function install_k8s {
+    start_section "Installing latest k8s tooling"
+
+    # kubectl
+    # google cloud signing key
+    sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    # k8s apt repo
+    echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+    sudo apt -y update
+    sudo apt -y install kubectl
+
+    # minikube
+    (
+        cd /tmp
+        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube_latest_amd64.deb
+        sudo dpkg -i minikube_latest_amd64.deb
+    )
+
+    # helm
+    curl https://baltocdn.com/helm/signing.asc | sudo apt-key add -
+    echo "deb https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+    sudo apt -y update
+    sudo apt -y install helm
+
+    # kubectx + kubens
+    # TODO
+
+    # k9s
+    # TODO
+
+    end_section "K8s installed: $(kubectl version --short)"
+}
+
+if [ "${skip_k8s}" != true ]; then
+    install_k8s
+fi
+
 function setup_rust {
     start_section "Installing latest Rust toolchain."
 
@@ -253,13 +295,6 @@ function setup_rust {
             cargo-outdated \
             cargo-expand \
             git-delta
-
-        # db tools
-        if [ "${skip_dbs}" != true ]; then
-            cargo install \
-                diesel_cli \
-                sqlx_cli
-        fi
     fi
 
     end_section "Rust installed: $(rustc --version)"
@@ -411,7 +446,7 @@ function install_apps {
     # spotify
     curl -sS https://download.spotify.com/debian/pubkey_0D811D58.gpg | sudo apt-key add -
     echo "deb http://repository.spotify.com stable non-free" | sudo tee /etc/apt/sources.list.d/spotify.list
-    sudo apt-get -y update && sudo apt-get -y install spotify-client
+    sudo apt -y update && sudo apt -y install spotify-client
 
     # syncthing
     sudo apt -y install syncthing
