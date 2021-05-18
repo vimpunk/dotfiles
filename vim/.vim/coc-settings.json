@@ -1,4 +1,7 @@
 {
+  "yaml.schemas": {
+    "kubernetes": "/*.yaml"
+  },
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
     "rust",

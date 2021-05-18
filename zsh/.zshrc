@@ -63,7 +63,7 @@ alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 alias repl=evcxr
 alias note='vim -c SimplenoteList'
 
-alias aws='docker run --rm -it -v ~/.aws:/root/ --network host amazon/aws-cli'
+alias aws='docker run --rm -it -v ~/.aws:/root --network host amazon/aws-cli'
 
 # ==============================================================================
 # Vim mode
@@ -99,7 +99,7 @@ my_zsh_plugins_dir=~/dotfiles/zsh-plugins/
 
 # lazy load nvm for faster terminal startup times
 export NVM_LAZY_LOAD=true
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim' 'sudoedit')
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim' 'sudoedit', 'nvim')
 source "${my_zsh_plugins_dir}/zsh-nvm/zsh-nvm.plugin.zsh"
 
 # NOTE: has to be before all uses of `zsh-defer`

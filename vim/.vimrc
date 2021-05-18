@@ -87,6 +87,7 @@ Plug 'posva/vim-vue'
 Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
+Plug 'towolf/vim-helm'
 
 " ------------------------------------------------------------------------------
 " Git
@@ -410,7 +411,7 @@ endif
 
 
 " ==============================================================================
-" Plugin settings
+" General plugin settings
 " ==============================================================================
 
 let g:vim_json_syntax_conceal = 0
@@ -434,9 +435,9 @@ nnoremap <F10> :NERDTreeToggle<CR>
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_position = 'vertical topleft'
 
-" ------------------------------------------------------------------------------
+" ==============================================================================
 " COC.nvim
-" ------------------------------------------------------------------------------
+" ==============================================================================
 
 " seeing red all the time drives me crazy, so increase code check interval
 set updatetime=200
@@ -449,8 +450,11 @@ set shortmess+=c
 set signcolumn=yes
 
 " Coc plugins
-let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer']
+let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml']
 
+" ----------------------------------------------------------------------------
+" Completion
+" ----------------------------------------------------------------------------
 " Use tab to trigger completion with characters ahead and for completion
 " navigation.
 "
@@ -479,6 +483,9 @@ endif
 inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
+" ----------------------------------------------------------------------------
+" Navigation
+" ----------------------------------------------------------------------------
 " Navigate diagnostics
 nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
 nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
@@ -490,12 +497,15 @@ nmap <silent> <leader>i <Plug>(coc-implementation)
 nmap <silent> <leader>r <Plug>(coc-references)
 nmap <silent> <leader>n <Plug>(coc-rename)
 
+" ----------------------------------------------------------------------------
+" CodeAction
+" ----------------------------------------------------------------------------
 " Applying codeAction to the selected region.
 " Example: `<leader>cap` for current paragraph
 "xmap <leader>c <Plug>(coc-codeaction-selected)
 "nmap <leader>c <Plug>(coc-codeaction-selected)
 " Apply codeAction to the current line.
-nmap <leader>qa  <Plug>(coc-codeaction)
+nmap <leader>qa  <Plug>(coc-codeaction-line)
 nmap <leader>qc  <Plug>(coc-codeaction-cursor)
 " Apply AutoFix to problem on the current line.
 "nmap <leader>qf  <Plug>(coc-fix-current)
@@ -522,8 +532,11 @@ augroup MyCocGroup
   autocmd FileType markdown let b:coc_suggest_disable = 1
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-  "" Autoformat file on save.
-  "autocmd BufWritePost * Format
+  " Autoformat file on save.
+  autocmd BufWritePost *.rs Format
+  " TODO: this causes issues with autoformat on save
+  "" Disable coc for mardkdown buffers, as it slows vim down unbearably.
+  "autocmd BufNew,BufEnter *.md let b:coc_enabled = 0
 augroup end
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
@@ -546,6 +559,9 @@ command! -nargs=0 Format :call CocAction('format')
 " provide custom statusline: lightline.vim, vim-airline.
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+" ----------------------------------------------------------------------------
+" Search
+" ----------------------------------------------------------------------------
 " resume previous search
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
 " show coc extensions
