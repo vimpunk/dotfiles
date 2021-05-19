@@ -19,6 +19,8 @@
   "rust-analyzer.inlayHints.typeHints": true,
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
+  "list.source.mru.defaultOptions": ["--auto-preview", "--no-sort"],
+  "list.source.files.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.files.args": ["--hidden", "--files"],
   "list.source.files.excludePatterns": ["**/.git/**"]
 }

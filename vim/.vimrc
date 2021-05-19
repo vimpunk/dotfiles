@@ -83,8 +83,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'leafgarland/typescript-vim'
 Plug 'elzr/vim-json'
 Plug 'posva/vim-vue'
-" Slow with coc.nvim, don't forget to disable autocomplete for markdown files.
-Plug 'gabrielelana/vim-markdown', { 'for': 'markdown' }
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 Plug 'towolf/vim-helm'
@@ -388,9 +386,6 @@ augroup FileTypeSettings
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
 
-  " No text width limit for markdown.
-  autocmd FileType markdown set noautoindent textwidth=1000
-
   " Python should have a max line length of 79, otherwise the linter complains.
   autocmd FileType python set textwidth=79
 
@@ -404,10 +399,8 @@ augroup end
 
 " Jump to last edit position on opening file
 " https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim#L439
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
+" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
 
 " ==============================================================================
@@ -433,7 +426,7 @@ let g:session_autosave = 'no'
 nnoremap <F10> :NERDTreeToggle<CR>
 
 let g:vista_default_executive = 'coc'
-let g:vista_sidebar_position = 'vertical topleft'
+let g:vista_sidebar_position = 'vertical topright'
 
 " ==============================================================================
 " COC.nvim
@@ -450,7 +443,7 @@ set shortmess+=c
 set signcolumn=yes
 
 " Coc plugins
-let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml']
+let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml', 'coc-explorer']
 
 " ----------------------------------------------------------------------------
 " Completion
@@ -528,8 +521,6 @@ augroup MyCocGroup
   " Setup formatexpr specified filetype(s).
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
       \ tabstop=2 shiftwidth=2
-  " Autocomplete in markdown seems to slow down vim too much to be worth it.
-  autocmd FileType markdown let b:coc_suggest_disable = 1
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
   " Autoformat file on save.
@@ -560,7 +551,7 @@ command! -nargs=0 Format :call CocAction('format')
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " ----------------------------------------------------------------------------
-" Search
+" Search/lists
 " ----------------------------------------------------------------------------
 " resume previous search
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
