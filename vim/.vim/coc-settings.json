@@ -19,6 +19,7 @@
   "rust-analyzer.inlayHints.typeHints": true,
   "diagnostic.messageTarget": "float",
   "suggest.autoTrigger": "always",
+  "list.source.buffers.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.mru.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.files.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.files.args": ["--hidden", "--files"],

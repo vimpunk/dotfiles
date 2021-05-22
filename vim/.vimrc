@@ -550,8 +550,10 @@ command! -nargs=0 Format :call CocAction('format')
 " provide custom statusline: lightline.vim, vim-airline.
 "set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+nnoremap <silent> <F2> :CocCommand explorer<CR>
+
 " ----------------------------------------------------------------------------
-" Search/lists
+" Search & lists
 " ----------------------------------------------------------------------------
 " resume previous search
 nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
@@ -571,7 +573,8 @@ nnoremap <silent> <leader>l  :<C-u>CocList lines<CR>
 nnoremap <silent> <leader>s  :<C-u>CocList grep<CR>
 " search files in $(pwd) in most recently used order
 nnoremap <silent> <leader>f  :<C-u>CocList files<CR>
-nnoremap <silent> <leader>b  :<C-u>CocList mru<CR>
+nnoremap <silent> <leader>b  :<C-u>CocList buffers<CR>
+nnoremap <silent> <leader>m  :<C-u>CocList mru<CR>
 " search command history
 nnoremap <silent> <leader>hc  :<C-u>CocList cmdhistory<CR>
 " search search history
