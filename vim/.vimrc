@@ -70,7 +70,7 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'junegunn/fzf.vim'
 " Start screen
-Plug 'mhinz/vim-startify'
+"Plug 'mhinz/vim-startify'
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
 Plug 'danro/rename.vim'
@@ -378,9 +378,6 @@ augroup end
 augroup FileTypeSettings
   " .md file extensions should be treated as markdown rather than modula.
   autocmd BufNewFile,BufFilePre,BufRead *.md setl filetype=markdown
-
-  " Tiltfiles essentially have python syntax
-  autocmd BufNewFile,BufFilePre,BufRead Tiltfile setl filetype=python
 
   " Dockerfile.builder is the conventional file name for builder docker files so
   " set file extensions to dockerfile.

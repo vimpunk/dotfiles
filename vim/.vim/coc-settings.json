@@ -9,9 +9,10 @@
     "js",
     "python"
   ],
+  "sql.database": "postgresql",
   "rust-analyzer.checkOnSave.command": "clippy",
   "rust-analyzer.diagnostics.disabled": ["proc-macro", "unresolved-proc-macro"],
-  "rust-analyzer.assist.importMergeBehavior": "last",
+  "rust-analyzer.checkOnSave.allFeatures": true,
   "rust-analyzer.cargo.allFeatures": true,
   "rust-analyzer.inlayHints.enable": true,
   "rust-analyzer.inlayHints.chainingHints": true,
