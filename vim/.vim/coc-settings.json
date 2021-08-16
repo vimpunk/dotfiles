@@ -24,5 +24,17 @@
   "list.source.mru.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.files.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.files.args": ["--hidden", "--files"],
-  "list.source.files.excludePatterns": ["**/.git/**"]
+  "list.source.files.excludePatterns": ["**/.git/**"],
+	"languageserver": {
+		"terraform": {
+			"command": "terraform-ls",
+			"args": ["serve"],
+			"filetypes": [
+				"terraform",
+				"tf"
+			],
+			"initializationOptions": {},
+			"settings": {}
+		}
+	}
 }

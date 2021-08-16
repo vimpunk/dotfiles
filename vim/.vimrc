@@ -114,6 +114,7 @@ Plug 'rakr/vim-one'
 Plug 'junegunn/seoul256.vim' " light variant is great
 Plug 'NLKNguyen/papercolor-theme' " good github alternative (less bright)
 Plug 'cormacrelf/vim-colors-github'
+Plug 'Rigellute/shades-of-purple.vim'
 
 Plug 'https://github.com/vim-scripts/pyte'
 Plug 'https://github.com/reedes/vim-colors-pencil'
@@ -391,7 +392,7 @@ augroup FileTypeSettings
   autocmd FileType rust set textwidth=80
 
   " file types for which we want 2 space wide tabs
-  autocmd FileType json,proto,vim,vue,yaml setl tabstop=2 shiftwidth=2
+  autocmd FileType json,proto,vim,vue,yaml,helm setl tabstop=2 shiftwidth=2
 augroup end
 
 " Jump to last edit position on opening file
@@ -412,9 +413,6 @@ let g:indentLine_color_gui = '#4f5b66'
 let g:goyo_width = 90
 let g:goyo_height = 100
 let g:goyo_linenr = 1
-
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
@@ -440,7 +438,7 @@ set shortmess+=c
 set signcolumn=yes
 
 " Coc plugins
-let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml', 'coc-explorer']
+let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml', 'coc-explorer', 'coc-sql', 'coc-prettier']
 
 " ----------------------------------------------------------------------------
 " Completion
