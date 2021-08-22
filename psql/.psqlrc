@@ -1,0 +1,17 @@
+\set QUIET 1
+
+\pset null '[null]'
+
+\timing
+
+\set COMP_KEYWORD_CASE upper
+
+\set HISTSIZE 2000
+
+\x auto
+
+\set VERBOSITY verbose
+\set ON_ERROR_ROLLBACK interactive
+
+\set extensions 'select * from pg_available_extensions;'
+\set version 'SELECT version();'
