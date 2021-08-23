@@ -380,7 +380,7 @@ function setup_shell {
 
 setup_shell
 
-# installs vim, vim-gtk3, nvim, vim-anywhere, and configures them
+# Installs vim, vim-gtk3, nvim, vim-anywhere, and configures them.
 function setup_vim {
     start_section "Installing vim and related tools."
 
@@ -401,8 +401,19 @@ function setup_vim {
                 --output nvim \
                 https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
             chmod u+x nvim
+
         )
         apply_conf nvim
+
+        # Set defaults to point to nvim.
+        set -u
+        MY_NVIM_PATH=$HOME/.local/bin/nvim
+        sudo update-alternatives --install /usr/bin/ex ex "${MY_NVIM_PATH}" 110
+        sudo update-alternatives --install /usr/bin/vi vi "${MY_NVIM_PATH}" 110
+        sudo update-alternatives --install /usr/bin/view view "${MY_NVIM_PATH}" 110
+        sudo update-alternatives --install /usr/bin/vim vim "${MY_NVIM_PATH}" 110
+        sudo update-alternatives --install /usr/bin/vimdiff vimdiff "${MY_NVIM_PATH}" 110
+
         echo "Neovim installed: $(nvim --version)"
     fi
 
@@ -416,7 +427,7 @@ function setup_vim {
 
 setup_vim
 
-# general sysadmin tools
+# Installs general sysadmin tools.
 function install_system_tools {
     start_section "Installing system tools."
 

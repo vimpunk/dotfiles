@@ -63,16 +63,21 @@ Plug 'tpope/vim-repeat'
 " ------------------------------------------------------------------------------
 " Core enhancements
 " ------------------------------------------------------------------------------
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 " Fuzzy searching: note that we're not actually using the fzf.vim plugin due to
 " coc.nvim providing most of the functionality. Instead, we just let vim-plug
 " manage the system fzf installation.
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'junegunn/fzf.vim'
-" Start screen
-"Plug 'mhinz/vim-startify'
+
+if has('nvim')
+  Plug 'nvim-lua/plenary.nvim'
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'fannheyward/telescope-coc.nvim'
+endif
+
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
+" Rename files more easily.
 Plug 'danro/rename.vim'
 
 " ------------------------------------------------------------------------------
@@ -87,19 +92,27 @@ Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 Plug 'towolf/vim-helm'
 
+" Render markdown documents in a less distracting way in a popup window.
+if has('nvim')
+  Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+endif
+
 " ------------------------------------------------------------------------------
 " Git
 " ------------------------------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" browse git commits (it's great)
+" Browse git commits (it's great).
 Plug 'junegunn/gv.vim'
 
 " ------------------------------------------------------------------------------
-" Distraction free writing
+" Writing
 " ------------------------------------------------------------------------------
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim'
+Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
+
+" Note taking with vim.
+Plug 'vimwiki/vimwiki'
 
 " ------------------------------------------------------------------------------
 " Color schemes
@@ -121,16 +134,27 @@ Plug 'https://github.com/reedes/vim-colors-pencil'
 Plug 'https://github.com/zefei/cake16'
 
 " ------------------------------------------------------------------------------
-" Experimental
+" Plugins in test
 " ------------------------------------------------------------------------------
+
 " Syntax aware visual selection.
 Plug 'terryma/vim-expand-region' " TODO: test
 " Expand abbreviations (mostly for inserting HTML elements).
 Plug 'mattn/emmet-vim' " TODO: test
 Plug 'tpope/vim-dadbod', { 'on': 'DB' }
-"Plug 'liuchengxu/eleline.vim'
-"Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
-Plug 'liuchengxu/vista.vim'
+
+" Statusline for (n)vim.
+" TODO: configure colors to match colorscheme
+Plug 'liuchengxu/eleline.vim'
+
+" TODO: configure these
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'ryanoasis/vim-devicons'
+
+" Smooth scrolling for ^d and ^u.
+if has('nvim')
+  Plug 'psliwka/vim-smoothie'
+endif
 
 call plug#end()
 
@@ -348,7 +372,8 @@ set laststatus=2 " Always display the statusline.
 "set statusline+=\ %m
 
 
-nnoremap <leader>gc /<<<<<<< HEAD\\|=======\\|>>>>>>><CR>
+" TODO: assign this to something sensible, currently conflicts with live_grep
+"nnoremap <leader>gc /<<<<<<< HEAD\\|=======\\|>>>>>>><CR>
 
 " ==============================================================================
 " Scripts & Autocommands
@@ -392,7 +417,7 @@ augroup FileTypeSettings
   autocmd FileType rust set textwidth=80
 
   " file types for which we want 2 space wide tabs
-  autocmd FileType json,proto,vim,vue,yaml,helm setl tabstop=2 shiftwidth=2
+  autocmd FileType json,proto,vim,vue,yaml,helm,vim setl tabstop=2 shiftwidth=2
 augroup end
 
 " Jump to last edit position on opening file
@@ -405,29 +430,68 @@ au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\
 " General plugin settings
 " ==============================================================================
 
+" Don't conceal quotes in JSON files: it makes editing them annoying and doesn't
+" really make it all that more readable.
 let g:vim_json_syntax_conceal = 0
 
 let g:indentLine_color_term = 246
 let g:indentLine_color_gui = '#4f5b66'
 
 let g:goyo_width = 90
-let g:goyo_height = 100
+let g:goyo_height = 80
 let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
 
 let g:session_autosave = 'no'
 
-nnoremap <F10> :NERDTreeToggle<CR>
-
 let g:vista_default_executive = 'coc'
 let g:vista_sidebar_position = 'vertical topright'
+
+" ==============================================================================
+" Vimwiki
+" ==============================================================================
+
+" List of wikis. Note that these are backed up via different means, so make sure
+" to initialize them before use as otherwise vimwiki will create a new wiki.
+"
+" In some cases we want to maintain logseq compatibility, which is why some
+" wikis are under a pages subdirectory, expected by logseq.
+let g:vimwiki_list = [
+      \ {
+          \ 'path': '~/exobrain',
+          \ 'syntax': 'markdown',
+          \ 'ext': 'md',
+          \ 'auto_toc': 1,
+          \ 'links_space_char': '-',
+      \ },
+      \ {
+          \ 'path': '~/diary',
+          \ 'syntax': 'markdown',
+          \ 'ext': 'md',
+          \ 'auto_toc': 1,
+          \ 'links_space_char': '-',
+      \ },
+      \ {
+          \ 'path': '~/algotrading/pages',
+          \ 'syntax': 'markdown',
+          \ 'ext': 'md',
+          \ 'auto_toc': 1,
+          \ 'links_space_char': '-',
+      \ },
+      \]
+
+" Automatically change to the wiki directory. This is used so that own fuzzy
+" searcher over files can be used instead of the more limited builtin searcher.
+let g:vimwiki_auto_chdir = 1
+
+" Automatically generate the page title based on the original link name.
+let g:vimwiki_auto_header = 1
 
 " ==============================================================================
 " COC.nvim
 " ==============================================================================
 
-" seeing red all the time drives me crazy, so increase code check interval
 set updatetime=200
 
 " Don't pass messages to |ins-completion-menu|.
@@ -438,7 +502,16 @@ set shortmess+=c
 set signcolumn=yes
 
 " Coc plugins
-let g:coc_global_extensions = ['coc-json',  'coc-lists', 'coc-sh', 'coc-rust-analyzer', 'coc-yaml', 'coc-explorer', 'coc-sql', 'coc-prettier']
+let g:coc_global_extensions = [
+      \ 'coc-json', 
+      \ 'coc-lists', 
+      \ 'coc-sh', 
+      \ 'coc-rust-analyzer', 
+      \ 'coc-yaml', 
+      \ 'coc-sql', 
+      \ 'coc-prettier', 
+      \ 'coc-vimlsp',
+      \ ]
 
 " ----------------------------------------------------------------------------
 " Completion
@@ -481,9 +554,21 @@ nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
 " GoTo code navigation.
 nmap <silent> <leader>d <Plug>(coc-definition)
 nmap <silent> <leader>y <Plug>(coc-type-definition)
-nmap <silent> <leader>i <Plug>(coc-implementation)
-nmap <silent> <leader>r <Plug>(coc-references)
 nmap <silent> <leader>n <Plug>(coc-rename)
+
+" Implementation and references are both lists, so let's take advantage of
+" Telescope here.
+if has('nvim')
+  nnoremap <leader>i <cmd>Telescope coc implementations<CR>
+else
+  nmap <silent> <leader>i <Plug>(coc-implementation)
+endif
+
+if has('nvim')
+  nnoremap <leader>r <cmd>Telescope coc references<CR>
+else
+  nmap <silent> <leader>r <Plug>(coc-references)
+endif
 
 " ----------------------------------------------------------------------------
 " CodeAction
@@ -541,94 +626,100 @@ endif
 command! -nargs=0 Format :call CocAction('format')
 
 " Add (Neo)Vim's native statusline support.
-" NOTE: Please see `:h coc-status` for integrations with external plugins that
-" provide custom statusline: lightline.vim, vim-airline.
-"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+set statusline+=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-nnoremap <silent> <F2> :CocCommand explorer<CR>
+nnoremap <F10> :CocCommand explorer<CR>
 
 " ----------------------------------------------------------------------------
-" Search & lists
+" Search & lists: coc-lists (vim) or Telescope (nvim)
+" 
+" The coc-lists fuzzy ranker is very often frustrating and therefore when neovim
+" is used, Telescope is used for search instead of Coc.
 " ----------------------------------------------------------------------------
-" resume previous search
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
-" show coc extensions
-nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
 
-" Mappings using CoCList:
-" resume previous search
-nnoremap <silent> <leader>p  :<C-u>CocListResume<CR>
-" show all diagnostics
-nnoremap <silent> <leader>a  :<C-u>CocList diagnostics<CR>
-" show extensions
-nnoremap <silent> <leader>e  :<C-u>CocList extensions<CR>
-" search for lines in current buffer
-nnoremap <silent> <leader>l  :<C-u>CocList lines<CR>
-" search words in $(pwd)
-nnoremap <silent> <leader>s  :<C-u>CocList grep<CR>
-" search files in $(pwd) in most recently used order
-nnoremap <silent> <leader>f  :<C-u>CocList files<CR>
-nnoremap <silent> <leader>b  :<C-u>CocList buffers<CR>
-nnoremap <silent> <leader>m  :<C-u>CocList mru<CR>
-" search command history
-nnoremap <silent> <leader>hc  :<C-u>CocList cmdhistory<CR>
-" search search history
-nnoremap <silent> <leader>h/  :<C-u>CocList searchhistory<CR>
+" Resume previous search.
+" TODO: Find out if there is a way to resume searches in Telescope. For now, we
+" can use ^q to populate the quickfix list with the search results and iterate
+" on those. This only helps if I know in advance that I will be processing more
+" than one file, but often it is the case that I want to resume a previous
+" search after the fact. Tough luck for now, it seems.
+" This is in the works: https://github.com/nvim-telescope/telescope.nvim/pull/1051
+nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
 
+" TODO: use this to clean up bindings
+"function! s:RegisterList(key, tel_cmd, coc_cmd)
+  "if has('nvim')
+    "nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
+  "else
+    "nnoremap <silent> <leader>a:key :<C-u>CocList a:coc_cmd<CR>
+  "endif
+"endfunction
 
-"" ------------------------------------------------------------------------------
-"" Clap
-"" ------------------------------------------------------------------------------
+" Search files in $(pwd) in most recently used order.
+"call s:RegisterList('f', 'oldfiles', 'files')
+if has('nvim')
+  " Not sure what the difference is between oldfiles and find_files, but the
+  " latter doesn't seem to provide any MRU ordering capabilities. However,
+  " oldfiles once crashed a large project so it could be that it is not async,
+  " so find_files is used until a better MRU capability exists.
+  nnoremap <leader>f <cmd>Telescope find_files<CR>
+else
+  nnoremap <silent> <leader>f :<C-u>CocList files<CR>
+endif
 
-"nnoremap <silent> <leader>c  :<C-u>Clap quickfix<CR>
-"" search for lines in current buffer
-"nnoremap <silent> <leader>l  :<C-u>Clap blines<CR>
-"" search words in $(pwd)
-"nnoremap <silent> <leader>s  :<C-u>Clap grep2<CR>
-"" search files in $(pwd)
-"nnoremap <silent> <leader>f  :<C-u>Clap files<CR>
-"" search buffers
-"nnoremap <silent> <leader>b  :<C-u>Clap buffers<CR>
-"" search command history
-"nnoremap <silent> <leader>hc  :<C-u>Clap hist:<CR>
-"" search search history
-"nnoremap <silent> <leader>h/  :<C-u>Clap hist/<CR>
+" Search words in $(pwd).
+if has('nvim')
+  nnoremap <leader>g <cmd>Telescope live_grep<CR>
+else
+  nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
+endif
 
-"" ------------------------------------------------------------------------------
-"" FZF
-"" ------------------------------------------------------------------------------
-"" Search of loaded buffer names.
-"nnoremap <leader>b :Buffers<CR>
-"" Recursive file name search starting from cwd.
-"nnoremap <leader>ff :Files<CR>
+" Search among currently opened buffers.
+if has('nvim')
+  nnoremap <leader>b <cmd>Telescope buffers sort_mru=true<CR>
+else
+  nnoremap <silent> <leader>b :<C-u>CocList buffers<CR>
+endif
 
-"" Search in project.
-"nnoremap <leader>ss :Ag<CR>
-"" Search in current buffer.
-"nnoremap <leader>/ :BLines<CR>
-"nnoremap <leader>? :BLines<CR>
+" Show all diagnostics.
+if has('nvim')
+  " workspace_diagnostics shows diagnostics for the entire project.
+  nnoremap <leader>a <cmd>Telescope coc workspace_diagnostics<CR>
+else
+  nnoremap <silent> <leader>a :<C-u>CocList diagnostics<CR>
+endif
 
-"" Command search.
-"nnoremap <leader>sc :Commands<CR>
-"" Command history search.
-"nnoremap <leader>hc :History:<CR>
-"" Search history search.
-"nnoremap <leader>h/ :History/<CR>
+" Show extensions.
+" TODO: Telescope?
+nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
-"" Customize fzf colors to always match current color scheme.
-"let g:fzf_colors = {
-      "\ 'fg':      ['fg', 'Normal'],
-      "\ 'bg':      ['bg', 'Normal'],
-      "\ 'hl':      ['fg', 'Comment'],
-      "\ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      "\ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      "\ 'hl+':     ['fg', 'Statement'],
-      "\ 'info':    ['fg', 'PreProc'],
-      "\ 'border':  ['fg', 'Ignore'],
-      "\ 'prompt':  ['fg', 'Conditional'],
-      "\ 'pointer': ['fg', 'Exception'],
-      "\ 'marker':  ['fg', 'Keyword'],
-      "\ 'spinner': ['fg', 'Label'],
-      "\ 'header':  ['fg', 'Comment']
-      "\ }
+" Search for lines in current buffer.
+if has('nvim')
+  nnoremap <silent> <leader>/ :<C-u>Telescope current_buffer_fuzzy_find<CR>
+else
+  nnoremap <silent> <leader>/ :<C-u>CocList lines<CR>
+endif
 
+" Search files in MRU order.
+if has('nvim')
+  " FIXME: doesn't seem to work
+  nnoremap <leader>m <cmd>Telescope coc mru<CR>
+else
+  nnoremap <silent> <leader>m :<C-u>CocList mru<CR>
+endif
+
+" Search command history.
+if has('nvim')
+  nnoremap <leader>hc <cmd>Telescope command_history<CR>
+else
+  nnoremap <silent> <leader>hc :<C-u>CocList cmdhistory<CR>
+endif
+
+" Search search history.
+if has('nvim')
+  nnoremap <leader>h/ <cmd>Telescope search_history<CR>
+else
+  nnoremap <silent> <leader>h/ :<C-u>CocList searchhistory<CR>
+endif
+
+" TODO: add shortcut to live_grep for current word under cursor with <leader>*
