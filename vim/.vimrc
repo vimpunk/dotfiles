@@ -175,10 +175,10 @@ colorscheme mnd-solarized
 " launched.
 "
 " Light during the day, dark during night.
-if (strftime('%H') >= 8 || strftime('%H') <= 16)
+"if (strftime('%H') >= 8 || strftime('%H') <= 16)
   "set bg=light
   "colorscheme PaperColor
-endif
+"endif
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
@@ -523,11 +523,11 @@ let g:coc_global_extensions = [
 " tab and cr are not mapped by other plugins before enabling this mapping.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
-      \ <SID>CheckBackSpace() ? "\<TAB>" :
+      \ <SID>check_backspace() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:CheckBackSpace() abort
+function! s:check_backspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
@@ -584,9 +584,9 @@ nmap <leader>qc  <Plug>(coc-codeaction-cursor)
 "nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>ShowDocumentation()<CR>
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:ShowDocumentation()
+function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
@@ -645,81 +645,41 @@ nnoremap <F10> :CocCommand explorer<CR>
 " search after the fact. Tough luck for now, it seems.
 " This is in the works: https://github.com/nvim-telescope/telescope.nvim/pull/1051
 nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
-
-" TODO: use this to clean up bindings
-"function! s:RegisterList(key, tel_cmd, coc_cmd)
-  "if has('nvim')
-    "nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
-  "else
-    "nnoremap <silent> <leader>a:key :<C-u>CocList a:coc_cmd<CR>
-  "endif
-"endfunction
-
-" Search files in $(pwd) in most recently used order.
-"call s:RegisterList('f', 'oldfiles', 'files')
-if has('nvim')
-  " Not sure what the difference is between oldfiles and find_files, but the
-  " latter doesn't seem to provide any MRU ordering capabilities. However,
-  " oldfiles once crashed a large project so it could be that it is not async,
-  " so find_files is used until a better MRU capability exists.
-  nnoremap <leader>f <cmd>Telescope find_files<CR>
-else
-  nnoremap <silent> <leader>f :<C-u>CocList files<CR>
-endif
-
-" Search words in $(pwd).
-if has('nvim')
-  nnoremap <leader>g <cmd>Telescope live_grep<CR>
-else
-  nnoremap <silent> <leader>g :<C-u>CocList grep<CR>
-endif
-
-" Search among currently opened buffers.
-if has('nvim')
-  nnoremap <leader>b <cmd>Telescope buffers sort_mru=true<CR>
-else
-  nnoremap <silent> <leader>b :<C-u>CocList buffers<CR>
-endif
-
-" Show all diagnostics.
-if has('nvim')
-  " workspace_diagnostics shows diagnostics for the entire project.
-  nnoremap <leader>a <cmd>Telescope coc workspace_diagnostics<CR>
-else
-  nnoremap <silent> <leader>a :<C-u>CocList diagnostics<CR>
-endif
-
 " Show extensions.
 " TODO: Telescope?
 nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
+" TODO: use this to clean up bindings
+function! s:register_list(key, tel_cmd, coc_cmd)
+  if has('nvim')
+    " like: nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
+    exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
+  else
+    " like: nnoremap <silent> <leader>a:key :<C-u>CocList a:coc_cmd<CR>
+    exe 'nnoremap <silent> <leader>' . a:key . ' <C-U>CocList ' . a:coc_cmd . '<CR>'
+  endif
+endfunction
+
+" Search files in $(pwd) in most recently used order.
+" Not sure what the difference is between oldfiles and find_files, but the
+" latter doesn't seem to provide any MRU ordering capabilities. However,
+" oldfiles once crashed a large project so it could be that it is not async,
+" so find_files is used until a better MRU capability exists.
+call s:register_list('f', 'find_files', 'files')
+" Search words in $(pwd).
+call s:register_list('g', 'live_grep', 'grep')
+" Search among currently opened buffers.
+call s:register_list('b', 'buffers sort_mru=true', 'buffers')
+" Show all diagnostics.
+" workspace_diagnostics shows diagnostics for the entire project.
+call s:register_list('a', 'coc workspace_diagnostics', 'diagnostics')
 " Search for lines in current buffer.
-if has('nvim')
-  nnoremap <silent> <leader>/ :<C-u>Telescope current_buffer_fuzzy_find<CR>
-else
-  nnoremap <silent> <leader>/ :<C-u>CocList lines<CR>
-endif
-
+call s:register_list('/', 'current_buffer_fuzzy_find', 'lines')
 " Search files in MRU order.
-if has('nvim')
-  " FIXME: doesn't seem to work
-  nnoremap <leader>m <cmd>Telescope coc mru<CR>
-else
-  nnoremap <silent> <leader>m :<C-u>CocList mru<CR>
-endif
-
+call s:register_list('/', 'coc mru', 'mru')
 " Search command history.
-if has('nvim')
-  nnoremap <leader>hc <cmd>Telescope command_history<CR>
-else
-  nnoremap <silent> <leader>hc :<C-u>CocList cmdhistory<CR>
-endif
-
+call s:register_list('hc', 'command_history', 'cmdhistory')
 " Search search history.
-if has('nvim')
-  nnoremap <leader>h/ <cmd>Telescope search_history<CR>
-else
-  nnoremap <silent> <leader>h/ :<C-u>CocList searchhistory<CR>
-endif
+call s:register_list('h/', 'search_history', 'searchhistory')
 
 " TODO: add shortcut to live_grep for current word under cursor with <leader>*
