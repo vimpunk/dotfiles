@@ -128,6 +128,7 @@ Plug 'junegunn/seoul256.vim' " light variant is great
 Plug 'NLKNguyen/papercolor-theme' " good github alternative (less bright)
 Plug 'cormacrelf/vim-colors-github'
 Plug 'Rigellute/shades-of-purple.vim'
+Plug 'ayu-theme/ayu-vim'
 
 Plug 'https://github.com/vim-scripts/pyte'
 Plug 'https://github.com/reedes/vim-colors-pencil'
@@ -169,16 +170,15 @@ nnoremap <space> <nop>
 filetype indent plugin on
 syntax on
 
-colorscheme mnd-solarized
+" Set the background automatically based on the time at which vim is
+" launched. Light during the day, dark at night.
+if (strftime('%H') >= 8 && strftime('%H') <= 18)
+  set bg=light
+else
+  set bg=dark
+endif
 
-" To set the background automatically based on the time at which vim is
-" launched.
-"
-" Light during the day, dark during night.
-"if (strftime('%H') >= 8 || strftime('%H') <= 16)
-  "set bg=light
-  "colorscheme PaperColor
-"endif
+colorscheme mnd-solarized
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
@@ -438,7 +438,7 @@ let g:indentLine_color_term = 246
 let g:indentLine_color_gui = '#4f5b66'
 
 let g:goyo_width = 90
-let g:goyo_height = 80
+let g:goyo_height = 100
 let g:goyo_linenr = 1
 
 let g:limelight_conceal_ctermfg = 'DarkGray'
@@ -559,13 +559,13 @@ nmap <silent> <leader>n <Plug>(coc-rename)
 " Implementation and references are both lists, so let's take advantage of
 " Telescope here.
 if has('nvim')
-  nnoremap <leader>i <cmd>Telescope coc implementations<CR>
+  nnoremap <leader>i <cmd>Telescope coc implementations theme=get_dropdown<CR>
 else
   nmap <silent> <leader>i <Plug>(coc-implementation)
 endif
 
 if has('nvim')
-  nnoremap <leader>r <cmd>Telescope coc references<CR>
+  nnoremap <leader>r <cmd>Telescope coc references theme=get_dropdown<CR>
 else
   nmap <silent> <leader>r <Plug>(coc-references)
 endif
