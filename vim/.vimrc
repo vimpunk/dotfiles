@@ -69,11 +69,15 @@ Plug 'tpope/vim-repeat'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 "Plug 'junegunn/fzf.vim'
 
+" Utilities package used by many neovim plugins.
 if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
-  Plug 'nvim-telescope/telescope.nvim'
-  Plug 'fannheyward/telescope-coc.nvim'
 endif
+
+"if has('nvim')
+  "Plug 'nvim-telescope/telescope.nvim'
+  "Plug 'fannheyward/telescope-coc.nvim'
+"endif
 
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
@@ -91,11 +95,6 @@ Plug 'posva/vim-vue'
 Plug 'PotatoesMaster/i3-vim-syntax'
 Plug 'cespare/vim-toml'
 Plug 'towolf/vim-helm'
-
-" Render markdown documents in a less distracting way in a popup window.
-if has('nvim')
-  Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
-endif
 
 " ------------------------------------------------------------------------------
 " Git
@@ -156,6 +155,14 @@ Plug 'ryanoasis/vim-devicons'
 if has('nvim')
   Plug 'psliwka/vim-smoothie'
 endif
+
+"" Render markdown documents in a less distracting way in a popup window.
+"if has('nvim')
+  "Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
+"endif
+
+" Plugin to improve the quicklist.
+Plug 'kevinhwang91/nvim-bqf', {'branch': 'main'}
 
 call plug#end()
 
@@ -649,15 +656,15 @@ nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
 " TODO: Telescope?
 nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
-" TODO: use this to clean up bindings
 function! s:register_list(key, tel_cmd, coc_cmd)
-  if has('nvim')
+  " TODO: for now just use coclist and return to telescope when it is ready
+  "if has('nvim')
     " like: nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
-    exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
-  else
+    "exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
+  "else
     " like: nnoremap <silent> <leader>a:key :<C-u>CocList a:coc_cmd<CR>
-    exe 'nnoremap <silent> <leader>' . a:key . ' <C-U>CocList ' . a:coc_cmd . '<CR>'
-  endif
+    exe 'nnoremap <silent> <leader>' . a:key . ' :<C-U>CocList ' . a:coc_cmd . '<CR>'
+  "endif
 endfunction
 
 " Search files in $(pwd) in most recently used order.
