@@ -1,6 +1,3 @@
-" Turn off Vi compatibility. Has to be first.
-set nocompatible
-
 " ==============================================================================
 " Plugins
 " ==============================================================================
@@ -273,6 +270,9 @@ endif
 
 "set spelllang=en
 
+" Highlight embedded code syntax.
+let g:vimsyn_embed = 1
+
 " ------------------------------------------------------------------------------
 " Formatting
 " ------------------------------------------------------------------------------
@@ -390,17 +390,17 @@ set laststatus=2 " Always display the statusline.
 " buffer, and show absolute line numbers when in insert mode. However, only set
 " relative number if number is also set. This avoids setting relative number
 " when no number is set, e.g. in vim docs.
-fun! s:SetRelativeNumber()
+function! s:SetRelativeNumber()
   if &number
     set relativenumber
   endif
-endfun
+endfunction
 
-fun! s:UnsetRelativeNumber()
+function! s:UnsetRelativeNumber()
   if &number
     set norelativenumber
   endif
-endfun
+endfunction
 
 augroup NumberToggle
   autocmd!
@@ -409,29 +409,32 @@ augroup NumberToggle
 augroup end
 
 augroup FileTypeSettings
+  autocmd!
   " .md file extensions should be treated as markdown rather than modula.
-  autocmd BufNewFile,BufFilePre,BufRead *.md setl filetype=markdown
+  autocmd BufNewFile,BufFilePre,BufRead *.md setlocal filetype=markdown
 
   " Dockerfile.builder is the conventional file name for builder docker files so
   " set file extensions to dockerfile.
   autocmd BufNewFile,BufFilePre,BufRead Dockerfile.builder set filetype=dockerfile
 
   " Python should have a max line length of 79, otherwise the linter complains.
-  autocmd FileType python set textwidth=79
+  autocmd FileType python setlocal textwidth=79
 
   " Overwriting `tw` in ftplugins/rust.vim doesn't work because I presume the
   " rust.vim plugin subsequently overwrites it, so in turn overwrite it here.
-  autocmd FileType rust set textwidth=80
+  autocmd FileType rust setlocal textwidth=80
 
   " file types for which we want 2 space wide tabs
-  autocmd FileType json,proto,vim,vue,yaml,helm,vim setl tabstop=2 shiftwidth=2
+  autocmd FileType json,proto,vim,vue,yaml,helm,lua setlocal tabstop=2 shiftwidth=2
 augroup end
 
-" Jump to last edit position on opening file
-" https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim#L439
-" https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
+augroup ResumeSettings
+  autocmd!
+  " Jump to last edit position on opening file
+  " https://github.com/jonhoo/configs/blob/master/editor/.config/nvim/init.vim#L439
+  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+  autocmd BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+augroup end
 
 " ==============================================================================
 " General plugin settings
