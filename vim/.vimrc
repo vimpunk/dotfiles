@@ -71,10 +71,11 @@ if has('nvim')
   Plug 'nvim-lua/plenary.nvim'
 endif
 
-"if has('nvim')
-  "Plug 'nvim-telescope/telescope.nvim'
-  "Plug 'fannheyward/telescope-coc.nvim'
-"endif
+" Telescope is a search interface like FZF, but more integrated with nvim.
+if has('nvim')
+  Plug 'nvim-telescope/telescope.nvim'
+  Plug 'fannheyward/telescope-coc.nvim'
+endif
 
 " Mark indentation with thin vertical lines.
 Plug 'Yggdroot/indentLine'
@@ -386,6 +387,29 @@ set laststatus=2 " Always display the statusline.
 " Scripts & Autocommands
 " ==============================================================================
 
+" Abuse jumplist to quickly navigate between files in the jumplist, rather than
+" individual jump locations. From:
+" https://www.reddit.com/r/vim/comments/cl7yns/buffer_switching_using_most_recent_buffers_list/evtpgd0?utm_source=share&utm_medium=web2x&context=3.
+function! GoToRecentBuffer(direction)
+  let limit = 0
+  let start = bufname('%')
+  let current = bufname('%')
+
+  while (start == current) && (a:direction == 'previous' ? limit < 100 : limit <= 100)
+    execute a:direction == 'previous' ? 'normal! \<C-o>' : 'normal! 1\<C-i>'
+
+    let current = bufname('%')
+    let limit  += 1
+  endwhile
+
+  if start == current
+    echo 'No ' . a:direction . ' file.'
+  endif
+endfunction
+
+nnoremap <leader>o :call GoToRecentBuffer('previous')<CR>
+nnoremap <leader>i :call GoToRecentBuffer('next')<CR>
+
 " Show relative line numbers when in command mode or switching to another
 " buffer, and show absolute line numbers when in insert mode. However, only set
 " relative number if number is also set. This avoids setting relative number
@@ -555,32 +579,6 @@ inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
       \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " ----------------------------------------------------------------------------
-" Navigation
-" ----------------------------------------------------------------------------
-" Navigate diagnostics
-nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
-nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> <leader>d <Plug>(coc-definition)
-nmap <silent> <leader>y <Plug>(coc-type-definition)
-nmap <silent> <leader>n <Plug>(coc-rename)
-
-" Implementation and references are both lists, so let's take advantage of
-" Telescope here.
-if has('nvim')
-  nnoremap <leader>i <cmd>Telescope coc implementations theme=get_dropdown<CR>
-else
-  nmap <silent> <leader>i <Plug>(coc-implementation)
-endif
-
-if has('nvim')
-  nnoremap <leader>r <cmd>Telescope coc references theme=get_dropdown<CR>
-else
-  nmap <silent> <leader>r <Plug>(coc-references)
-endif
-
-" ----------------------------------------------------------------------------
 " CodeAction
 " ----------------------------------------------------------------------------
 " Applying codeAction to the selected region.
@@ -592,6 +590,8 @@ nmap <leader>qa  <Plug>(coc-codeaction-line)
 nmap <leader>qc  <Plug>(coc-codeaction-cursor)
 " Apply AutoFix to problem on the current line.
 "nmap <leader>qf  <Plug>(coc-fix-current)
+
+nmap <silent> <leader>n <Plug>(coc-rename)
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -647,28 +647,32 @@ nnoremap <F10> :CocCommand explorer<CR>
 " is used, Telescope is used for search instead of Coc.
 " ----------------------------------------------------------------------------
 
-" Resume previous search.
-" TODO: Find out if there is a way to resume searches in Telescope. For now, we
-" can use ^q to populate the quickfix list with the search results and iterate
-" on those. This only helps if I know in advance that I will be processing more
-" than one file, but often it is the case that I want to resume a previous
-" search after the fact. Tough luck for now, it seems.
-" This is in the works: https://github.com/nvim-telescope/telescope.nvim/pull/1051
-nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
+" TODO: add shortcut to live_grep for current word under cursor with <leader>*
+
 " Show extensions.
 " TODO: Telescope?
 nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
 function! s:register_list(key, tel_cmd, coc_cmd)
-  " TODO: for now just use coclist and return to telescope when it is ready
-  "if has('nvim')
+  if has('nvim')
     " like: nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
-    "exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
-  "else
+    exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
+  else
     " like: nnoremap <silent> <leader>a:key :<C-u>CocList a:coc_cmd<CR>
     exe 'nnoremap <silent> <leader>' . a:key . ' :<C-U>CocList ' . a:coc_cmd . '<CR>'
-  "endif
+  endif
 endfunction
+
+" Resume previous search.
+if has('nvim')
+  call s:register_list('p', 'resume', '')
+else
+  nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
+endif
+
+" Show extensions.
+" TODO: Telescope?
+nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
 " Search files in $(pwd) in most recently used order.
 " Not sure what the difference is between oldfiles and find_files, but the
@@ -676,6 +680,8 @@ endfunction
 " oldfiles once crashed a large project so it could be that it is not async,
 " so find_files is used until a better MRU capability exists.
 call s:register_list('f', 'find_files', 'files')
+" Search files in MRU order.
+call s:register_list('m', 'coc mru', 'mru')
 " Search words in $(pwd).
 call s:register_list('g', 'live_grep', 'grep')
 " Search among currently opened buffers.
@@ -685,11 +691,36 @@ call s:register_list('b', 'buffers sort_mru=true', 'buffers')
 call s:register_list('a', 'coc workspace_diagnostics', 'diagnostics')
 " Search for lines in current buffer.
 call s:register_list('/', 'current_buffer_fuzzy_find', 'lines')
-" Search files in MRU order.
-call s:register_list('/', 'coc mru', 'mru')
 " Search command history.
 call s:register_list('hc', 'command_history', 'cmdhistory')
 " Search search history.
 call s:register_list('h/', 'search_history', 'searchhistory')
 
-" TODO: add shortcut to live_grep for current word under cursor with <leader>*
+" ----------------------------------------------------------------------------
+" Navigation
+" ----------------------------------------------------------------------------
+" Navigate diagnostics.
+nmap <silent> <C-p> <Plug>(coc-diagnostic-prev)
+nmap <silent> <C-n> <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>y <Plug>(coc-type-definition)
+
+" Implementation and references are both lists, so let's take advantage of
+" Telescope here.
+" TODO: maybe also include definitions, in very rare cases that results in a list too
+
+" TODO: find a suitable mapping, <leader>i clashes with GoToRecentBuffer('next')
+"if has('nvim')
+  "nnoremap <leader>i <cmd>Telescope coc implementations theme=get_dropdown<CR>
+  "s:register_list('i', 'coc implementations', '')
+"else
+  "nmap <silent> <leader>i <Plug>(coc-implementation)
+"endif
+
+if has('nvim')
+  call s:register_list('r', 'coc references', '')
+else
+  nmap <silent> <leader>r <Plug>(coc-references)
+endif
