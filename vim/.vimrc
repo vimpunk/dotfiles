@@ -75,6 +75,9 @@ endif
 if has('nvim')
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'fannheyward/telescope-coc.nvim'
+  " Disable telescope for now as it seems incomplete. Matches are
+  " consistently worse than that of coc-list.
+  let b:use_telescope = 0
 endif
 
 " Mark indentation with thin vertical lines.
@@ -653,8 +656,12 @@ nnoremap <F10> :CocCommand explorer<CR>
 " TODO: Telescope?
 nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 
+function! s:use_telescope()
+  return has('nvim') && b:use_telescope
+endfunction
+
 function! s:register_list(key, tel_cmd, coc_cmd)
-  if has('nvim')
+  if s:use_telescope()
     " like: nnoremap <leader>a:key <cmd>Telescope a:tel_cmd<CR>
     exe 'nnoremap <leader>' . a:key . ' <cmd>Telescope ' . a:tel_cmd . ' theme=get_dropdown<CR>'
   else
@@ -664,7 +671,7 @@ function! s:register_list(key, tel_cmd, coc_cmd)
 endfunction
 
 " Resume previous search.
-if has('nvim')
+if s:use_telescope()
   call s:register_list('p', 'resume', '')
 else
   nnoremap <silent> <leader>p :<C-u>CocListResume<CR>
@@ -719,7 +726,7 @@ nmap <silent> <leader>y <Plug>(coc-type-definition)
   "nmap <silent> <leader>i <Plug>(coc-implementation)
 "endif
 
-if has('nvim')
+if s:use_telescope()
   call s:register_list('r', 'coc references', '')
 else
   nmap <silent> <leader>r <Plug>(coc-references)
