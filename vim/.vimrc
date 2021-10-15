@@ -106,7 +106,7 @@ Plug 'junegunn/gv.vim'
 " Writing
 " ------------------------------------------------------------------------------
 Plug 'junegunn/goyo.vim', { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim', { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim'
 
 " Note taking with vim.
 Plug 'vimwiki/vimwiki'
@@ -396,7 +396,7 @@ function! GoToRecentBuffer(direction)
   let current = bufname('%')
 
   while (start == current) && (a:direction == 'previous' ? limit < 100 : limit <= 100)
-    execute a:direction == 'previous' ? 'normal! \<C-o>' : 'normal! 1\<C-i>'
+    execute a:direction == 'previous' ? 'normal! \<C-o>' : 'normal! \<C-i>'
 
     let current = bufname('%')
     let limit  += 1
@@ -589,7 +589,7 @@ inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 nmap <leader>qa  <Plug>(coc-codeaction-line)
 nmap <leader>qc  <Plug>(coc-codeaction-cursor)
 " Apply AutoFix to problem on the current line.
-"nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>qf  <Plug>(coc-fix-current)
 
 nmap <silent> <leader>n <Plug>(coc-rename)
 
@@ -681,7 +681,7 @@ nnoremap <silent> <leader>e :<C-u>CocList extensions<CR>
 " so find_files is used until a better MRU capability exists.
 call s:register_list('f', 'find_files', 'files')
 " Search files in MRU order.
-call s:register_list('m', 'coc mru', 'mru')
+call s:register_list('m', 'oldfiles', 'mru')
 " Search words in $(pwd).
 call s:register_list('g', 'live_grep', 'grep')
 " Search among currently opened buffers.
