@@ -20,6 +20,8 @@
   "rust-analyzer.inlayHints.maxLength": null,
   "rust-analyzer.inlayHints.typeHints": true,
   "diagnostic.messageTarget": "float",
+  "diagnostic.virtualText": true,
+  "diagnostic.checkCurrentLine": true,
   "suggest.autoTrigger": "always",
   "list.source.buffers.defaultOptions": ["--auto-preview", "--no-sort"],
   "list.source.mru.defaultOptions": ["--auto-preview", "--no-sort"],

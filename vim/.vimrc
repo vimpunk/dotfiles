@@ -49,8 +49,6 @@ Plug 'scrooloose/nerdcommenter'
 " Easily change, delete or add surroundings such as brackets, parentheses, quotes...
 Plug 'tpope/vim-surround'
 " Auto insert endings to structures like if, do, ifndef etc.
-"
-" Auto insert matching brackets, parentheses, quotes etc
 Plug 'jiangmiao/auto-pairs'
 " Extend % matching to HTML tags and others.
 Plug 'tmhedberg/matchit'
@@ -117,22 +115,13 @@ Plug 'vimwiki/vimwiki'
 " ------------------------------------------------------------------------------
 " Color schemes
 " ------------------------------------------------------------------------------
-Plug 'mandreyel/vim-japanese-indigo'
 Plug 'mandreyel/vim-mnd-solarized'
-Plug 'mhartington/oceanic-next'
-Plug 'altercation/vim-colors-solarized'
-Plug 'nightsense/stellarized' " This is great.
 Plug 'nightsense/seagrey'
-Plug 'rakr/vim-one'
 Plug 'junegunn/seoul256.vim' " light variant is great
 Plug 'NLKNguyen/papercolor-theme' " good github alternative (less bright)
 Plug 'cormacrelf/vim-colors-github'
 Plug 'Rigellute/shades-of-purple.vim'
 Plug 'ayu-theme/ayu-vim'
-
-Plug 'https://github.com/vim-scripts/pyte'
-Plug 'https://github.com/reedes/vim-colors-pencil'
-Plug 'https://github.com/zefei/cake16'
 
 " ------------------------------------------------------------------------------
 " Plugins in test
@@ -151,11 +140,6 @@ Plug 'liuchengxu/eleline.vim'
 " TODO: configure these
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'ryanoasis/vim-devicons'
-
-" Smooth scrolling for ^d and ^u.
-if has('nvim')
-  Plug 'psliwka/vim-smoothie'
-endif
 
 "" Render markdown documents in a less distracting way in a popup window.
 "if has('nvim')
@@ -180,13 +164,14 @@ syntax on
 
 " Set the background automatically based on the time at which vim is
 " launched. Light during the day, dark at night.
-if (strftime('%H') >= 8 && strftime('%H') <= 18)
-  set bg=light
-else
-  set bg=dark
+if (strftime('%H') >= 8 && strftime('%H') <= 16)
+  "set bg=light
+  "colorscheme PaperColor
 endif
 
+set bg=dark
 colorscheme mnd-solarized
+
 
 " Enable CTRL+V and other general shortcuts in gvim.
 if has("gui_running")
@@ -402,7 +387,7 @@ function! GoToRecentBuffer(direction)
     execute a:direction == 'previous' ? 'normal! \<C-o>' : 'normal! \<C-i>'
 
     let current = bufname('%')
-    let limit  += 1
+    let limit += 1
   endwhile
 
   if start == current
@@ -474,7 +459,7 @@ let g:vim_json_syntax_conceal = 0
 let g:indentLine_color_term = 246
 let g:indentLine_color_gui = '#4f5b66'
 
-let g:goyo_width = 90
+let g:goyo_width = 80
 let g:goyo_height = 100
 let g:goyo_linenr = 1
 
@@ -482,18 +467,12 @@ let g:limelight_conceal_ctermfg = 'DarkGray'
 
 let g:session_autosave = 'no'
 
-let g:vista_default_executive = 'coc'
-let g:vista_sidebar_position = 'vertical topright'
-
 " ==============================================================================
 " Vimwiki
 " ==============================================================================
 
 " List of wikis. Note that these are backed up via different means, so make sure
 " to initialize them before use as otherwise vimwiki will create a new wiki.
-"
-" In some cases we want to maintain logseq compatibility, which is why some
-" wikis are under a pages subdirectory, expected by logseq.
 let g:vimwiki_list = [
       \ {
           \ 'path': '~/exobrain',
@@ -510,7 +489,7 @@ let g:vimwiki_list = [
           \ 'links_space_char': '-',
       \ },
       \ {
-          \ 'path': '~/algotrading/pages',
+          \ 'path': '~/algotrading',
           \ 'syntax': 'markdown',
           \ 'ext': 'md',
           \ 'auto_toc': 1,
@@ -524,6 +503,12 @@ let g:vimwiki_auto_chdir = 1
 
 " Automatically generate the page title based on the original link name.
 let g:vimwiki_auto_header = 1
+
+" Don't treat non-wiki markdown files as part of vimwiki.
+let g:vimwiki_global_ext = 0
+
+" Append `.md` extension to links.
+let g:vimwiki_markdown_link_ext = 1
 
 " ==============================================================================
 " COC.nvim
@@ -547,7 +532,6 @@ let g:coc_global_extensions = [
       \ 'coc-yaml', 
       \ 'coc-sql', 
       \ 'coc-prettier', 
-      \ 'coc-vimlsp',
       \ ]
 
 " ----------------------------------------------------------------------------
@@ -589,8 +573,8 @@ inoremap <silent><expr> <CR> pumvisible() ? coc#_select_confirm()
 "xmap <leader>c <Plug>(coc-codeaction-selected)
 "nmap <leader>c <Plug>(coc-codeaction-selected)
 " Apply codeAction to the current line.
-nmap <leader>qa  <Plug>(coc-codeaction-line)
 nmap <leader>qc  <Plug>(coc-codeaction-cursor)
+nmap <leader>ql  <Plug>(coc-codeaction-line)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
