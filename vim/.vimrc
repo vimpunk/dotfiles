@@ -83,6 +83,10 @@ Plug 'Yggdroot/indentLine'
 " Rename files more easily.
 Plug 'danro/rename.vim'
 
+" Plugin to improve the quicklist.
+" This is amazing. It teleports the quickfix into the future.
+Plug 'kevinhwang91/nvim-bqf', {'branch': 'main'}
+
 " ------------------------------------------------------------------------------
 " Languages
 " ------------------------------------------------------------------------------
@@ -134,7 +138,6 @@ Plug 'mattn/emmet-vim' " TODO: test
 Plug 'tpope/vim-dadbod', { 'on': 'DB' }
 
 " Statusline for (n)vim.
-" TODO: configure colors to match colorscheme
 Plug 'liuchengxu/eleline.vim'
 
 " TODO: configure these
@@ -145,9 +148,6 @@ Plug 'ryanoasis/vim-devicons'
 "if has('nvim')
   "Plug 'ellisonleao/glow.nvim', {'do': ':GlowInstall', 'branch': 'main'}
 "endif
-
-" Plugin to improve the quicklist.
-Plug 'kevinhwang91/nvim-bqf', {'branch': 'main'}
 
 call plug#end()
 
@@ -257,7 +257,7 @@ if has('mouse')
     set mouse=a
 endif
 
-"set spelllang=en
+set spell spelllang=en
 
 " Highlight embedded code syntax.
 let g:vimsyn_embed = 1
@@ -715,3 +715,46 @@ if s:use_telescope()
 else
   nmap <silent> <leader>r <Plug>(coc-references)
 endif
+
+" ==============================================================================
+" Better Quickfix
+" ==============================================================================
+" NOTE: experimental
+
+" :h CocLocationsChange for detail
+let g:coc_enable_locationlist = 0
+aug Coc
+    au!
+    au User CocLocationsChange ++nested call Coc_qf_jump2loc(g:coc_jump_locations)
+aug END
+
+nnoremap <silent> <leader>qd <Cmd>call Coc_qf_diagnostic()<CR>
+
+function! Coc_qf_diagnostic() abort
+    let diagnostic_list = CocAction('diagnosticList')
+    let items = []
+    let loc_ranges = []
+    for d in diagnostic_list
+        let text = printf('[%s%s] %s', (empty(d.source) ? 'coc.nvim' : d.source),
+                    \ (d.code ? ' ' . d.code : ''), split(d.message, '\n')[0])
+        let item = {'filename': d.file, 'lnum': d.lnum, 'col': d.col, 'text': text, 'type':
+                    \ d.severity[0]}
+        call add(loc_ranges, d.location.range)
+        call add(items, item)
+    endfor
+    call setqflist([], ' ', {'title': 'CocDiagnosticList', 'items': items,
+                \ 'context': {'bqf': {'lsp_ranges_hl': loc_ranges}}})
+    botright copen
+endfunction
+
+function! Coc_qf_jump2loc(locs) abort
+    let loc_ranges = map(deepcopy(a:locs), 'v:val.range')
+    call setloclist(0, [], ' ', {'title': 'CocLocationList', 'items': a:locs,
+                \ 'context': {'bqf': {'lsp_ranges_hl': loc_ranges}}})
+    let winid = getloclist(0, {'winid': 0}).winid
+    if winid == 0
+        aboveleft lwindow
+    else
+        call win_gotoid(winid)
+    endif
+endfunction

@@ -4,7 +4,6 @@
   },
   "coc.preferences.formatOnSaveFiletypes": [
     "css",
-    "markdown",
     "rust",
     "ts",
     "js",
