@@ -22,7 +22,6 @@ vim.cmd [[set clipboard-=unnamedplus]]
 
 --------------------------------------------------------------------------------
 -- keymappings [view all the defaults by pressing <leader>Lk]
--- hello
 --------------------------------------------------------------------------------
 lvim.leader = "space"
 
@@ -83,6 +82,9 @@ lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
 --------------------------------------------------------------------------------
 -- which_key
 --------------------------------------------------------------------------------
+-- default makes quitting the editor too easy
+lvim.builtin.which_key.mappings["q"] = nil
+
 -- re-assign lvim defaults
 -- reassign git mapping from 'g' to capital 'G' to be harder to hit
 local git = lvim.builtin.which_key.mappings["g"]
