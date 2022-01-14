@@ -223,6 +223,7 @@ lvim.plugins = {
     {"karb94/neoscroll.nvim"},
     {"nacro90/numb.nvim"},
     {"https://github.com/ethanholz/nvim-lastplace"},
+    {"https://github.com/junegunn/goyo.vim"},
     -- language specific
     {"ray-x/lsp_signature.nvim"},
     {"simrat39/rust-tools.nvim"},
@@ -262,7 +263,6 @@ set formatoptions+=c " Auto format text in plaintext files, or comments in sourc
 set formatoptions+=r " Auto insert comment leader after hitting <Enter>.
 set formatoptions+=o " Auto insert comment leader when hitting 'o' or 'O' in normal mode.
 set formatoptions+=q " Allow formatting of comments with 'gq'.
-set formatoptions+=l " Don't break long lines in insert mode.
 set formatoptions+=1 " Break line before a single-letter word.
 set formatoptions+=n " Recognize numbered lists.
 set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
