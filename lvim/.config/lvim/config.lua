@@ -20,6 +20,24 @@ vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
 
 vim.cmd [[set clipboard-=unnamedplus]]
 
+lvim.autocommands._formatoptions = {}
+vim.opt.formatoptions = {
+    ["1"] = true,
+    ["2"] = true, -- use indent from 2nd line of a paragraph
+    q = true, -- continue comments with gq"
+    c = true, -- auto-wrap comments using textwidth
+    r = true, -- continue comments when pressing Enter
+    n = true, -- recognize numbered lists
+    t = true, -- autowrap lines using text width value
+    j = true, -- remove a comment leader when joining lines.
+    o = true, -- continue comments when inserting on new line
+    -- Only break if the line was not longer than 'textwidth' when the insert
+    -- started and only at a white character that has been entered during the
+    -- current insert command.
+    l = true,
+    v = true,
+}
+
 --------------------------------------------------------------------------------
 -- keymappings [view all the defaults by pressing <leader>Lk]
 --------------------------------------------------------------------------------
@@ -250,21 +268,3 @@ require('neoscroll').setup({
 })
 require "lsp_signature".setup()
 require "nvim-lastplace".setup()
-
---------------------------------------------------------------------------------
--- autocommands (https://neovim.io/doc/user/autocmd.html)
---------------------------------------------------------------------------------
--- FIXME: doesn't work, ther is no way to override the damned default formatoptions
-lvim.autocommands.custom_groups = {
-  { "BufWinEnter,BufRead,BufNewFile", "*", [[
-set formatoptions="" " Reset formatoptions.
-set formatoptions+=j " Remove comment leader when joining comment lines.
-set formatoptions+=c " Auto format text in plaintext files, or comments in source files.
-set formatoptions+=r " Auto insert comment leader after hitting <Enter>.
-set formatoptions+=o " Auto insert comment leader when hitting 'o' or 'O' in normal mode.
-set formatoptions+=q " Allow formatting of comments with 'gq'.
-set formatoptions+=1 " Break line before a single-letter word.
-set formatoptions+=n " Recognize numbered lists.
-set formatoptions+=2 " Indent paragraph based on the second line rather than the first.
-  ]] },
-}
