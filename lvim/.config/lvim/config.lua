@@ -50,6 +50,8 @@ lvim.keys.normal_mode["<A-j>"] = false
 lvim.keys.normal_mode["<A-k>"] = false
 lvim.keys.normal_mode["<S-l>"] = false
 lvim.keys.normal_mode["<S-h>"] = false
+lvim.keys.normal_mode["kk"] = false
+lvim.keys.normal_mode["kj"] = false
 
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.normal_mode["[b"] = ":bprev<CR>"
@@ -238,7 +240,6 @@ lvim.plugins = {
     {"tpope/vim-surround"},
     {"tpope/vim-repeat"},
     {"Yggdroot/indentLine"},
-    {"karb94/neoscroll.nvim"},
     {"nacro90/numb.nvim"},
     {"https://github.com/ethanholz/nvim-lastplace"},
     {"https://github.com/junegunn/goyo.vim"},
