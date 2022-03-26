@@ -63,6 +63,7 @@ alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 alias repl=evcxr
 alias note='vim -c SimplenoteList'
 
+alias k='kubectl'
 alias aws='docker run --rm -it -v ~/.aws:/root --network host amazon/aws-cli'
 
 # ==============================================================================
