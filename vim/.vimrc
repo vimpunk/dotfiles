@@ -198,19 +198,12 @@ set directory=~/.vim/swap//
 set undodir=~/.vim/undo//
 set undofile
 
-" Don't unload buffers when they're abandoned (also required for LSP operations
-" modifying multiple buffers like rename).
-set hidden
-
 set number
 set relativenumber
-set showcmd " Show current command.
 set lazyredraw
 set encoding=utf-8
 set nocursorline
 set diffopt=filler,vertical
-set autoread " Reload file if it has been changed outside of vim but not inside.
-set nrformats=hex,bin " Consider hex and bin when {in,de}crementing numbers.
 set wildmenu " This changed my life.
 set wildmode=full
 
