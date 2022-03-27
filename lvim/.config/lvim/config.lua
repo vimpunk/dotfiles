@@ -11,9 +11,12 @@ lvim.colorscheme = "onedarker"
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.wrap = true
+vim.opt.linebreak = true -- don't break lines mid-word
 vim.opt.breakindent = true
 vim.opt.scrolloff = 5
 vim.opt.lazyredraw = true -- faster scrolling
+vim.cmd [[let &showbreak='↳ ']] -- pretty line break signaler
+
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
