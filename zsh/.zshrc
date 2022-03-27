@@ -98,11 +98,6 @@ function source-compiled {
 
 my_zsh_plugins_dir=~/dotfiles/zsh-plugins/
 
-# lazy load nvm for faster terminal startup times
-export NVM_LAZY_LOAD=true
-export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim' 'sudoedit', 'nvim', 'vi')
-source "${my_zsh_plugins_dir}/zsh-nvm/zsh-nvm.plugin.zsh"
-
 # NOTE: has to be before all uses of `zsh-defer`
 source "${my_zsh_plugins_dir}/zsh-defer/zsh-defer.plugin.zsh"
 

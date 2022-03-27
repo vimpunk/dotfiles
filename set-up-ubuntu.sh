@@ -72,7 +72,7 @@ done
 mobile=${mobile:-true}
 skip_dbs=${skip_dbs:-false}
 skip_cpp=${skip_cpp:-false}
-skip_node=${skip_node:-false}
+skip_node=${skip_node:-true}
 skip_rust_tools=${skip_rust_tools:-false}
 skip_nvim=${skip_nvim:-false}
 skip_docker=${skip_docker:-false}
