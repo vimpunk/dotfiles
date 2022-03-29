@@ -110,13 +110,19 @@ lvim.builtin.which_key.mappings["q"] = nil
 lvim.builtin.which_key.mappings["w"] = nil
 
 -- re-assign lvim defaults
--- reassign git mapping from 'g' to capital 'G' to be harder to hit
-local git = lvim.builtin.which_key.mappings["g"]
-lvim.builtin.which_key.mappings["G"] = git
-
-local packer = lvim.builtin.which_key.mappings["p"]
-lvim.builtin.which_key.mappings["p"] = nil
-lvim.builtin.which_key.mappings["P"] = packer
+local function reassign_which_key(from, to)
+  local old = lvim.builtin.which_key.mappings[from]
+  lvim.builtin.which_key.mappings[from] = nil
+  lvim.builtin.which_key.mappings[to] = old
+end
+-- Reassign git mapping from 'g' to capital 'G' to be harder to hit. `g` will
+-- be assigned to live grep.
+reassign_which_key("g", "G")
+-- same for packer
+reassign_which_key("p", "P")
+-- Colorscheme with preview overrides regular colorscheme command as it's more
+-- useful. `sp` will be assigned to previous search.
+reassign_which_key("sp", "sc")
 
 local clear_highlight = lvim.builtin.which_key.mappings["h"]
 lvim.builtin.which_key.mappings["<space>"] = clear_highlight
@@ -124,18 +130,17 @@ lvim.builtin.which_key.mappings["<space>"] = clear_highlight
 -- new mappings
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["sp"] = nil
 lvim.builtin.which_key.mappings["sp"] = { "<cmd>Telescope resume<CR>", "Prev" }
 
--- lvim.builtin.which_key.mappings["t"] = {
---   name = "+Trouble",
---   r = { "<cmd>Trouble lsp_references<CR>", "References" },
---   f = { "<cmd>Trouble lsp_definitions<CR>", "Definitions" },
---   d = { "<cmd>Trouble lsp_document_diagnostics<CR>", "Diagnostics" },
---   q = { "<cmd>Trouble quickfix<CR>", "QuickFix" },
---   l = { "<cmd>Trouble loclist<CR>", "LocationList" },
---   w = { "<cmd>Trouble lsp_workspace_diagnostics<CR>", "Diagnostics" },
--- }
+lvim.builtin.which_key.mappings["t"] = {
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<CR>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<CR>", "Definitions" },
+  d = { "<cmd>Trouble lsp_document_diagnostics<CR>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<CR>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<CR>", "LocationList" },
+  w = { "<cmd>Trouble lsp_workspace_diagnostics<CR>", "Diagnostics" },
+}
 
 --------------------------------------------------------------------------------
 -- user config for default plugins
@@ -247,16 +252,19 @@ lvim.plugins = {
     {"Yggdroot/indentLine"},
     {"nacro90/numb.nvim"},
     {"https://github.com/ethanholz/nvim-lastplace"},
-    {"https://github.com/junegunn/goyo.vim"},
+    {
+      "folke/trouble.nvim",
+      cmd = "TroubleToggle",
+    },
     -- language specific
     {"ray-x/lsp_signature.nvim"},
     {"simrat39/rust-tools.nvim"},
     -- colors
     {"folke/tokyonight.nvim"},
-    -- {
-    --   "folke/trouble.nvim",
-    --   cmd = "TroubleToggle",
-    -- },
+    -- writing
+    {"https://github.com/junegunn/goyo.vim"},
+    {"https://github.com/junegunn/limelight.vim"},
+    {"vimwiki/vimwiki"},
 }
 
 require "lsp_signature".setup()
