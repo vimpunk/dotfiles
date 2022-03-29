@@ -61,9 +61,11 @@ alias :q='exit'
 alias gdb='gdb -q'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 alias repl=evcxr
-alias note='vim -c SimplenoteList'
 
-alias k='kubectl'
+alias performance="echo performance | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
+alias powersave="echo powersave | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
+
+alias k=kubectl
 alias aws='docker run --rm -it -v ~/.aws:/root --network host amazon/aws-cli'
 
 # ==============================================================================
