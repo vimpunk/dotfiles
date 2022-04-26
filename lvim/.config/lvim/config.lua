@@ -47,14 +47,16 @@ vim.opt.formatoptions = {
 lvim.leader = "space"
 
 -- unmap lvim defaults
+lvim.keys.insert_mode["kk"] = false
+lvim.keys.insert_mode["kj"] = false
+lvim.keys.insert_mode["kJ"] = false
+lvim.keys.insert_mode["KJ"] = false
 lvim.keys.insert_mode["<A-j>"] = false
 lvim.keys.insert_mode["<A-k>"] = false
 lvim.keys.normal_mode["<A-j>"] = false
 lvim.keys.normal_mode["<A-k>"] = false
 lvim.keys.normal_mode["<S-l>"] = false
 lvim.keys.normal_mode["<S-h>"] = false
-lvim.keys.normal_mode["kk"] = false
-lvim.keys.normal_mode["kj"] = false
 
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.normal_mode["[b"] = ":bprev<CR>"
