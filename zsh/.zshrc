@@ -109,6 +109,9 @@ bindkey '^A' autosuggest-accept
 
 zsh-defer source-compiled "${my_zsh_plugins_dir}/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
+# ask cargo to use the system wide git binary so that we use the system credentials store
+CARGO_NET_GIT_FETCH_WITH_CLI=true
+
 # ==============================================================================
 # Tools
 # ==============================================================================
