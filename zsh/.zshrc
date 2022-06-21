@@ -5,7 +5,7 @@
 # Path
 # ==============================================================================
 
-export EDITOR='vim'
+export EDITOR='lvim'
 export GOPATH=$HOME/go
 
 # own scripts
