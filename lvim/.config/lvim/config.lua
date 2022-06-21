@@ -25,20 +25,20 @@ vim.cmd [[set clipboard-=unnamedplus]]
 
 lvim.autocommands._formatoptions = {}
 vim.opt.formatoptions = {
-    ["1"] = true,
-    ["2"] = true, -- use indent from 2nd line of a paragraph
-    q = true, -- continue comments with gq"
-    c = true, -- auto-wrap comments using textwidth
-    r = true, -- continue comments when pressing Enter
-    n = true, -- recognize numbered lists
-    t = true, -- autowrap lines using text width value
-    j = true, -- remove a comment leader when joining lines.
-    o = true, -- continue comments when inserting on new line
-    -- Only break if the line was not longer than 'textwidth' when the insert
-    -- started and only at a white character that has been entered during the
-    -- current insert command.
-    l = true,
-    v = true,
+  ["1"] = true,
+  ["2"] = true, -- use indent from 2nd line of a paragraph
+  q = true, -- continue comments with gq"
+  c = true, -- auto-wrap comments using textwidth
+  r = true, -- continue comments when pressing Enter
+  n = true, -- recognize numbered lists
+  t = true, -- autowrap lines using text width value
+  j = true, -- remove a comment leader when joining lines.
+  o = true, -- continue comments when inserting on new line
+  -- Only break if the line was not longer than 'textwidth' when the insert
+  -- started and only at a white character that has been entered during the
+  -- current insert command.
+  l = true,
+  v = true,
 }
 
 --------------------------------------------------------------------------------
@@ -117,6 +117,7 @@ local function reassign_which_key(from, to)
   lvim.builtin.which_key.mappings[from] = nil
   lvim.builtin.which_key.mappings[to] = old
 end
+
 -- Reassign git mapping from 'g' to capital 'G' to be harder to hit. `g` will
 -- be assigned to live grep.
 reassign_which_key("g", "G")
@@ -148,7 +149,7 @@ lvim.builtin.which_key.mappings["t"] = {
 -- user config for default plugins
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 --------------------------------------------------------------------------------
-lvim.builtin.dashboard.active = true
+lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
 
 --------------------------------------------------------------------------------
@@ -186,31 +187,6 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pylsp", opts)
 
--- you can set a custom on_attach function that will be used for all the language servers
--- See <https://github.com/neovim/nvim-lspconfig#keybindings-and-completion>
--- lvim.lsp.on_attach_callback = function(client, bufnr)
---   local function buf_set_option(...)
---     vim.api.nvim_buf_set_option(bufnr, ...)
---   end
---   --Enable completion triggered by <c-x><c-o>
---   buf_set_option("omnifunc", "v:lua.vim.lsp.omnifunc")
--- end
--- you can overwrite the null_ls setup table (useful for setting the root_dir function)
--- lvim.lsp.null_ls.setup = {
---   root_dir = require("lspconfig").util.root_pattern("Makefile", ".git", "node_modules"),
--- }
--- or if you need something more advanced
--- lvim.lsp.null_ls.setup.root_dir = function(fname)
---   if vim.bo.filetype == "javascript" then
---     return require("lspconfig/util").root_pattern("Makefile", ".git", "node_modules")(fname)
---       or require("lspconfig/util").path.dirname(fname)
---   elseif vim.bo.filetype == "php" then
---     return require("lspconfig/util").root_pattern("Makefile", ".git", "composer.json")(fname) or vim.fn.getcwd()
---   else
---     return require("lspconfig/util").root_pattern("Makefile", ".git")(fname) or require("lspconfig/util").path.dirname(fname)
---   end
--- end
-
 -- -- set a formatter, this will override the language server formatting capabilities (if it exists)
 -- local formatters = require "lvim.lsp.null-ls.formatters"
 -- formatters.setup {
@@ -226,47 +202,47 @@ lvim.builtin.treesitter.highlight.enabled = true
 --   },
 -- }
 
--- -- set additional linters
--- local linters = require "lvim.lsp.null-ls.linters"
--- linters.setup {
---   { exe = "flake8", filetypes = { "python" } },
---   {
---     exe = "shellcheck",
---     ---@usage arguments to pass to the formatter
---     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
---     args = { "--severity", "warning" },
---   },
---   {
---     exe = "codespell",
---     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
---     filetypes = { "javascript", "python" },
---   },
--- }
+-- set additional linters
+local linters = require "lvim.lsp.null-ls.linters"
+linters.setup {
+  { exe = "flake8", filetypes = { "python" } },
+  {
+    exe = "shellcheck",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    -- args = { "--severity", "warning" },
+  },
+  {
+    exe = "codespell",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    -- filetypes = { "javascript", "python" },
+  },
+}
 
 --------------------------------------------------------------------------------
 -- additional plugins
 --------------------------------------------------------------------------------
 lvim.plugins = {
-    -- core enhancements
-    {"kevinhwang91/nvim-bqf"},
-    {"tpope/vim-surround"},
-    {"tpope/vim-repeat"},
-    {"Yggdroot/indentLine"},
-    {"nacro90/numb.nvim"},
-    {"https://github.com/ethanholz/nvim-lastplace"},
-    {
-      "folke/trouble.nvim",
-      cmd = "TroubleToggle",
-    },
-    -- language specific
-    {"ray-x/lsp_signature.nvim"},
-    {"simrat39/rust-tools.nvim"},
-    -- colors
-    {"folke/tokyonight.nvim"},
-    -- writing
-    {"https://github.com/junegunn/goyo.vim"},
-    {"https://github.com/junegunn/limelight.vim"},
-    {"vimwiki/vimwiki"},
+  -- core enhancements
+  { "kevinhwang91/nvim-bqf" },
+  { "tpope/vim-surround" },
+  { "tpope/vim-repeat" },
+  { "Yggdroot/indentLine" },
+  { "nacro90/numb.nvim" },
+  { "https://github.com/ethanholz/nvim-lastplace" },
+  {
+    "folke/trouble.nvim",
+    cmd = "TroubleToggle",
+  },
+  -- language specific
+  { "ray-x/lsp_signature.nvim" },
+  { "simrat39/rust-tools.nvim" },
+  -- writing
+  { "https://github.com/junegunn/goyo.vim" },
+  { "https://github.com/junegunn/limelight.vim" },
+  { "vimwiki/vimwiki" },
+  -- colors
+  { "folke/tokyonight.nvim" },
 }
 
 require "lsp_signature".setup()

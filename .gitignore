@@ -9,3 +9,4 @@ desktop/i3/.config/i3/[0-9]
 desktop/i3/.config/i3/wall
 tags*
 regolith/.config/regolith/flags
+**/ignore
