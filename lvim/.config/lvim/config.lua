@@ -102,7 +102,7 @@ lvim.builtin.telescope.defaults.mappings = {
     ["<C-k>"] = actions.move_selection_previous,
   },
 }
-lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
+-- lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
 
 --------------------------------------------------------------------------------
 -- which_key
@@ -113,9 +113,9 @@ lvim.builtin.which_key.mappings["w"] = nil
 
 -- re-assign lvim defaults
 local function reassign_which_key(from, to)
-  local old = lvim.builtin.which_key.mappings[from]
+  local mapping = lvim.builtin.which_key.mappings[from]
   lvim.builtin.which_key.mappings[from] = nil
-  lvim.builtin.which_key.mappings[to] = old
+  lvim.builtin.which_key.mappings[to] = mapping
 end
 
 -- Reassign git mapping from 'g' to capital 'G' to be harder to hit. `g` will
@@ -231,6 +231,12 @@ linters.setup {
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
 
+-- Use the vscode LLDB wrapper for a better debugging experience
+-- https://github.com/simrat39/rust-tools.nvim#a-better-debugging-experience
+local extensions_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+local codelldb_path = extensions_path .. "adapter/codelldb"
+local liblldb_path = extensions_path .. "lldb/lib/liblldb.so"
+
 lvim.plugins = {
   -- core enhancements
   { "kevinhwang91/nvim-bqf" },
@@ -238,41 +244,47 @@ lvim.plugins = {
   { "tpope/vim-repeat" },
   { "Yggdroot/indentLine" },
   { "nacro90/numb.nvim" },
-  { "https://github.com/ethanholz/nvim-lastplace" }, -- reopen files at last edit location
+  {
+    "https://github.com/ethanholz/nvim-lastplace",
+    config = function()
+      require "nvim-lastplace".setup()
+    end
+  }, -- reopen files at last edit location
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
   { "christoomey/vim-tmux-navigator" }, -- seamless navigation between vim and tmux
   -- debugging
-  -- {
-  --   "mfussenegger/nvim-dap",
-  --   opt = true,
-  --   event = "BufReadPre",
-  --   module = { "dap" },
-  --   wants = { "nvim-dap-virtual-text", "DAPInstall.nvim", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim" },
-  --   requires = {
-  --     "Pocco81/DAPInstall.nvim",
-  --     "theHamsta/nvim-dap-virtual-text",
-  --     "rcarriga/nvim-dap-ui",
-  --     "mfussenegger/nvim-dap-python",
-  --     "nvim-telescope/telescope-dap.nvim",
-  --     -- { "leoluz/nvim-dap-go", module = "dap-go" },
-  --     { "jbyuki/one-small-step-for-vimkind", module = "osv" },
-  --     -- rust config is provided by rust-tools
-  --   },
-  --   config = function()
-  --     require("config.dap").setup()
-  --   end,
-  -- },
+  {
+    "rcarriga/nvim-dap-ui",
+    config = function()
+      require("dapui").setup()
+    end,
+    ft = { "python", "rust", "go", "lua" },
+    event = "BufReadPost",
+    requires = { "mfussenegger/nvim-dap" },
+  },
   -- language specific
-  { "ray-x/lsp_signature.nvim" },
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require "lsp_signature".setup()
+    end,
+    event = { "BufRead", "BufNew" },
+  },
   {
     "simrat39/rust-tools.nvim",
     config = function()
+      local status_ok, rust_tools = pcall(require, "rust-tools")
+      if not status_ok then
+        vim.notify("rust-tools not found")
+      end
+
       local lsp_installer_servers = require "nvim-lsp-installer.servers"
       local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
-      require("rust-tools").setup({
+
+      rust_tools.setup({
         tools = {
           autoSetHints = true,
           hover_with_actions = true,
@@ -313,24 +325,26 @@ lvim.plugins = {
             },
           },
         },
+        dap = {
+          adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
+        },
       })
     end,
     ft = { "rust", "rs" },
   },
-  -- {
-  --   'saecki/crates.nvim',
-  --   event = { "BufRead Cargo.toml" },
-  --   requires = { { 'nvim-lua/plenary.nvim' } },
-  --   config = function()
-  --     local null_ls = require('null-ls')
-  --     require('crates').setup {
-  --       null_ls = {
-  --         enabled = true,
-  --         name = "crates.nvim",
-  --       },
-  --     }
-  --   end,
-  -- },
+  {
+    "saecki/crates.nvim",
+    -- event = { "BufRead Cargo.toml" },
+    requires = { { 'nvim-lua/plenary.nvim' } },
+    config = function()
+      require("crates").setup {
+        null_ls = {
+          enabled = true,
+          name = "crates.nvim",
+        },
+      }
+    end,
+  },
   -- writing
   { "https://github.com/junegunn/goyo.vim" },
   { "https://github.com/junegunn/limelight.vim" },
@@ -339,5 +353,30 @@ lvim.plugins = {
   { "folke/tokyonight.nvim" },
 }
 
-require "lsp_signature".setup()
-require "nvim-lastplace".setup()
+-- This needs to be enabled in order to run nvim-dap
+lvim.builtin.dap.active = true
+lvim.builtin.dap.on_config_done = function(dap)
+  dap.adapters.lldb = {
+    type = "executable",
+    command = codelldb_path,
+    name = "lldb"
+  }
+
+  dap.configurations.cpp = {
+    {
+      name = "Launch",
+      type = "lldb",
+      request = "launch",
+      program = function()
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+      runInTerminal = false,
+      args = {},
+    },
+  }
+  dap.configurations.c = dap.configurations.cpp
+  -- This is needed if running the debugger outside of rust-tools.
+  dap.configurations.rust = dap.configurations.cpp
+end

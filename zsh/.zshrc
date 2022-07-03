@@ -23,14 +23,15 @@ export PATH=$PATH:$GOPATH/bin
 # npm/yarn
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
-# FIXME: workaround for nvim-lsp not finding RA
-export PATH=$PATH:$HOME/.local/share/nvim/lsp_servers/rust_analyzer
-# homebrew installed python
-export PATH=$PATH:/usr/local/share/python
-export PATH=$PATH:/usr/local/opt/python/libexec/bin
 
 if [[ "$OSTYPE" == darwin* ]]
 then
+  # FIXME: workaround for nvim-lsp not finding RA
+  export PATH=$PATH:$HOME/.local/share/nvim/lsp_servers/rust_analyzer
+  # homebrew installed python
+  export PATH=$PATH:/usr/local/share/python
+  export PATH=$PATH:/usr/local/opt/python/libexec/bin
+  export PATH=$PATH:/opt/homebrew/opt/llvm/bin
   export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/lib
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/cyrus-sasl/lib/pkgconfig
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/openssl@3/lib/pkgconfig
