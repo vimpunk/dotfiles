@@ -23,6 +23,11 @@ export PATH=$PATH:$GOPATH/bin
 # npm/yarn
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
+# FIXME: workaround for nvim-lsp not finding RA
+export PATH=$PATH:$HOME/.local/share/nvim/lsp_servers/rust_analyzer
+# homebrew installed python
+export PATH=$PATH:/usr/local/share/python
+export PATH=$PATH:/usr/local/opt/python/libexec/bin
 
 # ==============================================================================
 # Settings
@@ -61,6 +66,8 @@ alias :q='exit'
 alias gdb='gdb -q'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 alias repl=evcxr
+alias clippy="cargo clippy --all --all-targets --all-features -- -D rust-2018-idioms"
+
 
 alias performance="echo performance | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
 alias powersave="echo powersave | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
@@ -115,6 +122,10 @@ CARGO_NET_GIT_FETCH_WITH_CLI=true
 # ==============================================================================
 # Tools
 # ==============================================================================
+
+# Ask cargo to use the git binary instead of the lib for authentication. This
+# allows reusing the configured git credential store.
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
 
 # fzf
 # NOTE: has to be after setting vim mode
