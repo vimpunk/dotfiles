@@ -29,6 +29,13 @@ export PATH=$PATH:$HOME/.local/share/nvim/lsp_servers/rust_analyzer
 export PATH=$PATH:/usr/local/share/python
 export PATH=$PATH:/usr/local/opt/python/libexec/bin
 
+if [[ "$OSTYPE" == darwin* ]]
+then
+  export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/lib
+  export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/cyrus-sasl/lib/pkgconfig
+  export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/openssl@3/lib/pkgconfig
+fi
+
 # ==============================================================================
 # Settings
 # ==============================================================================
@@ -69,8 +76,11 @@ alias repl=evcxr
 alias clippy="cargo clippy --all --all-targets --all-features -- -D rust-2018-idioms"
 
 
-alias performance="echo performance | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
-alias powersave="echo powersave | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
+if [[ "$OSTYPE" == linux* ]]
+then
+  alias performance="echo performance | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
+  alias powersave="echo powersave | sudo tee /sys/devices/system/cpu/cpu[0-9]*/cpufreq/scaling_governor"
+fi
 
 alias k=kubectl
 alias aws='docker run --rm -it -v ~/.aws:/root --network host amazon/aws-cli'
