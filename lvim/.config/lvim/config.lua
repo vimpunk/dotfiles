@@ -212,16 +212,25 @@ linters.setup {
     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
     -- args = { "--severity", "warning" },
   },
-  {
-    exe = "codespell",
-    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-    -- filetypes = { "javascript", "python" },
-  },
+  -- {
+  --   exe = "codespell",
+  --   ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+  --   -- filetypes = { "javascript", "python" },
+  -- },
 }
 
 --------------------------------------------------------------------------------
 -- additional plugins
 --------------------------------------------------------------------------------
+
+-- rust-analyzer is configured by rust-tools, disable LunarVim's
+-- rust-analyzer config
+-- https://github.com/LunarVim/LunarVim/issues/2163
+-- https://www.lunarvim.org/languages/rust.html#debugger
+-- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
+
 lvim.plugins = {
   -- core enhancements
   { "kevinhwang91/nvim-bqf" },
@@ -229,14 +238,99 @@ lvim.plugins = {
   { "tpope/vim-repeat" },
   { "Yggdroot/indentLine" },
   { "nacro90/numb.nvim" },
-  { "https://github.com/ethanholz/nvim-lastplace" },
+  { "https://github.com/ethanholz/nvim-lastplace" }, -- reopen files at last edit location
   {
     "folke/trouble.nvim",
     cmd = "TroubleToggle",
   },
+  { "christoomey/vim-tmux-navigator" }, -- seamless navigation between vim and tmux
+  -- debugging
+  -- {
+  --   "mfussenegger/nvim-dap",
+  --   opt = true,
+  --   event = "BufReadPre",
+  --   module = { "dap" },
+  --   wants = { "nvim-dap-virtual-text", "DAPInstall.nvim", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim" },
+  --   requires = {
+  --     "Pocco81/DAPInstall.nvim",
+  --     "theHamsta/nvim-dap-virtual-text",
+  --     "rcarriga/nvim-dap-ui",
+  --     "mfussenegger/nvim-dap-python",
+  --     "nvim-telescope/telescope-dap.nvim",
+  --     -- { "leoluz/nvim-dap-go", module = "dap-go" },
+  --     { "jbyuki/one-small-step-for-vimkind", module = "osv" },
+  --     -- rust config is provided by rust-tools
+  --   },
+  --   config = function()
+  --     require("config.dap").setup()
+  --   end,
+  -- },
   -- language specific
   { "ray-x/lsp_signature.nvim" },
-  { "simrat39/rust-tools.nvim" },
+  {
+    "simrat39/rust-tools.nvim",
+    config = function()
+      local lsp_installer_servers = require "nvim-lsp-installer.servers"
+      local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
+      require("rust-tools").setup({
+        tools = {
+          autoSetHints = true,
+          hover_with_actions = true,
+          runnables = {
+            use_telescope = true,
+          },
+        },
+        server = {
+          cmd_env = requested_server._default_options.cmd_env,
+          on_attach = require("lvim.lsp").common_on_attach,
+          on_init = require("lvim.lsp").common_on_init,
+          settings = {
+            ["rust-analyzer"] = {
+              -- completion = {
+              --   postfix = {
+              --     enable = false
+              --   }
+              -- },
+              assist = {
+                importEnforceGranularity = true,
+                importPrefix = "crate"
+              },
+              checkOnSave = {
+                command = "clippy"
+              },
+              inlayHints = {
+                lifetimeElisionHints = {
+                  enable = "always",
+                  useParameterNames = true,
+                },
+                bindingModeHints = {
+                  enable = true,
+                },
+                closingBraceHints = {
+                  minLines = 1,
+                },
+              }
+            },
+          },
+        },
+      })
+    end,
+    ft = { "rust", "rs" },
+  },
+  -- {
+  --   'saecki/crates.nvim',
+  --   event = { "BufRead Cargo.toml" },
+  --   requires = { { 'nvim-lua/plenary.nvim' } },
+  --   config = function()
+  --     local null_ls = require('null-ls')
+  --     require('crates').setup {
+  --       null_ls = {
+  --         enabled = true,
+  --         name = "crates.nvim",
+  --       },
+  --     }
+  --   end,
+  -- },
   -- writing
   { "https://github.com/junegunn/goyo.vim" },
   { "https://github.com/junegunn/limelight.vim" },
