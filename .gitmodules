@@ -1,12 +1,16 @@
 [submodule "zsh-plugins/zsh-autosuggestions"]
 	path = zsh-plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
+  ignore = dirty
 [submodule "zsh-plugins/fast-syntax-highlighting"]
 	path = zsh-plugins/fast-syntax-highlighting
 	url = https://github.com/zdharma/fast-syntax-highlighting.git
+  ignore = dirty
 [submodule "zsh-plugins/zsh-defer"]
 	path = zsh-plugins/zsh-defer
 	url = https://github.com/romkatv/zsh-defer.git
+  ignore = dirty
 [submodule "zsh-plugins/zsh-nvm"]
 	path = zsh-plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm
+  ignore = dirty
