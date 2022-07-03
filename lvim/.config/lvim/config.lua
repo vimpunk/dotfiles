@@ -17,7 +17,6 @@ vim.opt.scrolloff = 5
 vim.opt.lazyredraw = true -- faster scrolling
 vim.cmd [[let &showbreak='↳ ']] -- pretty line break signaler
 
-
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
 
@@ -64,11 +63,12 @@ lvim.keys.normal_mode["]b"] = ":bnext<CR>"
 lvim.keys.normal_mode["<S-h>"] = "<S-h>5k"
 lvim.keys.normal_mode["<S-l>"] = "<S-l>5j"
 
--- move lines up and down
-vim.cmd [[nnoremap <silent> <C-k> :move-2<CR>]]
-vim.cmd [[xnoremap <silent> <C-k> :move-2<CR>gv]]
-vim.cmd [[nnoremap <silent> <C-j> :move+<CR>]]
-vim.cmd [[xnoremap <silent> <C-j> :move'>+<CR>gv]]
+-- TODO: these currently don't work due to clashing with pane navigation bindings
+-- -- move lines up and down
+-- vim.cmd [[nnoremap <silent> <C-k> :move-2<CR>]]
+-- vim.cmd [[xnoremap <silent> <C-k> :move-2<CR>gv]]
+-- vim.cmd [[nnoremap <silent> <C-j> :move+<CR>]]
+-- vim.cmd [[xnoremap <silent> <C-j> :move'>+<CR>gv]]
 
 -- Make n and N always go in the same direction, no matter what search
 -- direction you started off with, and always center the current match on the
@@ -170,7 +170,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "yaml",
 }
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+-- lvim.builtin.nvimtree.show_icons.git = 0
 lvim.builtin.treesitter.highlight.enabled = true
 
 --------------------------------------------------------------------------------
