@@ -176,6 +176,15 @@ lvim.builtin.treesitter.highlight.enabled = true
 --------------------------------------------------------------------------------
 -- generic LSP settings
 --------------------------------------------------------------------------------
+-- rust-analyzer is configured by rust-tools, disable LunarVim's
+-- rust-analyzer config
+-- https://github.com/LunarVim/LunarVim/issues/2163
+-- https://www.lunarvim.org/languages/rust.html#debugger
+-- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+-- TODO: try removing this, supposedly no longer needed
+vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
+
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
 
@@ -223,140 +232,11 @@ linters.setup {
 --------------------------------------------------------------------------------
 -- additional plugins
 --------------------------------------------------------------------------------
+require "user.plugins".config()
 
--- rust-analyzer is configured by rust-tools, disable LunarVim's
--- rust-analyzer config
--- https://github.com/LunarVim/LunarVim/issues/2163
--- https://www.lunarvim.org/languages/rust.html#debugger
--- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
-vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
-
-lvim.plugins = {
-  -- core enhancements
-  { "kevinhwang91/nvim-bqf" },
-  { "tpope/vim-surround" },
-  { "tpope/vim-repeat" },
-  { "Yggdroot/indentLine" },
-  { "nacro90/numb.nvim" },
-  {
-    "https://github.com/ethanholz/nvim-lastplace",
-    config = function()
-      require "nvim-lastplace".setup()
-    end
-  }, -- reopen files at last edit location
-  {
-    "folke/trouble.nvim",
-    cmd = "TroubleToggle",
-  },
-  { "christoomey/vim-tmux-navigator" }, -- seamless navigation between vim and tmux
-  -- debugging
-  {
-    "rcarriga/nvim-dap-ui",
-    config = function()
-      require("dapui").setup()
-    end,
-    ft = { "python", "rust", "go", "lua" },
-    event = "BufReadPost",
-    requires = { "mfussenegger/nvim-dap" },
-  },
-  -- language specific
-  {
-    "ray-x/lsp_signature.nvim",
-    config = function()
-      require "lsp_signature".setup()
-    end,
-    event = { "BufRead", "BufNew" },
-  },
-  {
-    "simrat39/rust-tools.nvim",
-    config = function()
-      local status_ok, rust_tools = pcall(require, "rust-tools")
-      if not status_ok then
-        vim.notify("rust-tools not found")
-      end
-
-      local lsp_installer_servers = require "nvim-lsp-installer.servers"
-      local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
-
-      -- Use the vscode LLDB wrapper for a better debugging experience
-      -- https://github.com/simrat39/rust-tools.nvim#a-better-debugging-experience
-      local extensions_path = vim.fn.expand "~/" .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
-      local codelldb_path = extensions_path .. "adapter/codelldb"
-      local liblldb_path = extensions_path .. "lldb/lib/liblldb.dylib"
-
-      rust_tools.setup({
-        tools = {
-          autoSetHints = true,
-          hover_with_actions = true,
-          hover_actions = {
-            auto_focus = true,
-          },
-          runnables = {
-            use_telescope = true,
-          },
-        },
-        server = {
-          cmd_env = requested_server._default_options.cmd_env,
-          on_attach = require("lvim.lsp").common_on_attach,
-          on_init = require("lvim.lsp").common_on_init,
-          settings = {
-            ["rust-analyzer"] = {
-              -- completion = {
-              --   postfix = {
-              --     enable = false
-              --   }
-              -- },
-              assist = {
-                importEnforceGranularity = true,
-                importPrefix = "crate"
-              },
-              checkOnSave = {
-                command = "clippy"
-              },
-              inlayHints = {
-                lifetimeElisionHints = {
-                  enable = "always",
-                  useParameterNames = true,
-                },
-                bindingModeHints = {
-                  enable = true,
-                },
-                closingBraceHints = {
-                  minLines = 1,
-                },
-              }
-            },
-          },
-        },
-        -- FIXME: this is not working with the vscode extension wrapper
-        dap = {
-          adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
-        },
-      })
-    end,
-    ft = { "rust", "rs" },
-  },
-  {
-    "saecki/crates.nvim",
-    -- event = { "BufRead Cargo.toml" },
-    requires = { { 'nvim-lua/plenary.nvim' } },
-    config = function()
-      require("crates").setup {
-        null_ls = {
-          enabled = true,
-          name = "crates.nvim",
-        },
-      }
-    end,
-  },
-  -- writing
-  { "https://github.com/junegunn/goyo.vim" },
-  { "https://github.com/junegunn/limelight.vim" },
-  { "vimwiki/vimwiki" },
-  -- colors
-  { "folke/tokyonight.nvim" },
-}
+--------------------------------------------------------------------------------
+-- Debugger Adapter Protocol
+--------------------------------------------------------------------------------
 
 -- This needs to be enabled in order to run nvim-dap
 lvim.builtin.dap.active = true
