@@ -219,6 +219,7 @@ linters.setup {
   -- },
 }
 
+
 --------------------------------------------------------------------------------
 -- additional plugins
 --------------------------------------------------------------------------------
@@ -230,12 +231,6 @@ linters.setup {
 -- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
-
--- Use the vscode LLDB wrapper for a better debugging experience
--- https://github.com/simrat39/rust-tools.nvim#a-better-debugging-experience
-local extensions_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
-local codelldb_path = extensions_path .. "adapter/codelldb"
-local liblldb_path = extensions_path .. "lldb/lib/liblldb.so"
 
 lvim.plugins = {
   -- core enhancements
@@ -284,10 +279,19 @@ lvim.plugins = {
       local lsp_installer_servers = require "nvim-lsp-installer.servers"
       local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
 
+      -- Use the vscode LLDB wrapper for a better debugging experience
+      -- https://github.com/simrat39/rust-tools.nvim#a-better-debugging-experience
+      local extensions_path = vim.fn.expand "~/" .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
+      local codelldb_path = extensions_path .. "adapter/codelldb"
+      local liblldb_path = extensions_path .. "lldb/lib/liblldb.dylib"
+
       rust_tools.setup({
         tools = {
           autoSetHints = true,
           hover_with_actions = true,
+          hover_actions = {
+            auto_focus = true,
+          },
           runnables = {
             use_telescope = true,
           },
@@ -325,6 +329,7 @@ lvim.plugins = {
             },
           },
         },
+        -- FIXME: this is not working with the vscode extension wrapper
         dap = {
           adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
         },
@@ -358,7 +363,8 @@ lvim.builtin.dap.active = true
 lvim.builtin.dap.on_config_done = function(dap)
   dap.adapters.lldb = {
     type = "executable",
-    command = codelldb_path,
+    -- TODO: the only way this works is like this. rust-tools' dap integration is broken
+    command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
     name = "lldb"
   }
 
@@ -373,7 +379,6 @@ lvim.builtin.dap.on_config_done = function(dap)
       cwd = "${workspaceFolder}",
       stopOnEntry = false,
       runInTerminal = false,
-      args = {},
     },
   }
   dap.configurations.c = dap.configurations.cpp
