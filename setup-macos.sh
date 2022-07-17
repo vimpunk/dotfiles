@@ -13,14 +13,18 @@ function error {
 # brew
 
 function setup_brew_packages {
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  if ! which brew
+  then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  fi
 
-  packages=(stow zsh fzf bash openssl git neovim yarn node python shellcheck htop gdb llvm)
+  packages=(stow zsh fzf bash openssl git neovim yarn node python shellcheck htop llvm)
   for package in "${packages[@]}"
   do
     brew install "$package"
   done
 
+  brew tap homebrew/cask-fonts
   casks=(font-hack-nerd-font amethyst)
   for cask in "${casks[@]}"
   do
@@ -54,8 +58,7 @@ function setup_rust {
     ripgrep \
     tokei \
     bat \
-    alacritty \
-    rust-analyzer
+    alacritty
 }
 
 setup_rust
