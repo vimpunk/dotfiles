@@ -91,22 +91,26 @@ lvim.keys.normal_mode["gt"] = "<Cmd>lua vim.lsp.buf.type_definition()<CR>"
 --------------------------------------------------------------------------------
 -- Change Telescope navigation to use j and k for navigation and n and p for history in both input and normal mode.
 -- We use protected-mode (pcall) just in case the plugin wasn't loaded yet.
-local _, actions = pcall(require, "telescope.actions")
-lvim.builtin.telescope.defaults.mappings = {
-  -- for input mode
-  i = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-    ["<C-n>"] = actions.cycle_history_next,
-    ["<C-p>"] = actions.cycle_history_prev,
-  },
-  -- for normal mode
-  n = {
-    ["<C-j>"] = actions.move_selection_next,
-    ["<C-k>"] = actions.move_selection_previous,
-  },
-}
--- lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
+local status_ok, actions = pcall(require, "telescope.actions")
+if status_ok then
+  lvim.builtin.telescope.defaults.mappings = {
+    -- for input mode
+    i = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+      ["<C-n>"] = actions.cycle_history_next,
+      ["<C-p>"] = actions.cycle_history_prev,
+    },
+    -- for normal mode
+    n = {
+      ["<C-j>"] = actions.move_selection_next,
+      ["<C-k>"] = actions.move_selection_previous,
+    },
+  }
+  lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
+  -- don't shorted paths (the lvim default shortes to 5 chars)
+  lvim.builtin.telescope.defaults.path_display = { shorten = nil, absolute = 1, }
+end
 
 --------------------------------------------------------------------------------
 -- which_key
@@ -130,17 +134,17 @@ reassign_which_key("p", "P")
 -- Colorscheme with preview overrides regular colorscheme command as it's more
 -- useful. `sp` will be assigned to previous search.
 reassign_which_key("sp", "sc")
+-- <space><space> is more comfy since it's used a lot.
+reassign_which_key("h", "<space>")
 
 -- Changes an existing mapping to a completely new one. Old mapping is deleted,
 -- so should be re-assigned first.
-local function change_mapping(key, mapping)
+local function change_which_key(key, mapping)
   lvim.builtin.which_key.mappings[key] = nil
   lvim.builtin.which_key.mappings[key] = mapping
 end
 
-local clear_highlight = lvim.builtin.which_key.mappings["h"]
-change_mapping("sp", clear_highlight)
-change_mapping("sp", { "<cmd>Telescope resume<CR>", "Prev" })
+change_which_key("sp", { "<cmd>Telescope resume<CR>", "Prev" })
 
 -- new mappings
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" }
@@ -194,7 +198,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 -- TODO: try removing this, supposedly no longer needed
-vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
+-- vim.list_extend(lvim.lsp.override, { "rust_analyzer" })
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
