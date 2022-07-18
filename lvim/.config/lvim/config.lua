@@ -131,13 +131,20 @@ reassign_which_key("p", "P")
 -- useful. `sp` will be assigned to previous search.
 reassign_which_key("sp", "sc")
 
+-- Changes an existing mapping to a completely new one. Old mapping is deleted,
+-- so should be re-assigned first.
+local function change_mapping(key, mapping)
+  lvim.builtin.which_key.mappings[key] = nil
+  lvim.builtin.which_key.mappings[key] = mapping
+end
+
 local clear_highlight = lvim.builtin.which_key.mappings["h"]
-lvim.builtin.which_key.mappings["<space>"] = clear_highlight
+change_mapping("sp", clear_highlight)
+change_mapping("sp", { "<cmd>Telescope resume<CR>", "Prev" })
 
 -- new mappings
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
-lvim.builtin.which_key.mappings["sp"] = { "<cmd>Telescope resume<CR>", "Prev" }
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
