@@ -19,6 +19,10 @@ M.config = function()
       cmd = "TroubleToggle",
     },
     { "christoomey/vim-tmux-navigator" }, -- seamless navigation between vim and tmux
+    {
+      "ggandor/lightspeed.nvim",
+      event = "BufRead",
+    },
     -- debugging
     {
       "rcarriga/nvim-dap-ui",
