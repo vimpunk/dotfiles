@@ -14,3 +14,11 @@
 	path = zsh-plugins/zsh-nvm
 	url = https://github.com/lukechilds/zsh-nvm
   ignore = dirty
+[submodule "tmux-plugins/tmux-resurrect"]
+	path = tmux-plugins/tmux-resurrect
+	url = https://github.com/tmux-plugins/tmux-resurrect
+  ignore = dirty
+[submodule "tmux-plugins/tmux-continuum"]
+	path = tmux-plugins/tmux-continuum
+	url = https://github.com/tmux-plugins/tmux-continuum
+  ignore = dirty
