@@ -18,7 +18,7 @@ function setup_brew_packages {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  packages=(stow zsh fzf bash openssl git neovim yarn node python shellcheck htop llvm)
+  packages=(stow zsh fzf bash openssl git neovim yarn node python shellcheck htop llvm alacritty)
   for package in "${packages[@]}"
   do
     brew install "$package"
@@ -30,6 +30,9 @@ function setup_brew_packages {
   do
     brew install --cask "$cask"
   done
+
+  # alacritty is not signed with Apple's notary service but it can be trusted
+  brew install --cask alacritty --no-quarantine
 }
 
 setup_brew_packages
@@ -57,11 +60,14 @@ function setup_rust {
     starship \
     ripgrep \
     tokei \
-    bat \
-    alacritty
+    bat
 }
 
 setup_rust
+
+# lunarvim
+
+bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
 
 # zsh
 
@@ -100,6 +106,8 @@ function setup_config {
     bash
     git
     bin
+    tmux
+    alacritty
   )
 
   for conf in "${conf[@]}"
