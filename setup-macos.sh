@@ -24,6 +24,8 @@ function setup_brew_packages {
     brew install "$package"
   done
 
+  "$(brew --prefix)/opt/fzf/install" <<< yyn
+
   brew tap homebrew/cask-fonts
   casks=(font-hack-nerd-font amethyst)
   for cask in "${casks[@]}"
@@ -42,13 +44,13 @@ setup_brew_packages
 function setup_rust {
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
-  source ~/.cargo/env
-
   rustup component add \
     rust-analysis \
     rust-src \
     clippy \
     rustfmt
+
+  source ~/.cargo/env
 
   cargo install \
     cargo-edit \
