@@ -109,7 +109,7 @@ if status_ok then
   }
   -- lvim.builtin.telescope.defaults.pickers.find_files["theme"] = "dropdown"
   -- don't shorted paths (the lvim default shortes to 5 chars)
-  lvim.builtin.telescope.defaults.path_display = { shorten = nil, absolute = 1, }
+  lvim.builtin.telescope.defaults.path_display = { shorten = nil }
 end
 
 --------------------------------------------------------------------------------
