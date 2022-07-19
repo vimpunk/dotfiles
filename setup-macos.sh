@@ -18,7 +18,22 @@ function setup_brew_packages {
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   fi
 
-  packages=(stow zsh fzf bash openssl git neovim yarn node python shellcheck htop llvm alacritty)
+  packages=(
+    stow
+    zsh
+    fzf
+    bash
+    openssl
+    git
+    neovim
+    yarn
+    node
+    python
+    shellcheck
+    htop
+    llvm
+    alacritty
+  )
   for package in "${packages[@]}"
   do
     brew install "$package"
@@ -26,8 +41,13 @@ function setup_brew_packages {
 
   "$(brew --prefix)/opt/fzf/install" <<< yyn
 
+  # nerd-fonts: https://gist.github.com/davidteren/898f2dcccd42d9f8680ec69a3a5d350e
   brew tap homebrew/cask-fonts
-  casks=(font-hack-nerd-font amethyst)
+  casks=(
+    font-hack-nerd-font
+    font-jetbrains-mono-nerd-font
+    amethyst
+  )
   for cask in "${casks[@]}"
   do
     brew install --cask "$cask"
