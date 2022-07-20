@@ -294,6 +294,7 @@ function setup_rust {
             cargo-audit \
             cargo-outdated \
             cargo-expand \
+            cargo-whatfeatures \
             git-delta
     fi
 

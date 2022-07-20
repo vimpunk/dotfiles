@@ -33,6 +33,7 @@ function setup_brew_packages {
     htop
     llvm
     alacritty
+    jq
   )
   for package in "${packages[@]}"
   do
@@ -79,6 +80,7 @@ function setup_rust {
     cargo-audit \
     cargo-outdated \
     cargo-expand \
+    cargo-whatfeatures \
     starship \
     ripgrep \
     tokei \
