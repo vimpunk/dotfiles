@@ -34,6 +34,8 @@ function setup_brew_packages {
     llvm
     alacritty
     jq
+    solidity
+    git-delta
   )
   for package in "${packages[@]}"
   do
@@ -44,10 +46,13 @@ function setup_brew_packages {
 
   # nerd-fonts: https://gist.github.com/davidteren/898f2dcccd42d9f8680ec69a3a5d350e
   brew tap homebrew/cask-fonts
+  # solidity: https://docs.soliditylang.org/en/v0.8.9/installing-solidity.html#macos-packages
+  brew tap ethereum/ethereum
   casks=(
     font-hack-nerd-font
     font-jetbrains-mono-nerd-font
     amethyst
+    visual-studio-code
   )
   for cask in "${casks[@]}"
   do
@@ -141,3 +146,12 @@ function setup_config {
 }
 
 setup_config
+
+# macos system settings
+
+function config_system {
+  # disable press-and-hold so that ex navigating in vim works as expected
+  defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+}
+
+config_system
