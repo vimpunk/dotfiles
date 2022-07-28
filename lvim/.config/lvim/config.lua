@@ -16,6 +16,7 @@ vim.opt.breakindent = true
 vim.opt.scrolloff = 5
 vim.opt.lazyredraw = true -- faster scrolling
 vim.cmd [[let &showbreak='↳ ']] -- pretty line break signaler
+vim.opt.concealcursor = "" -- don't conceal on current line
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
