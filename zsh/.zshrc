@@ -77,6 +77,10 @@ alias gdb='gdb -q'
 alias ytmp3='youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 '
 alias repl=evcxr
 alias clippy="cargo clippy --all --all-targets --all-features -- -D rust-2018-idioms"
+if which lvim &> /dev/null
+then
+  alias nvim=lvim
+fi
 
 
 if [[ "$OSTYPE" == linux* ]]
