@@ -282,3 +282,12 @@ lvim.builtin.dap.on_config_done = function(dap)
   -- This is needed if running the debugger outside of rust-tools.
   dap.configurations.rust = dap.configurations.cpp
 end
+
+-- disable default lightspeed mappings
+lvim.keys.normal_mode["s"] = "s"
+lvim.keys.normal_mode["S"] = "S"
+
+vim.cmd [[
+  nmap <space>j <Plug>Lightspeed_s
+  nmap <space>J <Plug>Lightspeed_S
+]]
