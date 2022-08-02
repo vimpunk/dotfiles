@@ -53,6 +53,8 @@ function setup_brew_packages {
     font-jetbrains-mono-nerd-font
     amethyst
     visual-studio-code
+    keepassxc
+    transmission
   )
   for cask in "${casks[@]}"
   do
