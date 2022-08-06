@@ -154,6 +154,8 @@ setup_config
 function config_system {
   # disable press-and-hold so that ex navigating in vim works as expected
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
+  # hide dock for a long time so that it doesn't annoy me
+  defaults write com.apple.dock autohide-delay -float 1000; killall Dock
 }
 
 config_system
