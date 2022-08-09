@@ -23,6 +23,7 @@ M.config = function()
       "ggandor/lightspeed.nvim",
       event = "BufRead",
     },
+    { "nvim-treesitter/nvim-treesitter-context", }, -- keep function signature in scope
     -- debugging
     {
       "rcarriga/nvim-dap-ui",
