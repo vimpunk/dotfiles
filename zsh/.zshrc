@@ -80,6 +80,8 @@ alias clippy="cargo clippy --all --all-targets --all-features -- -D rust-2018-id
 if which lvim &> /dev/null
 then
   alias nvim=lvim
+  alias vim=lvim
+  alias vi=lvim
 fi
 
 
