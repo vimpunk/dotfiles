@@ -9,11 +9,12 @@ M.config = function()
     { "Yggdroot/indentLine" },
     { "nacro90/numb.nvim" },
     {
+      -- reopen files at last edit location
       "https://github.com/ethanholz/nvim-lastplace",
       config = function()
         require "nvim-lastplace".setup()
       end
-    }, -- reopen files at last edit location
+    },
     {
       "folke/trouble.nvim",
       cmd = "TroubleToggle",
@@ -23,7 +24,13 @@ M.config = function()
       "ggandor/lightspeed.nvim",
       event = "BufRead",
     },
-    { "nvim-treesitter/nvim-treesitter-context", }, -- keep function signature in scope
+    {
+      -- keep function signature in scope
+      "nvim-treesitter/nvim-treesitter-context",
+      config = function()
+        require "user.treesitter_context".config()
+      end
+    },
     -- debugging
     {
       "rcarriga/nvim-dap-ui",
