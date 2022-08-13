@@ -51,6 +51,7 @@ lvim.keys.insert_mode["kk"] = false
 lvim.keys.insert_mode["kj"] = false
 lvim.keys.insert_mode["kJ"] = false
 lvim.keys.insert_mode["KJ"] = false
+lvim.keys.insert_mode["KJ"] = false
 lvim.keys.insert_mode["<C-h>"] = false
 lvim.keys.insert_mode["<C-j>"] = false
 lvim.keys.insert_mode["<C-k>"] = false
@@ -151,6 +152,9 @@ change_which_key("sp", { "<cmd>Telescope resume<CR>", "Prev" })
 -- new mappings
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
+
+lvim.builtin.which_key.mappings["j"] = { "<Plug>Lightspeed_s", "Lightjump" }
+lvim.builtin.which_key.mappings["J"] = { "<Plug>Lightspeed_S", "Lightjump" }
 
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
@@ -281,11 +285,29 @@ lvim.builtin.dap.on_config_done = function(dap)
   dap.configurations.rust = dap.configurations.cpp
 end
 
+--------------------------------------------------------------------------------
+-- lightspeed --
+--------------------------------------------------------------------------------
 -- disable default lightspeed mappings
 lvim.keys.normal_mode["s"] = "s"
 lvim.keys.normal_mode["S"] = "S"
 
-vim.cmd [[
-  nmap <space>j <Plug>Lightspeed_s
-  nmap <space>J <Plug>Lightspeed_S
-]]
+-- vim.cmd [[
+--   nmap <space>j <Plug>Lightspeed_s
+--   nmap <space>J <Plug>Lightspeed_S
+-- ]]
+
+--------------------------------------------------------------------------------
+-- toggleterm --
+--------------------------------------------------------------------------------
+function _G.set_terminal_keymaps()
+  local opts = { buffer = 0 }
+  vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
+  -- vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+  vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
+  vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
+  vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
+  vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
+end
+
+vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
