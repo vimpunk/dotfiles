@@ -17,6 +17,9 @@ window:
      columns: 133
      lines: 80
 
+# Other interesting colorschemes:
+# https://github.com/arcticicestudio/nord-alacritty
+
 # One Dark theme from https://github.com/eendroroy/alacritty-theme/blob/master/themes/one_dark.yaml
 colors:
   # Default colors

@@ -23,6 +23,7 @@ export PATH=$PATH:$GOPATH/bin
 # npm/yarn
 export PATH=$PATH:$HOME/.npm-global/bin
 export PATH=$PATH:$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin
+export PATH=$PATH:$HOME/.foundry/bin
 
 if [[ "$OSTYPE" == darwin* ]]
 then

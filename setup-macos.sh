@@ -36,6 +36,7 @@ function setup_brew_packages {
     jq
     solidity
     git-delta
+    libusb # for foundry
   )
   for package in "${packages[@]}"
   do
@@ -94,6 +95,7 @@ function setup_rust {
     bat
 }
 
+# TODO: add foundry
 setup_rust
 
 # lunarvim
