@@ -23,7 +23,8 @@ vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
 
 vim.cmd [[set clipboard-=unnamedplus]]
 
-lvim.autocommands._formatoptions = {}
+-- https://github.com/LunarVim/LunarVim/issues/2878
+vim.api.nvim_del_augroup_by_name("_format_options")
 vim.opt.formatoptions = {
   ["1"] = true,
   ["2"] = true, -- use indent from 2nd line of a paragraph
