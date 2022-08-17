@@ -27,7 +27,7 @@ M.config = function()
       },
     },
     -- zindex = 20, -- The Z-index of the context window
-    mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
+    mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
     separator = "─", -- Separator between context and content. Should be a single character string, like '-'.
   }
 end

@@ -292,6 +292,8 @@ end
 -- disable default lightspeed mappings
 lvim.keys.normal_mode["s"] = "s"
 lvim.keys.normal_mode["S"] = "S"
+lvim.keys.visual_mode["s"] = "s"
+lvim.keys.visual_mode["S"] = "S"
 
 -- vim.cmd [[
 --   nmap <space>j <Plug>Lightspeed_s
