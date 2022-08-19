@@ -16,6 +16,8 @@ M.config = function()
   local codelldb_path = extensions_path .. "adapter/codelldb"
   local liblldb_path = extensions_path .. "lldb/lib/liblldb.dylib"
 
+  vim.cmd("autocmd! FileType rust setlocal nowrap")
+
   rust_tools.setup({
     tools = {
       autoSetHints = true,
