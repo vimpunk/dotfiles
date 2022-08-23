@@ -35,11 +35,14 @@ M.config = function()
       on_init = require("lvim.lsp").common_on_init,
       settings = {
         ["rust-analyzer"] = {
-          -- completion = {
-          --   postfix = {
-          --     enable = false
-          --   }
-          -- },
+          completion = {
+            privateEditable = {
+              enable = true
+            }
+          },
+          cargo = {
+            features = "all"
+          },
           assist = {
             importEnforceGranularity = true,
             importPrefix = "crate"
