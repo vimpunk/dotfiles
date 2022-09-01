@@ -5,6 +5,10 @@ lvim.log.level = "warn"
 lvim.format_on_save = true
 lvim.colorscheme = "onedarker"
 
+-- For some reason lunarvim's autoformatter completely messes up proto files.
+-- Disable as a temporary workaround.
+vim.cmd("autocmd! FileType proto lua lvim.format_on_save = false")
+
 --------------------------------------------------------------------------------
 -- general
 --------------------------------------------------------------------------------
