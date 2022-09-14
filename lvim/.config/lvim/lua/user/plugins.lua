@@ -24,6 +24,7 @@ M.config = function()
       "ggandor/lightspeed.nvim",
       event = "BufRead",
     },
+    -- { "ruanyl/vim-gh-line" }, -- TODO: test. doesn't work on private registry urls
     {
       -- keep function signature in scope
       "nvim-treesitter/nvim-treesitter-context",

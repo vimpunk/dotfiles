@@ -161,6 +161,11 @@ lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projec
 lvim.builtin.which_key.mappings["j"] = { "<Plug>Lightspeed_s", "Lightjump" }
 lvim.builtin.which_key.mappings["J"] = { "<Plug>Lightspeed_S", "Lightjump" }
 
+lvim.builtin.which_key.mappings["ds"] = {
+  "<cmd>lua if vim.bo.filetype == 'rust' then vim.cmd[[RustDebuggables]] else require'dap'.continue() end<CR>",
+  "Start",
+}
+
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<CR>", "References" },

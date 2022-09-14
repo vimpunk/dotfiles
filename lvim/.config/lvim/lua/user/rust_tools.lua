@@ -7,19 +7,11 @@ M.config = function()
     return
   end
 
-  local lsp_installer_servers = require "nvim-lsp-installer.servers"
-  local _, requested_server = lsp_installer_servers.get_server "rust_analyzer"
-
-  -- Use the vscode LLDB wrapper for a better debugging experience
-  -- https://github.com/simrat39/rust-tools.nvim#a-better-debugging-experience
-  local extensions_path = vim.fn.expand "~/" .. "/.vscode/extensions/vadimcn.vscode-lldb-1.6.7/"
-  local codelldb_path = extensions_path .. "adapter/codelldb"
-  local liblldb_path = extensions_path .. "lldb/lib/liblldb.dylib"
-
   vim.cmd("autocmd! FileType rust setlocal nowrap")
 
-  rust_tools.setup({
+  local opts = {
     tools = {
+      reload_workspace_from_cargo_toml = true,
       autoSetHints = true,
       hover_with_actions = true,
       hover_actions = {
@@ -30,7 +22,7 @@ M.config = function()
       },
     },
     server = {
-      cmd_env = requested_server._default_options.cmd_env,
+      -- cmd_env = requested_server._default_options.cmd_env,
       on_attach = require("lvim.lsp").common_on_attach,
       on_init = require("lvim.lsp").common_on_init,
       settings = {
@@ -69,7 +61,29 @@ M.config = function()
     dap = {
       adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
     },
-  })
+  }
+
+  local path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/") or ""
+  local codelldb_path = path .. "adapter/codelldb"
+  local liblldb_path = path .. "lldb/lib/liblldb.so"
+  if vim.fn.has "mac" == 1 then
+    liblldb_path = path .. "lldb/lib/liblldb.dylib"
+  end
+
+  if vim.fn.filereadable(codelldb_path) and vim.fn.filereadable(liblldb_path) then
+    opts.dap = {
+      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+    }
+  else
+    local msg = "Either codelldb or liblldb is not readable."
+      .. "\n codelldb: "
+      .. codelldb_path
+      .. "\n liblldb: "
+      .. liblldb_path
+    vim.notify(msg, vim.log.levels.ERROR)
+  end
+
+  rust_tools.setup(opts)
 end
 
 return M
