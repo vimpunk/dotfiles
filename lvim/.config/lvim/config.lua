@@ -8,6 +8,7 @@ lvim.colorscheme = "onedarker"
 -- For some reason lunarvim's autoformatter completely messes up proto files.
 -- Disable as a temporary workaround.
 vim.cmd("autocmd! FileType proto lua lvim.format_on_save = false")
+-- vim.cmd("autocmd! FileType toml lua lvim.format_on_save = false") # TODO: doesn't work for some reason
 
 --------------------------------------------------------------------------------
 -- general
@@ -212,7 +213,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- https://github.com/LunarVim/LunarVim/issues/2163
 -- https://www.lunarvim.org/languages/rust.html#debugger
 -- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer", "taplo" })
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
