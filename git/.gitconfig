@@ -38,7 +38,7 @@
     c = checkout
     d = diff
 
-    mru = !git for-each-ref --sort=-committerdate refs/heads/ | tac
+    mru = !git for-each-ref --sort=-committerdate refs/heads/ | tail -r
     branch-first = !git log master..$(git rev-parse --abbrev-ref HEAD) --oneline | tail -1
 [credential]
     helper = cache --timeout=21600
