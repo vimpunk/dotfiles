@@ -64,7 +64,7 @@ M.config = function()
       config = function()
         require("crates").setup {
           null_ls = {
-            enabled = false,
+            enabled = true,
             name = "crates.nvim",
           },
         }

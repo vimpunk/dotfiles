@@ -193,6 +193,8 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- https://www.lunarvim.org/languages/rust.html#debugger
 -- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
 vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+-- don't install taplo as it messes up Cargo.toml files by autoformatting and there is no way to turn it off afaik
+lvim.lsp.installer.setup.automatic_installation = { exclude = { "taplo" } }
 
 -- ---@usage disable automatic installation of servers
 -- lvim.lsp.automatic_servers_installation = false
