@@ -309,3 +309,9 @@ vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
 vim.cmd([[
 let g:goyo_linenr = 1
 ]])
+
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = { "*.rs" },
+  command = ":SymbolsOutlineOpen",
+  group = vim.api.nvim_create_augroup("my_symbols_outline_au", { clear = true }),
+})

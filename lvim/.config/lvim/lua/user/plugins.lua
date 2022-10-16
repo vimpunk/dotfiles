@@ -12,7 +12,7 @@ M.config = function()
       -- reopen files at last edit location
       "https://github.com/ethanholz/nvim-lastplace",
       config = function()
-        require "nvim-lastplace".setup()
+        require("nvim-lastplace").setup()
       end
     },
     {
@@ -29,7 +29,7 @@ M.config = function()
       -- keep function signature in scope
       "nvim-treesitter/nvim-treesitter-context",
       config = function()
-        require "user.treesitter_context".config()
+        require("user.treesitter_context").config()
       end
     },
     -- debugging
@@ -42,18 +42,18 @@ M.config = function()
       event = "BufReadPost",
       requires = { "mfussenegger/nvim-dap" },
     },
-    -- language specific
+    -- LSP
     {
       "ray-x/lsp_signature.nvim",
       config = function()
-        require "lsp_signature".setup()
+        require("lsp_signature").setup()
       end,
       event = { "BufRead", "BufNew" },
     },
     {
       "simrat39/rust-tools.nvim",
       config = function()
-        require "user.rust_tools".config()
+        require("user.rust_tools").config()
       end,
       ft = { "rust", "rs" },
     },
@@ -69,6 +69,18 @@ M.config = function()
           },
         }
       end,
+    },
+    {
+      "https://github.com/j-hui/fidget.nvim",
+      config = function()
+        require("fidget").setup()
+      end
+    },
+    {
+      "simrat39/symbols-outline.nvim",
+      config = function()
+        require("user.symbols_outline").config()
+      end
     },
     -- writing
     { "https://github.com/junegunn/goyo.vim" },
