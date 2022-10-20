@@ -32,16 +32,6 @@ M.config = function()
         require("user.treesitter_context").config()
       end
     },
-    -- debugging
-    {
-      "rcarriga/nvim-dap-ui",
-      config = function()
-        require("dapui").setup()
-      end,
-      ft = { "python", "rust", "go", "lua" },
-      event = "BufReadPost",
-      requires = { "mfussenegger/nvim-dap" },
-    },
     -- LSP
     {
       "ray-x/lsp_signature.nvim",
@@ -86,8 +76,6 @@ M.config = function()
     { "https://github.com/junegunn/goyo.vim" },
     { "https://github.com/junegunn/limelight.vim" },
     { "vimwiki/vimwiki" },
-    -- colors
-    { "folke/tokyonight.nvim" },
   }
 end
 

@@ -29,7 +29,7 @@ vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
 vim.cmd [[set clipboard-=unnamedplus]]
 
 -- https://github.com/LunarVim/LunarVim/issues/2878
-vim.api.nvim_del_augroup_by_name("_format_options")
+pcall(vim.api.nvim_del_augroup_by_name, "_format_options")
 vim.opt.formatoptions = {
   ["1"] = true,
   ["2"] = true, -- use indent from 2nd line of a paragraph
@@ -68,6 +68,8 @@ lvim.keys.normal_mode["<A-j>"] = false
 lvim.keys.normal_mode["<A-k>"] = false
 lvim.keys.normal_mode["<S-l>"] = false
 lvim.keys.normal_mode["<S-h>"] = false
+
+lvim.keys.insert_mode["jk"] = "<esc>"
 
 lvim.keys.normal_mode["<C-s>"] = ":w<CR>"
 lvim.keys.normal_mode["[b"] = ":bprev<CR>"
@@ -141,6 +143,8 @@ lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projec
 lvim.builtin.which_key.mappings["j"] = { "<Plug>Lightspeed_s", "Lightjump" }
 lvim.builtin.which_key.mappings["J"] = { "<Plug>Lightspeed_S", "Lightjump" }
 
+lvim.builtin.which_key.mappings["o"] = { ":SymbolsOutline<CR>", "Outline" }
+
 lvim.builtin.which_key.mappings["ds"] = {
   "<cmd>lua if vim.bo.filetype == 'rust' then vim.cmd[[RustDebuggables]] else require'dap'.continue() end<CR>",
   "Start",
@@ -162,6 +166,7 @@ lvim.builtin.which_key.mappings["t"] = {
 --------------------------------------------------------------------------------
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
+lvim.builtin.terminal.open_mapping = "<c-t>"
 
 --------------------------------------------------------------------------------
 -- Treesitter
@@ -310,8 +315,9 @@ vim.cmd([[
 let g:goyo_linenr = 1
 ]])
 
-vim.api.nvim_create_autocmd("BufEnter", {
-  pattern = { "*.rs" },
-  command = ":SymbolsOutlineOpen",
-  group = vim.api.nvim_create_augroup("my_symbols_outline_au", { clear = true }),
-})
+-- FIXME
+-- vim.api.nvim_create_autocmd("BufEnter", {
+--   pattern = { "*.rs", ".lua" },
+--   command = ":SymbolsOutlineOpen",
+--   group = vim.api.nvim_create_augroup("my_symbols_outline_au", { clear = true }),
+-- })
