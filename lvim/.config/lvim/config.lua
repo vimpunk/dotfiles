@@ -33,6 +33,7 @@ pcall(vim.api.nvim_del_augroup_by_name, "_format_options")
 vim.opt.formatoptions = {
   ["1"] = true,
   ["2"] = true, -- use indent from 2nd line of a paragraph
+  a = true, -- real-time auto-format of non-code text
   q = true, -- continue comments with gq"
   c = true, -- auto-wrap comments using textwidth
   r = true, -- continue comments when pressing Enter
@@ -166,7 +167,11 @@ lvim.builtin.which_key.mappings["t"] = {
 --------------------------------------------------------------------------------
 lvim.builtin.alpha.active = true
 lvim.builtin.terminal.active = true
-lvim.builtin.terminal.open_mapping = "<c-t>"
+-- This was remapped to `<C-\>` in a recent update.
+lvim.builtin.terminal.open_mapping = "<C-t>"
+-- Don't set cwd which causes issues when it re-roots within the same repository and
+-- then searching in parent won't work. To manually set cwd, use `:ProjectRoot`.
+lvim.builtin.project.manual_mode = true
 
 --------------------------------------------------------------------------------
 -- Treesitter
@@ -197,7 +202,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- https://github.com/LunarVim/LunarVim/issues/2163
 -- https://www.lunarvim.org/languages/rust.html#debugger
 -- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
-vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer", "taplo" })
 -- don't install taplo as it messes up Cargo.toml files by autoformatting and there is no way to turn it off afaik
 lvim.lsp.installer.setup.automatic_installation = { exclude = { "taplo" } }
 
