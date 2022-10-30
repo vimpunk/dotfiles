@@ -6,7 +6,6 @@ M.config = function()
     { "kevinhwang91/nvim-bqf" },
     { "tpope/vim-surround" },
     { "tpope/vim-repeat" },
-    { "Yggdroot/indentLine" },
     { "nacro90/numb.nvim" },
     {
       -- reopen files at last edit location
