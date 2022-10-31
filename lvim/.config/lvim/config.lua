@@ -111,8 +111,8 @@ lvim.builtin.which_key.mappings["w"] = nil
 -- re-assign lvim defaults
 local function reassign_which_key(from, to)
   local mapping = lvim.builtin.which_key.mappings[from]
-  lvim.builtin.which_key.mappings[from] = nil
   lvim.builtin.which_key.mappings[to] = mapping
+  lvim.builtin.which_key.mappings[from] = nil
 end
 
 -- Reassign git mapping from 'g' to capital 'G' to be harder to hit. `g` will
