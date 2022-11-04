@@ -65,12 +65,13 @@ M.config = function()
         require("fidget").setup()
       end
     },
-    {
-      "simrat39/symbols-outline.nvim",
-      config = function()
-        require("user.symbols_outline").config()
-      end
-    },
+    -- TODO: this freezes the editor on :w, enable back once blocking is fixed
+    -- {
+    --   "simrat39/symbols-outline.nvim",
+    --   config = function()
+    --     require("user.symbols_outline").config()
+    --   end
+    -- },
     -- writing
     { "https://github.com/junegunn/goyo.vim" },
     { "https://github.com/junegunn/limelight.vim" },
