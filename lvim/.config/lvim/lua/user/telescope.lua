@@ -35,11 +35,5 @@ local function setup_mappings()
   lvim.builtin.telescope.defaults.path_display = { shorten = nil }
 end
 
-local M = {}
-
-M.config = function()
-  setup_pickers()
-  setup_mappings()
-end
-
-return M
+setup_pickers()
+setup_mappings()

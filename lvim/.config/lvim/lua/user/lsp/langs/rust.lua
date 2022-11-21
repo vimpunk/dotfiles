@@ -1,23 +1,25 @@
-local M = {}
+-- Guides:
+-- https://github.com/LunarVim/starter.lvim/blob/rust-ide/config.lua
+-- https://www.youtube.com/watch?v=kzLR8M1C4Hg
 
-M.config = function()
-  local status_ok, rust_tools = pcall(require, "rust-tools")
-  if not status_ok then
-    vim.notify("rust-tools not found", vim.log.levels.ERROR)
-    return
-  end
+-- rust-analyzer is configured by rust-tools, disable LunarVim's rust-analyzer config
+-- https://github.com/LunarVim/LunarVim/issues/2163
+-- https://www.lunarvim.org/languages/rust.html#debugger
+-- https://github.com/abzcoding/lvim/blob/main/lua/user/rust_tools.lua
+vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "rust_analyzer" })
 
-  local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
-  local codelldb_adapter = {
-    type = "server",
-    port = "${port}",
-    executable = {
-      command = mason_path .. "bin/codelldb",
-      args = { "--port", "${port}" },
-    },
-  }
+local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+local codelldb_adapter = {
+  type = "server",
+  port = "${port}",
+  executable = {
+    command = mason_path .. "bin/codelldb",
+    args = { "--port", "${port}" },
+  },
+}
 
-  local opts = {
+pcall(function()
+  require("rust-tools").setup({
     tools = {
       reload_workspace_from_cargo_toml = true,
       autoSetHints = true,
@@ -76,25 +78,36 @@ M.config = function()
         },
       },
     },
+  })
+end)
+
+-- TODO: consider moving all Rust LSP related plugin setup here
+
+-- pcall(function()
+--   require("fidget").setup()
+-- end)
+
+-- pcall(function()
+--   require("crates").setup({
+--     null_ls = {
+--       enabled = true,
+--       name = "crates.nvim",
+--     },
+--   })
+-- end)
+
+lvim.builtin.dap.on_config_done = function(dap)
+  dap.adapters.codelldb = codelldb_adapter
+  dap.configurations.rust = {
+    {
+      name = "Launch file",
+      type = "codelldb",
+      request = "launch",
+      program = function()
+        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+      end,
+      cwd = "${workspaceFolder}",
+      stopOnEntry = false,
+    },
   }
-
-  lvim.builtin.dap.on_config_done = function(dap)
-    dap.adapters.codelldb = codelldb_adapter
-    dap.configurations.rust = {
-      {
-        name = "Launch file",
-        type = "codelldb",
-        request = "launch",
-        program = function()
-          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
-        end,
-        cwd = "${workspaceFolder}",
-        stopOnEntry = false,
-      },
-    }
-  end
-
-  rust_tools.setup(opts)
 end
-
-return M
