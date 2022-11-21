@@ -1,6 +1,4 @@
-local M = {}
-
-M.config = function()
+pcall(function()
   require("symbols-outline").setup({
     position = 'left',
     width = 15,
@@ -22,6 +20,4 @@ M.config = function()
       fold_reset = "R",
     },
   })
-end
-
-return M
+end)

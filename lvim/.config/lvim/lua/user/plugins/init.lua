@@ -22,20 +22,27 @@ lvim.plugins = {
   },
   -- { "ruanyl/vim-gh-line" }, -- TODO: test. doesn't work on private registry urls
   {
-    -- keep function signature in scope
-    "nvim-treesitter/nvim-treesitter-context",
-    config = function()
-      require "user.treesitter_context"
-    end
-  },
-  {
     "f-person/auto-dark-mode.nvim",
     config = function()
-      require "user.auto-dark-mode"
+      require "user.plugins.auto-dark-mode"
     end,
+  },
+  {
+    "ThePrimeagen/harpoon",
+    config = function()
+      require "user.plugins.harpoon"
+    end
   },
 
   -- LSP
+  "nvim-treesitter/nvim-treesitter-textobjects",
+  {
+    -- keep function signature in scope
+    "nvim-treesitter/nvim-treesitter-context",
+    config = function()
+      require "user.plugins.treesitter_context"
+    end
+  },
   {
     "ray-x/lsp_signature.nvim",
     config = function()
@@ -69,11 +76,11 @@ lvim.plugins = {
   "mfussenegger/nvim-dap-python",
   "olexsmir/gopher.nvim",
   "leoluz/nvim-dap-go",
-  -- seems to make lvim hang on :w
+  -- TODO: seems to make lvim hang on :w. investigate
   -- {
   --   "simrat39/symbols-outline.nvim",
   --   config = function()
-  --     require("user.symbols_outline").config()
+  --     require("user.plugins.symbols_outline").config()
   --   end
   -- },
 
@@ -83,7 +90,10 @@ lvim.plugins = {
     "folke/zen-mode.nvim",
     requires = { { "folke/twilight.nvim" } },
     config = function()
-      require "user.zen-mode"
+      require "user.plugins.zen-mode"
     end
   }
 }
+
+-- This has to be called separately for some reason.
+require "user.plugins.lightspeed"

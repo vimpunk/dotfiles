@@ -174,4 +174,4 @@ schemes:
       - { index: 16, color: '0xb15c00' }
       - { index: 17, color: '0xc64343' }
 
-colors: *tokyonight_day
+colors: *tokyonight_night
