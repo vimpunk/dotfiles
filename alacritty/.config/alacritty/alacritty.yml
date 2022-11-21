@@ -17,99 +17,6 @@ window:
      columns: 133
      lines: 80
 
-# Other interesting colorschemes:
-# https://github.com/arcticicestudio/nord-alacritty
-
-# TokyoNight Alacritty Colors
-# https://github.com/folke/tokyonight.nvim/blob/main/extras/alacritty/tokyonight_night.yml
-
-# colors:
-#   # Default colors
-#   primary:
-#     background: '0x1a1b26'
-#     foreground: '0xc0caf5'
-#   # Normal colors
-#   normal:
-#     black:   '0x15161e'
-#     red:     '0xf7768e'
-#     green:   '0x9ece6a'
-#     yellow:  '0xe0af68'
-#     blue:    '0x7aa2f7'
-#     magenta: '0xbb9af7'
-#     cyan:    '0x7dcfff'
-#     white:   '0xa9b1d6'
-#   # Bright colors
-#   bright:
-#     black:   '0x414868'
-#     red:     '0xf7768e'
-#     green:   '0x9ece6a'
-#     yellow:  '0xe0af68'
-#     blue:    '0x7aa2f7'
-#     magenta: '0xbb9af7'
-#     cyan:    '0x7dcfff'
-#     white:   '0xc0caf5'
-#   indexed_colors:
-#     - { index: 16, color: '0xff9e64' }
-#     - { index: 17, color: '0xdb4b4b' }
-
-# TokyoNight Day Alacritty Colors
-
-colors:
-  # Default colors
-  primary:
-    background: '0xe1e2e7'
-    foreground: '0x3760bf'
-  # Normal colors
-  normal:
-    black:   '0xe9e9ed'
-    red:     '0xf52a65'
-    green:   '0x587539'
-    yellow:  '0x8c6c3e'
-    blue:    '0x2e7de9'
-    magenta: '0x9854f1'
-    cyan:    '0x007197'
-    white:   '0x6172b0'
-  # Bright colors
-  bright:
-    black:   '0xa1a6c5'
-    red:     '0xf52a65'
-    green:   '0x587539'
-    yellow:  '0x8c6c3e'
-    blue:    '0x2e7de9'
-    magenta: '0x9854f1'
-    cyan:    '0x007197'
-    white:   '0x3760bf'
-  indexed_colors:
-    - { index: 16, color: '0xb15c00' }
-    - { index: 17, color: '0xc64343' }
-
-# One Dark theme from
-# https://github.com/eendroroy/alacritty-theme/blob/master/themes/one_dark.yaml
-# colors: # Default colors primary: background: '0x1e2127' foreground:
-# '0xabb2bf'
-
-#   # Normal colors
-#   normal:
-#     black:   '0x1e2127'
-#     red:     '0xe06c75'
-#     green:   '0x98c379'
-#     yellow:  '0xd19a66'
-#     blue:    '0x61afef'
-#     magenta: '0xc678dd'
-#     cyan:    '0x56b6c2'
-#     white:   '0xabb2bf'
-
-#   # Bright colors
-#   bright:
-#     black:   '0x5c6370'
-#     red:     '0xe06c75'
-#     green:   '0x98c379'
-#     yellow:  '0xd19a66'
-#     blue:    '0x61afef'
-#     magenta: '0xc678dd'
-#     cyan:    '0x56b6c2'
-#     white:   '0xffffff'
-
 # https://github.com/zellij-org/zellij/issues/265
 key_bindings:
   - { key: A,         mods: Alt,       chars: "\x1ba"                       }
@@ -205,3 +112,66 @@ key_bindings:
   - { key: Comma,    mods: Alt|Shift, chars: "\x1b<"                       } # Alt + <
   - { key: LBracket,    mods: Alt, chars: "\x1b["                       } # Alt + [
   - { key: RBracket,    mods: Alt, chars: "\x1b]"                       } # Alt + ]
+
+schemes:
+  # https://github.com/folke/tokyonight.nvim/blob/main/extras/alacritty/tokyonight_night.yml
+  tokyonight_night: &tokyonight_night
+    # Default colors
+    primary:
+      background: '0x1a1b26'
+      foreground: '0xc0caf5'
+    # Normal colors
+    normal:
+      black:   '0x15161e'
+      red:     '0xf7768e'
+      green:   '0x9ece6a'
+      yellow:  '0xe0af68'
+      blue:    '0x7aa2f7'
+      magenta: '0xbb9af7'
+      cyan:    '0x7dcfff'
+      white:   '0xa9b1d6'
+    # Bright colors
+    bright:
+      black:   '0x414868'
+      red:     '0xf7768e'
+      green:   '0x9ece6a'
+      yellow:  '0xe0af68'
+      blue:    '0x7aa2f7'
+      magenta: '0xbb9af7'
+      cyan:    '0x7dcfff'
+      white:   '0xc0caf5'
+    indexed_colors:
+      - { index: 16, color: '0xff9e64' }
+      - { index: 17, color: '0xdb4b4b' }
+
+  # https://github.com/folke/tokyonight.nvim/blob/main/extras/alacritty/tokyonight_day.yml
+  tokyonight_day: &tokyonight_day
+    # Default colors
+    primary:
+      background: '0xe1e2e7'
+      foreground: '0x3760bf'
+    # Normal colors
+    normal:
+      black:   '0xe9e9ed'
+      red:     '0xf52a65'
+      green:   '0x587539'
+      yellow:  '0x8c6c3e'
+      blue:    '0x2e7de9'
+      magenta: '0x9854f1'
+      cyan:    '0x007197'
+      white:   '0x6172b0'
+    # Bright colors
+    bright:
+      black:   '0xa1a6c5'
+      red:     '0xf52a65'
+      green:   '0x587539'
+      yellow:  '0x8c6c3e'
+      blue:    '0x2e7de9'
+      magenta: '0x9854f1'
+      cyan:    '0x007197'
+      white:   '0x3760bf'
+    indexed_colors:
+      - { index: 16, color: '0xb15c00' }
+      - { index: 17, color: '0xc64343' }
+
+colors: *tokyonight_day
