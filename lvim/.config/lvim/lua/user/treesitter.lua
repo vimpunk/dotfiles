@@ -1,4 +1,18 @@
-lvim.builtin.treesitter.ensure_installed = "all"
+-- TODO: change to "all"?
+lvim.builtin.treesitter.ensure_installed = {
+  "bash",
+  "c",
+  "javascript",
+  "json",
+  "lua",
+  "python",
+  "typescript",
+  "css",
+  "rust",
+  "java",
+  "yaml",
+}
+
 
 lvim.builtin.treesitter.textobjects = {
   select = {
