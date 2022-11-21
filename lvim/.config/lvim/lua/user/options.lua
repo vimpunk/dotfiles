@@ -40,7 +40,7 @@ vim.opt.formatoptions = {
 --------------------------------------------------------------------------------
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "tokyonight-day"
+lvim.colorscheme = "tokyonight"
 
 -- After changing plugin config exit and reopen LunarVim, Run :PackerInstall :PackerCompile
 lvim.builtin.alpha.active = true

@@ -25,8 +25,14 @@ lvim.plugins = {
     -- keep function signature in scope
     "nvim-treesitter/nvim-treesitter-context",
     config = function()
-      require("user.treesitter_context")
+      require "user.treesitter_context"
     end
+  },
+  {
+    "f-person/auto-dark-mode.nvim",
+    config = function()
+      require "user.auto-dark-mode"
+    end,
   },
 
   -- LSP
@@ -77,7 +83,7 @@ lvim.plugins = {
     "folke/zen-mode.nvim",
     requires = { { "folke/twilight.nvim" } },
     config = function()
-      require("user.zen-mode")
+      require "user.zen-mode"
     end
   }
 }
