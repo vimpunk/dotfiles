@@ -65,6 +65,7 @@ M.config = function()
         require("fidget").setup()
       end
     },
+    "mfussenegger/nvim-dap-python",
     -- TODO: this freezes the editor on :w, enable back once blocking is fixed
     -- {
     --   "simrat39/symbols-outline.nvim",

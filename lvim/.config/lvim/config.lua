@@ -145,11 +145,6 @@ lvim.builtin.which_key.mappings["J"] = { "<Plug>Lightspeed_S", "Lightjump" }
 
 lvim.builtin.which_key.mappings["o"] = { ":SymbolsOutline<CR>", "Outline" }
 
-lvim.builtin.which_key.mappings["ds"] = {
-  "<cmd>lua if vim.bo.filetype == 'rust' then vim.cmd[[RustDebuggables]] else require'dap'.continue() end<CR>",
-  "Start",
-}
-
 lvim.builtin.which_key.mappings["t"] = {
   name = "+Trouble",
   r = { "<cmd>Trouble lsp_references<CR>", "References" },
@@ -260,31 +255,6 @@ require "user.plugins".config()
 
 -- This needs to be enabled in order to run nvim-dap
 lvim.builtin.dap.active = true
-lvim.builtin.dap.on_config_done = function(dap)
-  dap.adapters.lldb = {
-    type = "executable",
-    -- TODO: the only way this works is like this. rust-tools' dap integration is broken
-    command = "/opt/homebrew/opt/llvm/bin/lldb-vscode",
-    name = "lldb"
-  }
-
-  dap.configurations.cpp = {
-    {
-      name = "Launch",
-      type = "lldb",
-      request = "launch",
-      program = function()
-        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-      end,
-      cwd = "${workspaceFolder}",
-      stopOnEntry = false,
-      runInTerminal = false,
-    },
-  }
-  dap.configurations.c = dap.configurations.cpp
-  -- This is needed if running the debugger outside of rust-tools.
-  dap.configurations.rust = dap.configurations.cpp
-end
 
 --------------------------------------------------------------------------------
 -- lightspeed --

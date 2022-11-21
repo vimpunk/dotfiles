@@ -7,7 +7,15 @@ M.config = function()
     return
   end
 
-  vim.cmd("autocmd! FileType rust setlocal nowrap")
+  local mason_path = vim.fn.glob(vim.fn.stdpath "data" .. "/mason/")
+  local codelldb_adapter = {
+    type = "server",
+    port = "${port}",
+    executable = {
+      command = mason_path .. "bin/codelldb",
+      args = { "--port", "${port}" },
+    },
+  }
 
   local opts = {
     tools = {
@@ -20,6 +28,17 @@ M.config = function()
       runnables = {
         use_telescope = true,
       },
+      on_initialized = function()
+        vim.api.nvim_create_autocmd({ "BufWritePost", "BufEnter", "CursorHold", "InsertLeave" }, {
+          pattern = { "*.rs" },
+          callback = function()
+            local _, _ = pcall(vim.lsp.codelens.refresh)
+          end,
+        })
+      end,
+    },
+    dap = {
+      adapter = codelldb_adapter,
     },
     server = {
       -- cmd_env = requested_server._default_options.cmd_env,
@@ -57,30 +76,22 @@ M.config = function()
         },
       },
     },
-    -- FIXME: this is not working with the vscode extension wrapper
-    dap = {
-      adapter = require('rust-tools.dap').get_codelldb_adapter(codelldb_path, liblldb_path),
-    },
   }
 
-  local path = vim.fn.glob(vim.fn.stdpath("data") .. "/mason/packages/codelldb/extension/") or ""
-  local codelldb_path = path .. "adapter/codelldb"
-  local liblldb_path = path .. "lldb/lib/liblldb.so"
-  if vim.fn.has "mac" == 1 then
-    liblldb_path = path .. "lldb/lib/liblldb.dylib"
-  end
-
-  if vim.fn.filereadable(codelldb_path) and vim.fn.filereadable(liblldb_path) then
-    opts.dap = {
-      adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+  lvim.builtin.dap.on_config_done = function(dap)
+    dap.adapters.codelldb = codelldb_adapter
+    dap.configurations.rust = {
+      {
+        name = "Launch file",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+      },
     }
-  else
-    local msg = "Either codelldb or liblldb is not readable."
-      .. "\n codelldb: "
-      .. codelldb_path
-      .. "\n liblldb: "
-      .. liblldb_path
-    vim.notify(msg, vim.log.levels.ERROR)
   end
 
   rust_tools.setup(opts)
