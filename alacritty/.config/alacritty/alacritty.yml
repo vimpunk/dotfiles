@@ -16,6 +16,8 @@ window:
    dimensions:
      columns: 133
      lines: 80
+   decorations: none
+
 
 # https://github.com/zellij-org/zellij/issues/265
 key_bindings:
