@@ -7,6 +7,8 @@ lvim.builtin.which_key.mappings["h"] = {
   p = { "<cmd>lua require('harpoon.ui').nav_prev()<CR>", "Prev" },
   j = { "<cmd>lua require('harpoon.ui').nav_file(1)<CR>", "Goto 1" },
   k = { "<cmd>lua require('harpoon.ui').nav_file(2)<CR>", "Goto 2" },
+  l = { "<cmd>lua require('harpoon.ui').nav_file(3)<CR>", "Goto 3" },
+  [";"] = { "<cmd>lua require('harpoon.ui').nav_file(4)<CR>", "Goto 4" },
 }
 
 pcall(function()
