@@ -35,6 +35,7 @@ change_which_key("sp", { "<cmd>Telescope resume<CR>", "Prev" })
 -- Telescope
 lvim.builtin.which_key.mappings["f"] = { "<cmd>Telescope find_files<CR>", "Grep" }
 lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" }
+lvim.builtin.which_key.mappings["*"] = { "<cmd>Telescope grep_string<CR>", "Grep" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 -- SymbolsOutline
