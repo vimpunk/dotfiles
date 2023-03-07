@@ -50,9 +50,7 @@ lvim.builtin.terminal.open_mapping = "<C-t>"
 -- Don't set cwd which causes issues when it re-roots within the same repository and
 -- then searching in parent won't work. To manually set cwd, use
 -- `:ProjectRoot`.
--- TODO: just setting manual_mode should work but has not been working for a while,
--- so the plugin is disabled entirely
-lvim.builtin.project.active = false
+-- TODO: just setting manual_mode should work but has not been working for a while
 lvim.builtin.project.manual_mode = true
 lvim.builtin.nvimtree.setup.view.side = "left"
 
