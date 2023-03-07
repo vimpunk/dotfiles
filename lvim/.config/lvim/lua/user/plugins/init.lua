@@ -20,7 +20,10 @@ lvim.plugins = {
     "ggandor/lightspeed.nvim",
     event = "BufRead",
   },
-  -- { "ruanyl/vim-gh-line" }, -- TODO: test. doesn't work on private registry urls
+  -- NOTE: doesn't work on private registry urls
+  -- TODO: test
+  -- TODO: need to configure as <leader>gh classes with live_grep
+  { "ruanyl/vim-gh-line" },
   {
     "f-person/auto-dark-mode.nvim",
     config = function()
@@ -31,6 +34,29 @@ lvim.plugins = {
     "ThePrimeagen/harpoon",
     config = function()
       require "user.plugins.harpoon"
+    end
+  },
+
+  -- TODO: test
+  { "https://github.com/HiPhish/nvim-ts-rainbow2" },
+
+  -- copilot
+  {
+    "https://github.com/zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function()
+      require("copilot_cmp").setup()
     end
   },
 
