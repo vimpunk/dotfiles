@@ -1,5 +1,6 @@
 require "user.lsp.langs.rust"
 require "user.lsp.langs.go"
+require "user.lsp.langs.solidity"
 
 lvim.lsp.diagnostics.virtual_text = true
 lvim.builtin.dap.active = true

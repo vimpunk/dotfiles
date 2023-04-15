@@ -11,3 +11,4 @@ require "user.whichkey"
 -- https://github.com/ChristianChiarulli/lvim
 -- https://github.com/abzcoding/lvim/blob/main/config.lua
 -- https://github.com/accidentaldevelopment/dotfiles/tree/main/dot_config/nvim
+-- https://github.com/IGI-111/neovim
