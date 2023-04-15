@@ -103,12 +103,12 @@ lvim.plugins = {
   "olexsmir/gopher.nvim",
   "leoluz/nvim-dap-go",
   -- TODO: seems to make lvim hang on :w. investigate
-  -- {
-  --   "simrat39/symbols-outline.nvim",
-  --   config = function()
-  --     require("user.plugins.symbols_outline").config()
-  --   end
-  -- },
+  {
+    "simrat39/symbols-outline.nvim",
+    config = function()
+      require "user.plugins.symbols_outline"
+    end
+  },
 
   -- writing
   "vimwiki/vimwiki",

@@ -72,5 +72,5 @@ pcall(function()
   })
 end)
 
-lvim.builtin.which_key.mappings["y"] = { "<cmd>ZenMode<CR>", "ZenMode" }
-lvim.builtin.which_key.mappings["Y"] = { "<cmd>Twilight<CR>", "Twilight" }
+lvim.builtin.which_key.mappings["z"] = { "<cmd>ZenMode<CR>", "ZenMode" }
+lvim.builtin.which_key.mappings["Z"] = { "<cmd>Twilight<CR>", "Twilight" }

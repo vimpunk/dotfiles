@@ -5,6 +5,12 @@ local function setup_pickers()
     -- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
     find_command = { "rg", "--files", "--hidden", "--glob", "!.git/*" },
   }
+  lvim.builtin.telescope.pickers.live_grep = {
+    only_sort_text = false,
+  }
+  lvim.builtin.telescope.pickers.grep_string = {
+    only_sort_text = false,
+  }
 end
 
 local function setup_mappings()

@@ -39,7 +39,7 @@ lvim.builtin.which_key.mappings["*"] = { "<cmd>Telescope grep_string<CR>", "Grep
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
 -- SymbolsOutline
--- lvim.builtin.which_key.mappings["o"] = { ":SymbolsOutline<CR>", "Outline" }
+lvim.builtin.which_key.mappings["o"] = { ":SymbolsOutline<CR>", "Outline" }
 
 -- Trouble
 lvim.builtin.which_key.mappings["t"] = {
