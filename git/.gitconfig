@@ -1,21 +1,25 @@
 [user]
     email = mandreyel@protonmail.com
     name = mandreyel
+
 [core]
     editor = vim
     pager = delta
     excludesfile = ~/dotfiles/git/.gitignore
+
 [delta]
     features = side-by-side line-numbers decorations
     syntax-theme = GitHub
+
 [pretty]
-	better-oneline = "format:%C(auto)%h%d %s %Cblue[%cn]"
+    better-oneline = "format:%C(auto)%h%d %s %Cblue[%cn]"
+
 [alias]
     # Detailed commit history graph
     lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 
     # test
-	tree = log --pretty=better-oneline --all --graph
+    tree = log --pretty=better-oneline --all --graph
     l = log --pretty=better-oneline
     ll = log --pretty=better-oneline --numstat
     details = "!f() { git ll "$1"^.."$1"; }; f"
@@ -40,13 +44,21 @@
 
     mru = !git for-each-ref --sort=-committerdate refs/heads/ | tail -r
     branch-first = !git log master..$(git rev-parse --abbrev-ref HEAD) --oneline | tail -1
+
 [credential]
     helper = cache --timeout=21600
+
 [diff]
     tool = vimdiff
+
 [interactive]
     diffFilter = delta --color-only
+
 [merge]
     tool = vimdiff
+
 [mergetool]
     prompt = false
+
+[gpg]
+	program = /usr/local/MacGPG2/bin/gpg2
