@@ -1,11 +1,11 @@
-require "user.keys"
-require "user.lsp"
-require "user.options"
-require "user.plugins"
-require "user.telescope"
-require "user.toggleterm"
-require "user.treesitter"
-require "user.whichkey"
+reload "user.keys"
+reload "user.lsp"
+reload "user.options"
+reload "user.plugins"
+reload "user.telescope"
+reload "user.toggleterm"
+reload "user.treesitter"
+reload "user.whichkey"
 
 -- For inspiration:
 -- https://github.com/ChristianChiarulli/lvim

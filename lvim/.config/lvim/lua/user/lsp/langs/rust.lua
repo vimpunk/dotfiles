@@ -23,7 +23,6 @@ pcall(function()
     tools = {
       reload_workspace_from_cargo_toml = true,
       autoSetHints = true,
-      hover_with_actions = true,
       hover_actions = {
         auto_focus = true,
       },

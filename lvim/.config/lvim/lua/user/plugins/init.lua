@@ -1,12 +1,12 @@
 lvim.plugins = {
   -- core
-  { "kevinhwang91/nvim-bqf" },
-  { "tpope/vim-surround" },
-  { "tpope/vim-repeat" },
-  { "nacro90/numb.nvim" },
+  "kevinhwang91/nvim-bqf",
+  "tpope/vim-surround",
+  "tpope/vim-repeat",
+  "nacro90/numb.nvim",
   {
     -- reopen files at last edit location
-    "https://github.com/ethanholz/nvim-lastplace",
+    "ethanholz/nvim-lastplace",
     config = function()
       require("nvim-lastplace").setup()
     end
@@ -38,11 +38,11 @@ lvim.plugins = {
   },
 
   -- TODO: test
-  { "https://github.com/HiPhish/nvim-ts-rainbow2" },
+  { "HiPhish/nvim-ts-rainbow2" },
 
   -- copilot
   {
-    "https://github.com/zbirenbaum/copilot.lua",
+    "zbirenbaum/copilot.lua",
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
@@ -83,7 +83,7 @@ lvim.plugins = {
   {
     "saecki/crates.nvim",
     -- event = { "BufRead Cargo.toml" },
-    requires = { { "nvim-lua/plenary.nvim" } },
+    dependencies = { { "nvim-lua/plenary.nvim" } },
     config = function()
       require("crates").setup {
         null_ls = {
@@ -94,7 +94,7 @@ lvim.plugins = {
     end,
   },
   {
-    "https://github.com/j-hui/fidget.nvim",
+    "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup()
     end
@@ -114,7 +114,7 @@ lvim.plugins = {
   "vimwiki/vimwiki",
   {
     "folke/zen-mode.nvim",
-    requires = { { "folke/twilight.nvim" } },
+    dependencies = { { "folke/twilight.nvim" } },
     config = function()
       require "user.plugins.zen-mode"
     end
