@@ -116,13 +116,13 @@ bindkey '^N' down-history
 
 # Compiles a zsh plugin script into zsh byte code for faster startup times.
 function source-compiled {
-    plugin_path=$1
-    compiled_path=$1.zwc
-    # If there is no *.zsh.zwc or it's older than *.zsh, compile *.zsh into *.zsh.zwc.
-    if [[ ! "${compiled_path}" -nt "${plugin_path}" ]]; then
-      zcompile "${plugin_path}"
-    fi
-    source "${plugin_path}"
+  plugin_path=$1
+  compiled_path=$1.zwc
+  # If there is no *.zsh.zwc or it's older than *.zsh, compile *.zsh into *.zsh.zwc.
+  if [[ ! "${compiled_path}" -nt "${plugin_path}" ]]; then
+    zcompile "${plugin_path}"
+  fi
+  source "${plugin_path}"
 }
 
 my_zsh_plugins_dir=~/dotfiles/zsh-plugins/
@@ -150,6 +150,13 @@ export CARGO_NET_GIT_FETCH_WITH_CLI=true
 # fzf
 # NOTE: has to be after setting vim mode
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# nvm
+if [[ "$OSTYPE" == darwin* ]]
+then
+  export NVM_DIR=~/.nvm
+  source $(brew --prefix nvm)/nvm.sh
+fi
 
 # ==============================================================================
 # Prompt

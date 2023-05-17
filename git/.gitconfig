@@ -55,7 +55,10 @@
     diffFilter = delta --color-only
 
 [merge]
-    tool = vimdiff
+    tool = lvim
+
+[mergetool "lvim"]
+    cmd = lvim -f -c \"Gdiffsplit!\" \"$MERGED\"
 
 [mergetool]
     prompt = false
