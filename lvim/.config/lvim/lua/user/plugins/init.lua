@@ -110,6 +110,18 @@ lvim.plugins = {
     end
   },
 
+  -- git
+  "tpope/vim-fugitive",
+  {
+    "akinsho/git-conflict.nvim",
+    version = "*",
+    config = function()
+      require("git-conflict").setup({
+        default_mappings = false
+      })
+    end
+  },
+
   -- writing
   "vimwiki/vimwiki",
   {

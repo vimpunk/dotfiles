@@ -1,6 +1,8 @@
 -- default makes quitting the editor too easy
 lvim.builtin.which_key.mappings["q"] = nil
 lvim.builtin.which_key.mappings["w"] = nil
+-- don't need the close buffer default mapping
+lvim.builtin.which_key.mappings["c"] = nil
 
 -- re-assign lvim defaults
 local function reassign_which_key(from, to)
@@ -38,6 +40,9 @@ lvim.builtin.which_key.mappings["g"] = { "<cmd>Telescope live_grep<CR>", "Grep" 
 lvim.builtin.which_key.mappings["*"] = { "<cmd>Telescope grep_string<CR>", "Grep" }
 lvim.builtin.which_key.mappings["sP"] = { "<cmd>Telescope projects<CR>", "Projects" }
 
+-- mappings for my plugin
+-- TODO: consider moving these to their respective plugin files
+
 -- SymbolsOutline
 lvim.builtin.which_key.mappings["o"] = { ":SymbolsOutline<CR>", "Outline" }
 
@@ -50,4 +55,15 @@ lvim.builtin.which_key.mappings["t"] = {
   q = { "<cmd>Trouble quickfix<CR>", "QuickFix" },
   l = { "<cmd>Trouble loclist<CR>", "LocationList" },
   w = { "<cmd>Trouble lsp_workspace_diagnostics<CR>", "Diagnostics" },
+}
+
+-- git-conflict
+lvim.builtin.which_key.mappings["c"] = {
+  name = "git-conflict",
+  o = { "<Plug>(git-conflict-ours)", "Ours" },
+  t = { "<Plug>(git-conflict-theirs)", "Theirs" },
+  b = { "<Plug>(git-conflict-both)", "Both" },
+  n = { "<Plug>(git-conflict-none)", "None", },
+  j = { "<Plug>(git-conflict-next-conflict)", "Next" },
+  k = { "<Plug>(git-conflict-prev-conflict)", "Prev" },
 }
