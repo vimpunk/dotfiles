@@ -64,6 +64,6 @@ lvim.builtin.which_key.mappings["c"] = {
   t = { "<Plug>(git-conflict-theirs)", "Theirs" },
   b = { "<Plug>(git-conflict-both)", "Both" },
   n = { "<Plug>(git-conflict-none)", "None", },
-  j = { "<Plug>(git-conflict-next-conflict)", "Next" },
-  k = { "<Plug>(git-conflict-prev-conflict)", "Prev" },
+  j = { "<Plug>(git-conflict-next-conflict)zz", "Next" },
+  k = { "<Plug>(git-conflict-prev-conflict)zz", "Prev" },
 }
