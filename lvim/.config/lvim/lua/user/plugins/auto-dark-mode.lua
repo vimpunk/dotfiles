@@ -8,7 +8,6 @@ pcall(function()
     end,
     set_light_mode = function()
       vim.api.nvim_set_option('background', 'light')
-      vim.fn.executable "echo hello world > ~/hello"
       vim.fn.execute([[!sed -i "" -e 's/^colors: \*.*/colors: \*tokyonight_day/' ~/.config/alacritty/alacritty.yml]])
     end,
   })
