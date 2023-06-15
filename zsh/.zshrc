@@ -1,6 +1,10 @@
 # TODO: what does this do? this was here by default
 [[ $- != *i* ]] && return
 
+autoload -U compinit
+compinit -i
+
+
 # ==============================================================================
 # Path
 # ==============================================================================
@@ -33,11 +37,13 @@ then
   export PATH=$PATH:/usr/local/share/python
   export PATH=$PATH:/usr/local/opt/python/libexec/bin
   export PATH=$PATH:/opt/homebrew/opt/llvm/bin
+  # Add Docker Desktop for Mac (docker)
+  export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
+
   export LIBRARY_PATH=$LIBRARY_PATH:/opt/homebrew/lib
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/cyrus-sasl/lib/pkgconfig
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/openssl@3/lib/pkgconfig
   export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl@3"
-
 fi
 
 # ==============================================================================
