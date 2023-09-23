@@ -95,6 +95,7 @@ lvim.plugins = {
   },
   {
     "j-hui/fidget.nvim",
+    version = "legacy",
     config = function()
       require("fidget").setup()
     end
@@ -132,6 +133,8 @@ lvim.plugins = {
     end
   }
 }
+
+lvim.builtin.indentlines.active = false
 
 -- This has to be called separately for some reason.
 require "user.plugins.lightspeed"

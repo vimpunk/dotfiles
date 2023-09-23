@@ -43,3 +43,6 @@ vim.cmd [[nnoremap <expr> N 'nN'[v:searchforward] . 'zz']]
 
 -- FIXME:
 -- vim.api.nvim_set_keymap('n', '<S-h>', '<S-h>5k', { noremap = true, silent = true })
+
+-- TODO: fix, for some reason it's not set
+lvim.keys.normal_mode["gt"] = "<Cmd>lua vim.lsp.buf.type_definition()<CR>"

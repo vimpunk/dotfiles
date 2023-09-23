@@ -7,9 +7,9 @@ vim.opt.wrap = true
 vim.opt.linebreak = true -- don't break lines mid-word
 vim.opt.breakindent = true
 vim.opt.scrolloff = 5
-vim.opt.lazyredraw = true -- faster scrolling
+vim.opt.lazyredraw = true       -- faster scrolling
 vim.cmd [[let &showbreak='↳ ']] -- pretty line break signaler
-vim.opt.concealcursor = "" -- don't conceal on current line
+vim.opt.concealcursor = ""      -- don't conceal on current line
 
 vim.opt.undofile = true
 vim.opt.undodir = vim.fn.stdpath "cache" .. "/undo"
@@ -21,13 +21,13 @@ pcall(vim.api.nvim_del_augroup_by_name, "_format_options")
 vim.opt.formatoptions = {
   ["1"] = true,
   ["2"] = true, -- use indent from 2nd line of a paragraph
-  q = true, -- continue comments with gq"
-  c = true, -- auto-wrap comments using textwidth
-  r = true, -- continue comments when pressing Enter
-  n = true, -- recognize numbered lists
-  t = true, -- autowrap lines using text width value
-  j = true, -- remove a comment leader when joining lines.
-  o = true, -- continue comments when inserting on new line
+  q = true,     -- continue comments with gq"
+  c = true,     -- auto-wrap comments using textwidth
+  r = true,     -- continue comments when pressing Enter
+  n = true,     -- recognize numbered lists
+  t = true,     -- autowrap lines using text width value
+  j = true,     -- remove a comment leader when joining lines.
+  o = true,     -- continue comments when inserting on new line
   -- Only break if the line was not longer than 'textwidth' when the insert
   -- started and only at a white character that has been entered during the
   -- current insert command.
@@ -56,3 +56,7 @@ lvim.builtin.nvimtree.setup.view.side = "left"
 
 -- lvim.builtin.nvimtree.show_icons.git = 0
 lvim.builtin.treesitter.highlight.enabled = true
+
+-- file watcher keeps hanging nvim -- looks like some infinite loop in either lualine or nvimtree
+lvim.builtin.lualine.active = false
+-- lvim.builtin.nvimtree.active = false
