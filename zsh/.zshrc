@@ -17,8 +17,6 @@ export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/bin
 # rust
 export PATH=$PATH:$HOME/.cargo/bin
-# ruby
-export PATH=$PATH:$HOME/.gem/ruby/2.5.0/bin
 # snap
 export PATH=$PATH:/var/lib/snapd/snap/bin/
 # go
@@ -44,6 +42,12 @@ then
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/cyrus-sasl/lib/pkgconfig
   export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/opt/homebrew/opt/openssl@3/lib/pkgconfig
   export OPENSSL_ROOT_DIR="/opt/homebrew/opt/openssl@3"
+fi
+
+# ruby
+if [ -d "/opt/homebrew/opt/ruby/bin" ]; then
+  export PATH=/opt/homebrew/opt/ruby/bin:$PATH
+  export PATH=`gem environment gemdir`/bin:$PATH
 fi
 
 # ==============================================================================
