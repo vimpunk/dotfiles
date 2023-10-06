@@ -47,7 +47,21 @@ lvim.plugins = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = { enabled = false },
+        suggestion = {
+          -- set separately in nvim-cmp
+          accept = false,
+          enabled = true,
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
+            accept = false,
+            accept_word = false,
+            accept_line = false,
+            next = "<M-[>",
+            prev = "<M-]>",
+            dismiss = "<M-Esc>",
+          },
+        },
         panel = { enabled = false },
       })
     end,
@@ -134,7 +148,26 @@ lvim.plugins = {
   }
 }
 
+local cmp = require("cmp")
 lvim.builtin.indentlines.active = false
+-- https://github.com/zbirenbaum/copilot.lua/issues/91#issuecomment-1345190310
+-- https://github.com/MunifTanjim/dotfiles/blob/6b5199346f7e96065d5e517e61e2d8768e10770d/private_dot_config/nvim/lua/plugins/cmp.lua#L48-L63
+lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
+      if require("copilot.suggestion").is_visible() then
+        require("copilot.suggestion").accept()
+      elseif cmp.visible() then
+        cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
+        -- elseif luasnip.expandable() then
+        --   luasnip.expand()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, {
+      "i",
+      "s",
+    }),
 
--- This has to be called separately for some reason.
-require "user.plugins.lightspeed"
+    -- This has to be called separately for some reason.
+    require "user.plugins.lightspeed"
