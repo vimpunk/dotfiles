@@ -46,24 +46,7 @@ lvim.plugins = {
     cmd = "Copilot",
     event = "InsertEnter",
     config = function()
-      require("copilot").setup({
-        suggestion = {
-          -- set separately in nvim-cmp
-          accept = false,
-          enabled = true,
-          auto_trigger = true,
-          debounce = 75,
-          keymap = {
-            accept = false,
-            accept_word = false,
-            accept_line = false,
-            next = "<M-[>",
-            prev = "<M-]>",
-            dismiss = "<M-Esc>",
-          },
-        },
-        panel = { enabled = false },
-      })
+      require "user.plugins.copilot"
     end,
   },
   {
@@ -148,17 +131,32 @@ lvim.plugins = {
   }
 }
 
+local function has_words_before()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+-- When there is a copilot suggestion, accept it with <CR>.
+-- https://github.com/zbirenbaum/copilot.lua/issues/91#issuecomment-1345190310
 local cmp = require("cmp")
 lvim.builtin.indentlines.active = false
--- https://github.com/zbirenbaum/copilot.lua/issues/91#issuecomment-1345190310
+lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping(function(fallback)
+  local copilot_suggestion = require("copilot.suggestion")
+  if copilot_suggestion.is_visible() then
+    copilot_suggestion.accept()
+  else
+    fallback()
+  end
+end, {
+  "i",
+  "s",
+})
+
+-- When there is a cmp suggestion, accept it with <Tab>, or if there is a word, trigger completion.
 -- https://github.com/MunifTanjim/dotfiles/blob/6b5199346f7e96065d5e517e61e2d8768e10770d/private_dot_config/nvim/lua/plugins/cmp.lua#L48-L63
 lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
-      if require("copilot.suggestion").is_visible() then
-        require("copilot.suggestion").accept()
-      elseif cmp.visible() then
+      if cmp.visible() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
-        -- elseif luasnip.expandable() then
-        --   luasnip.expand()
       elseif has_words_before() then
         cmp.complete()
       else
