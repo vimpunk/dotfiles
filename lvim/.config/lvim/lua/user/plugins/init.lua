@@ -136,12 +136,26 @@ local function has_words_before()
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
+lvim.builtin.indentlines.active = false
+
 -- When there is a copilot suggestion, accept it with <CR>.
 -- https://github.com/zbirenbaum/copilot.lua/issues/91#issuecomment-1345190310
 local cmp = require("cmp")
-lvim.builtin.indentlines.active = false
+
+-- If cmp suggestions are visible but none are selected (i.e. initial state),
+-- accept copilot suggestion. Otherwise we have selected one of the cmp entries
+-- with <Tab> and <CR> should accept that entry rather than copilot's
+-- suggestion.
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping(function(fallback)
   local copilot_suggestion = require("copilot.suggestion")
+  if cmp.visible() then
+    local e = cmp.get_active_entry()
+    if e then
+      cmp.confirm({ select = false })
+      return
+    end
+  end
+
   if copilot_suggestion.is_visible() then
     copilot_suggestion.accept()
   else
@@ -154,6 +168,7 @@ end, {
 
 -- When there is a cmp suggestion, accept it with <Tab>, or if there is a word, trigger completion.
 -- https://github.com/MunifTanjim/dotfiles/blob/6b5199346f7e96065d5e517e61e2d8768e10770d/private_dot_config/nvim/lua/plugins/cmp.lua#L48-L63
+-- maybe make it so that tab returns to copilot suggestion after going through all cmp suggestions?
 lvim.builtin.cmp.mapping["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
