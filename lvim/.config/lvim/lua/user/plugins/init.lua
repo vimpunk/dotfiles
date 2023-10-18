@@ -148,15 +148,22 @@ local cmp = require("cmp")
 -- suggestion.
 lvim.builtin.cmp.mapping["<CR>"] = cmp.mapping(function(fallback)
   local copilot_suggestion = require("copilot.suggestion")
+  local copilot_visible = copilot_suggestion.is_visible()
   if cmp.visible() then
-    local e = cmp.get_active_entry()
+    -- If copilot is already visible, nvim-cmp does not jump to the first
+    -- suggested entry, in which case we don't want to auto-accept that first
+    -- entry until we explicitly go onto it with <Tab>. Otherwise no copilot
+    -- suggestion, nvim-cmp auto jumps to the first entry in the selection menu
+    -- and we can accept it as that's most likely what we want.
+    local e = copilot_visible and cmp.get_active_entry() or cmp.get_selected_entry()
     if e then
-      cmp.confirm({ select = false })
-      return
+      if cmp.confirm({ select = false }) then
+        return
+      end
     end
   end
 
-  if copilot_suggestion.is_visible() then
+  if copilot_visible then
     copilot_suggestion.accept()
   else
     fallback()
